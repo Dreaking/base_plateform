@@ -1,0 +1,61 @@
+<h3>通知管理
+   <small>Edit in Notice</small>
+</h3>
+<div ng-controller="BaseNoticeController as art" class="container-fluid">
+   <div style="border-width:0px;" class="row content-wrapper">
+      <p class="lead">历史公告列表</p>
+      <div class="panel">
+         <div class="table-responsive">
+            <table class="table table-hover">
+               <thead>
+                  <tr>
+                     <th>
+                        <strong>公告 ID</strong>
+                     </th>
+                     <th>
+                        <strong>时间</strong>
+                     </th>
+                     <th>
+                        <strong>内容</strong>
+                     </th>
+                     <th>
+                        <strong>操作</strong>
+                     </th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr ng-repeat="notice in art.notices">
+                     <td>{{notice.notice_id}}</td>
+                     <td>{{notice.add_time| date: 'yyyy年-MM月-dd日' }}</td>
+                     <td>{{notice.title}}</td>
+                     <td>
+                        <button type="button" class="btn btn-sm btn-danger">
+                           <em class="icon-trash"></em>
+                        </button>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+      </div>
+      <!-- Article Content-->
+      <div class="col-lg-1-1">
+         <div class="panel panel-default">
+            <div class="panel-body">
+               <form name="art.formValidate" ng-submit="art.addNotice(art.notice)" novalidate="" class="form-validate form-horizontal">
+                  <input type="text" name="title" required="" ng-model="art.notice.title" placeholder="标题" class="mb-lg form-control input-lg" />
+                  <span ng-show="art.validateInput('title', 'required')" class="mb-lg text-danger">请填写内容</span>
+                  <!-- Wysiswyg editor-->
+                  <div text-angular="" ng-model="art.notice.htmlContent" required="" name="content" class="btn-group-small"></div>
+                  <span ng-show="art.validateInput('content', 'required')" class="text-danger">请填写内容</span>
+                  <br/>
+                  <div class="pull-right">
+                     <button type="submit" class="btn btn-primary m-r-10 m-t-10">
+                        <em class="fa icon-paper-plane fa-fw"></em>发布</button>
+                  </div>
+               </form>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>

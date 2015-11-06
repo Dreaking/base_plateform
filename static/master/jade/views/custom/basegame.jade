@@ -1,0 +1,54 @@
+h3 比赛管理
+  small Edit in Game
+.container-fluid(ng-controller="BaseGameController as art")
+
+  .row.content-wrapper(style='border-width:0px;')
+      p.lead 历史比赛列表
+      .panel
+        .table-responsive
+          table.table.table-hover
+            thead
+              tr
+                th
+                  strong 比赛 ID
+                th
+                  strong 时间
+                th
+                  strong 标题
+                th
+                  strong 内容
+                th
+                  strong 操作
+            tbody
+              tr(ng-repeat="game in art.games")
+                td {{game.notice_id}}
+                td {{game.add_time| NowTime }}
+                td {{game.title | limitTo:15}}
+                td {{game.content | removeTag |limitTo:50}}
+                td
+                  button(type="button" ng-click="art.delecteGame($index,game)").btn.btn-sm.btn-danger
+                    em.icon-trash
+          p.text-center(ng-show='!art.games||art.games.length<1')
+            |暂无任何数据
+      // Article Content
+      .col-lg-1-1
+        .panel.panel-default
+          .panel-body
+            form.form-validate.form-horizontal(name="art.formValidate", ng-submit="art.addGame(art.game)", novalidate="")
+              input.mb-lg.form-control.input-lg(type="text", name="title",required="" ng-maxlength="20" ng-model='art.game.title', placeholder="标题")
+              span.mb-lg.text-danger(ng-show="art.validateInput('title', 'required')") 请填写内容
+              span.text-danger(ng-show="form.validateInput('length', 'maxlength')") 字数不能超过20
+              ueditor(config="art.editorConfig" ng-model="art.game.content" required="")
+              br
+              .pull-right
+                  button.btn.btn-primary.m-r-10.m-t-10(type="submit")
+                    em.fa.icon-paper-plane.fa-fw
+                    | 发布
+      //- template
+      script(type="text/ng-template", id="confirm")
+        .ngdialog-message.clearfix
+          h3.text-center
+            | 确定删除该比赛?
+          
+          button.btn.btn-primary.mr.pull-right(type='button', ng-click='confirm()') 确定
+          button.btn.btn-default.pull-left(type='button', ng-click="closeThisDialog()") 取消

@@ -1,0 +1,90 @@
+h3 团队补贴
+  small Team Subsidies
+
+.container-fluid(ng-controller="TeamAccountController as table")
+  .table
+    .btn-group
+            button.btn.btn-sm.btn-default(title="加钱" ng-click='IncreaseAllMoney()') 批量加钱
+            button.btn.btn-sm.btn-default(title="扣钱" ng-click='DecreaseAllMoney()') 批量扣钱
+  table.table.table-bordered.table-hover.bg-white
+    tr(style='font-weight: bold')
+      td(style='width:60%') 团队名
+      td(style='width:10%') 余额
+      td(style='width:30%') 操作
+    tr(ng-repeat='team in table.teams')
+      td
+        span {{ team.team_name || &apos;暂无团队名&apos; }}
+      td
+        // editable group (select-remote)
+        span {{ team.balance }}
+      td(style='white-space: nowrap')
+        // form
+        form.form-buttons.form-inline(editable-form='', name='rowform', onbeforesave='table.saveUser($data, team.id)', ng-show='rowform.$visible', shown='table.inserted == team')
+        .buttons(ng-show='!rowform.$visible')
+          .btn-group
+            button.btn.btn-sm.btn-default(title="加钱" ng-click='IncreaseMoney(team.team_id)') 加钱
+            button.btn.btn-sm.btn-default(title="扣钱" ng-click='DecreaseMoney(team.team_id)') 扣钱
+          .btn-group  
+            a.btn.btn-sm.btn-info(title="消费记录" ui-sref="admin.teamorders({id:{{::team.team_id}}})") 操作记录
+  p.text-center(ng-show='!table.teams||table.teams.length<1')
+            |暂无任何数据
+  script(type="text/ng-template", id="Increase")
+    .ngdialog-message
+      h3.mt0.text-center 增加资金
+      .panel-body
+        form.form-horizontal
+          .form-group
+            label.col-lg-2.control-label 金额
+            .col-lg-10
+              input.form-control(type='text' ng-model='Increase.money' placeholder='例:500')
+          .form-group
+            label.col-lg-2.control-label 理由
+            .col-lg-10
+              input.form-control(type='text' ng-model='Increase.reason' placeholder='例:年终奖')
+        button.btn.btn-default.mr.pull-left(type='button', ng-click="closeThisDialog('Cancel')") 取消
+        button.btn.btn-primary.pull-right(type='button', ng-click="confirm(Increase)") 保存
+  script(type="text/ng-template", id="Decrease")
+    .ngdialog-message
+      h3.mt0.text-center 减少资金
+      .panel-body
+        form.form-horizontal
+          .form-group
+            label.col-lg-2.control-label 金额
+            .col-lg-10
+              input.form-control(type='text' ng-model='Decrease.money' placeholder='例:500' require='')
+          .form-group
+            label.col-lg-2.control-label 理由
+            .col-lg-10
+              input.form-control(type='text' ng-model='Decrease.reason' placeholder='例:拖欠电费' require='')
+        button.btn.btn-default.mr.pull-left(type='button', ng-click="closeThisDialog('Cancel')") 取消
+        button.btn.btn-primary.pull-right(type='button', ng-click="confirm(Decrease)") 保存
+  script(type="text/ng-template", id="AllIncrease")
+    .ngdialog-message
+      h3.mt0.text-center 批量增加资金
+      .panel-body
+        form.form-horizontal
+          .form-group
+            label.col-lg-2.control-label 金额
+            .col-lg-10
+              input.form-control(type='text' ng-model='Increase.money' placeholder='例:500')
+          .form-group
+            label.col-lg-2.control-label 理由
+            .col-lg-10
+              input.form-control(type='text' ng-model='Increase.reason' placeholder='例:年终奖')
+        button.btn.btn-default.mr.pull-left(type='button', ng-click="closeThisDialog('Cancel')") 取消
+        button.btn.btn-primary.pull-right(type='button', ng-click="confirm(Increase)") 保存
+  script(type="text/ng-template", id="AllDecrease")
+    .ngdialog-message
+      h3.mt0.text-center 批量减少资金
+      .panel-body
+        form.form-horizontal
+          .form-group
+            label.col-lg-2.control-label 金额
+            .col-lg-10
+              input.form-control(type='text' ng-model='Decrease.money' placeholder='例:500' require='')
+          .form-group
+            label.col-lg-2.control-label 理由
+            .col-lg-10
+              input.form-control(type='text' ng-model='Decrease.reason' placeholder='例:拖欠电费' require='')
+        button.btn.btn-default.mr.pull-left(type='button', ng-click="closeThisDialog('Cancel')") 取消
+        button.btn.btn-primary.pull-right(type='button', ng-click="confirm(Decrease)") 保存

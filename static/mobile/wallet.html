@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0"
+          charset="utf-8">
+    <title>钱包</title>
+    <link rel="stylesheet" type="text/css" href="css/common.css">
+    <script src="js/wallet_tab.js" type="text/javascript" charset="utf-8" async defer></script>
+    <script type="text/javascript" src="js/jquery.js" charset="utf-8"></script>
+    <script src="js/money_check.js" type="text/javascript" charset="utf-8" async defer></script>
+</head>
+
+<body>
+<header>
+    <a class="iconfont backgo" href="javascript:history.go(-1)">&#xe601;</a>
+    <span class="left">钱包</span>
+</header>
+
+
+<nav id="navTab" class="wallet">
+    <ul>
+        <li class="navBeSelected">补帖记录</li>
+        <li>收费项目</li>
+    </ul>
+</nav>
+<div id="tabSection">
+
+    <section class="consumingRecords">
+        <ul id="record_list">
+            <li><span class="consumingMoney"> 扣除:¥323</span>
+                <span class="consumingReason">买谁的防守打法的说多少</span>
+                <time>2015.02.34</time>
+            </li>
+            <li><span class="consumingMoney">扣除:¥323</span>
+                <span class="consumingReason"> 买谁的防守打法的少</span>
+                <time>2015.02.34</time>
+            </li>
+            <li><span class="consumingMoney">扣除:¥323</span>
+                <span class="consumingReason"> 买谁的防守打法的少</span>
+                <time>2015.02.34</time>
+            </li>
+            <li><span class="consumingMoney">扣除:¥323</span>
+                <span class="consumingReason">买谁的防守打法的少</span>
+                <time>2015.02.34</time>
+            </li>
+            <li><span class="consumingMoney">扣除:¥323</span>
+                <span class="consumingReason">买谁的防守打法的少</span>
+                <time>2015.02.34</time>
+            </li>
+            <li><span class="consumingMoney">扣除:¥323</span>
+                <span class="consumingReason">买谁的防守打法的少</span>
+                <time>2015.02.34</time>
+            </li>
+        </ul>
+    </section>
+
+    <section class="displayConsumption">
+        <form class="consumption" name="myform">
+            <table id="tab">
+                <tr>
+                    <td>
+                        <span class="consumption_title">桶装水</span><span class="price">134.50</span>
+                        <input class="add" name="" type="button" value="+"/>
+                        <input class="text_box" name="" type="text" value="0"/>
+                        <input class="min" name="" type="button" value="-"/>
+                    </td>
+                    <td>
+                        <span class="consumption_title">桶装水</span><span class="price">134.50</span>
+                        <input class="add" name="" type="button" value="+"/>
+                        <input class="text_box" name="" type="text" value="0"/>
+                        <input class="min" name="" type="button" value="-"/>
+                    </td>
+                </tr>
+            </table>
+
+            <div class="consumption_total"><span>总价</span><label id="total"></label></div>
+
+            <button class="deductMoney" onclick="#">购买</button>
+        </form>
+    </section>
+
+</div>
+
+<footer class="accountBalance">
+    <div>
+        <span class="iconfont" id="balance">&#xe604; 余额 234元</span>
+    </div>
+</footer>
+</body>
+
+</html>

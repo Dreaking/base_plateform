@@ -1,0 +1,68 @@
+<h3>比赛管理
+   <small>Edit in Game</small>
+</h3>
+<div ng-controller="BaseGameController as art" class="container-fluid">
+   <div style="border-width:0px;" class="row content-wrapper">
+      <p class="lead">历史比赛列表</p>
+      <div class="panel">
+         <div class="table-responsive">
+            <table class="table table-hover">
+               <thead>
+                  <tr>
+                     <th>
+                        <strong>比赛 ID</strong>
+                     </th>
+                     <th>
+                        <strong>时间</strong>
+                     </th>
+                     <th>
+                        <strong>标题</strong>
+                     </th>
+                     <th>
+                        <strong>内容</strong>
+                     </th>
+                     <th>
+                        <strong>操作</strong>
+                     </th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr ng-repeat="game in art.games">
+                     <td>{{game.notice_id}}</td>
+                     <td>{{game.add_time| NowTime }}</td>
+                     <td>{{game.title | limitTo:15}}</td>
+                     <td>{{game.content | removeTag |limitTo:50}}</td>
+                     <td>
+                        <button type="button" ng-click="art.delecteGame($index,game)" class="btn btn-sm btn-danger">
+                           <em class="icon-trash"></em>
+                        </button>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+            <p ng-show="!art.games||art.games.length&lt;1" class="text-center">暂无任何数据</p>
+         </div>
+      </div>
+      <!-- Article Content-->
+      <div class="col-lg-1-1">
+         <div class="panel panel-default">
+            <div class="panel-body">
+               <form name="art.formValidate" ng-submit="art.addGame(art.game)" novalidate="" class="form-validate form-horizontal">
+                  <input type="text" name="title" required="" ng-maxlength="20" ng-model="art.game.title" placeholder="标题" class="mb-lg form-control input-lg" />
+                  <span ng-show="art.validateInput('title', 'required')" class="mb-lg text-danger">请填写内容</span>
+                  <span ng-show="form.validateInput('length', 'maxlength')" class="text-danger">字数不能超过20</span>
+                  <ueditor config="art.editorConfig" ng-model="art.game.content" required=""></ueditor>
+                  <br/>
+                  <div class="pull-right">
+                     <button type="submit" class="btn btn-primary m-r-10 m-t-10">
+                        <em class="fa icon-paper-plane fa-fw"></em>发布</button>
+                  </div>
+               </form>
+            </div>
+         </div>
+      </div>
+      <script type="text/ng-template" id="confirm">
+         <div class="ngdialog-message clearfix"><h3 class="text-center">确定删除该比赛?</h3><button type="button" ng-click="confirm()" class="btn btn-primary mr pull-right">确定</button><button type="button" ng-click="closeThisDialog()" class="btn btn-default pull-left">取消</button></div>
+      </script>
+   </div>
+</div>

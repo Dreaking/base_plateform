@@ -1,0 +1,62 @@
+[
+  {
+    "text": "团队负责人菜单",
+    "heading": "true",
+    "translate": "sidebar.heading.HEADER"
+  },
+  {
+    "text": "成员管理",
+    "sref": "#",
+    "icon": "icon-user",
+    "label": "label label-info", 
+    "submenu": [
+      {"text": "目前成员",       "sref": "team.teamworker"},
+      {"text": "招聘成员",       "sref": "team.joinercheck" }
+    ],
+    "translate": "sidebar.nav.TEAMWORKER"
+  },
+  {
+    "text": "团队管理",
+    "sref": "#",
+    "icon": "icon-users",
+    "label": "label label-info", 
+    "submenu": [
+      {"text": "团队资料",       "sref": "team.teamintroduce"},
+      {"text": "招聘管理",       "sref": "team.recruit" }
+    ],
+    "translate": "sidebar.nav.TEAMMANAGEMENT"
+  },
+  {
+    "text": "资金管理",
+    "sref": "#",
+    "icon": "icon-wallet",
+    "label": "label label-info", 
+    "submenu": [
+      {"text": "团队补贴",       "sref": "team.orders"},
+      {"text": "记账本",       "sref": "team.record"}
+    ],
+    "translate": "sidebar.nav.MONEYMANEGE"
+  },
+  {
+    "text": "申请中心",
+    "sref": "#",
+    "icon": "icon-envelope-letter",
+    "label": "label label-info",
+    "submenu": [
+      {"text": "申请物资",       "sref": "team.suportcenter"},
+      {"text": "申请队列",       "sref": "team.suportlist"}
+    ], 
+    "translate": "sidebar.nav.TEAMAPPLY"
+  },
+  {
+    "text": "个人中心",
+    "sref": "#",
+    "icon": "icon-puzzle",
+    "label": "label label-info", 
+    "submenu": [
+      {"text": "个人信息",       "sref": "team.userinfo"},
+      {"text": "修改密码",       "sref": "team.changepassword"}
+    ],
+    "translate": "sidebar.nav.PERSON"
+  }
+]

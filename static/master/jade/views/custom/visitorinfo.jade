@@ -1,0 +1,52 @@
+h3 个人信息
+  small Edit for user personal Info
+
+.container-fluid(ng-controller="UserInfoController as form")
+  .row
+    .col-md-12
+      form.form-validate.form-horizontal(name="form.formValidate", ng-submit="form.submitForm()", novalidate="")
+        .panel
+          .panel-body
+            fieldset.b0
+              legend 修改信息
+            fieldset
+              .form-group
+                label.col-sm-3.control-label 姓名
+                .col-sm-6
+                  input.form-control(type='text', name='name',placeholder="请输入姓名", required='', ng-model="form.user.name")
+                  span.text-danger(ng-show="form.validateInput('name', 'required')") 这项是必填项
+            fieldset
+              .form-group
+                label.col-sm-3.control-label 昵称
+                .col-sm-6
+                  input.form-control(type='text', name='nickname',placeholder="请输入姓名", required='', ng-model="form.user.nickname")
+                  span.text-danger(ng-show="form.validateInput('nickname', 'required')") 这项是必填项
+            fieldset
+              .form-group
+                label.col-sm-3.control-label 学号
+                .col-sm-6
+                  input.form-control(type='text', name='student_number',ng-pattern="/^[0-9]{10}$/",placeholder="请输入学号", required='', ng-model="form.user.sid")
+                  span.text-danger(ng-show="form.validateInput('student_number', 'required')") 这项是必填项
+                  span.text-danger(ng-show="form.validateInput('student_number', 'pattern')") 请输入正确学号
+            fieldset
+              .form-group
+                label.col-sm-3.control-label 手机号码
+                .col-sm-6
+                  input.form-control(type='text', name='phone_number',ng-pattern="/^[1][0-9]{10}$/", required='', ng-model="form.user.phone")
+                  span.text-danger(ng-show="form.validateInput('phone_number', 'required')") 这项是必填项
+                  span.text-danger(ng-show="form.validateInput('phone_number', 'pattern')") 请输入正确手机号码
+            fieldset
+              .form-group
+                label.col-sm-3.control-label 学院
+                .col-sm-6
+                  select.form-control(name='college', required="",ng-options="g.school_id as g.school_name for g in form.colleges",ng-change="form.loadMajors(form.user.school_id)", ng-model="form.user.school_id")
+            fieldset
+              .form-group
+                label.col-sm-3.control-label 专业
+                .col-sm-6
+                  select.form-control(name='major', required="",ng-options='g.major_id as g.major_name for g in form.majors', ng-model="form.user.major_id")
+                  span.text-danger(ng-show="form.validateInput('major', 'required')") 请输入正确手机号码
+            .col-md-12
+              .col-md-5
+              button.btn.btn-default.col-md-2(type="submit" style="width:80px;") 保存                  
+ 

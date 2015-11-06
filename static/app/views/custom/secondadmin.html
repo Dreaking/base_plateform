@@ -1,0 +1,60 @@
+<h3>二级管理员
+   <small>Edit in secondary admin</small>
+</h3>
+<div ng-controller="secondadminController as table" class="container-fluid">
+   <!-- Editable row-->
+   <h4 class="page-header">成员列表</h4>
+   <table class="table table-bordered table-hover bg-white">
+      <tr style="font-weight: bold">
+         <td style="width:20%">用户名</td>
+         <td style="width:15%">姓名</td>
+         <td style="width:20%">联系方式</td>
+         <td style="width:15%">学院</td>
+         <td style="width:15%">专业</td>
+         <td style="width:15%">操作</td>
+      </tr>
+      <tr ng-repeat="user in table.users">
+         <td>
+            <!-- editable username (text with validation)-->
+            <span editable-text="user.login_name" e-name="login_name" e-form="rowform" onbeforesave="table.checkLoginname($data)" e-required="">{{ user.login_name || &apos;暂无&apos; }}</span>
+         </td>
+         <td>
+            <!-- editable name (select-local)-->
+            <span editable-text="user.name" e-name="name" e-form="rowform" onbeforesave="table.checkName($data)" e-required="">{{ user.name || &apos;暂无&apos; }}</span>
+         </td>
+         <td>
+            <!-- editable user.phone (select-remote)-->
+            <span editable-text="user.phone" e-name="phone" e-form="rowform" onbeforesave="table.checkPhone($data)" e-required="">{{ user.phone || &apos;暂无&apos; }}</span>
+         </td>
+         <td>
+            <!-- editable school_name (select-remote)-->
+            <span editable-select="user.school_name" e-name="school_name" onbeforesave="table.checkID($data)" onshow="table.loadColleges()" e-form="rowform" e-ng-change="table.loadMajors($data)" e-ng-options="g.school_id as g.school_name for g in table.colleges">{{ table.showColleges(user) }}</span>
+         </td>
+         <td>
+            <!-- editable major_name (select-remote)-->
+            <span editable-select="user.major_name" e-name="major_name" e-form="rowform" onbeforesave="table.checkID($data)" e-ng-options="g.major_id as g.major_name for g in table.majors">{{ table.showMajors(user) }}</span>
+         </td>
+         <td style="white-space: nowrap">
+            <!-- form-->
+            <form editable-form="" name="rowform" onbeforesave="table.saveUser($data)" ng-show="rowform.$visible" shown="table.inserted == user" class="form-buttons form-inline">
+               <button type="submit" ng-disabled="rowform.$waiting" title="Save" class="btn btn-sm btn-info">
+                  <em class="fa fa-save"></em>
+               </button>
+               <button type="button" ng-disabled="rowform.$waiting" ng-click="table.cancel(rowform)" title="取消" class="btn btn-sm btn-default">
+                  <em class="fa fa-times"></em>
+               </button>
+            </form>
+            <div ng-show="!rowform.$visible" class="buttons">
+               <button ng-click="table.removeUser($index,user.user_id)" title="删除" class="btn btn-sm btn-danger">
+                  <em class="icon-trash"></em>
+               </button>
+            </div>
+         </td>
+      </tr>
+   </table>
+   <p ng-show="!table.users||table.users.length&lt;1" class="text-center">暂无任何数据</p>
+   <button ng-click="table.addUser()" class="btn btn-default">添加成员</button>
+   <script type="text/ng-template" id="confirm">
+      <div class="ngdialog-message clearfix"><h3 class="text-center">确定执行该操作?</h3><button type="button" ng-click="confirm()" class="btn btn-primary mr pull-right">确定</button><button type="button" ng-click="closeThisDialog()" class="btn btn-default pull-left">取消</button></div>
+   </script>
+</div>

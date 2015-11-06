@@ -1,0 +1,47 @@
+<h3>团队流水
+   <small>Edit in User</small>
+</h3>
+<div ng-controller="usermanagementController as table" class="container-fluid">
+   <form role="form" class="form-inline">
+      <div class="row panel-heading form-horizontal">
+         <div class="form-group pull-right list-inline panel-heading">
+            <label class="col-sm-4 control-label">团队</label>
+            <div class="col-sm-8">
+               <select name="account" ng-change="table.loadUserList()" ng-options="team.team_id as team.team_name for team in table.teams" ng-model="selectTeam" class="form-control"></select>
+            </div>
+         </div>
+      </div>
+   </form>
+</div>
+<div class="table-responsive b0">
+   <table datatable="" class="table table-hover">
+      <thead class="bg-white">
+         <tr>
+            <th style="width:80px">
+               <strong>ID</strong>
+            </th>
+            <th>
+               <strong>时间</strong>
+            </th>
+            <th>
+               <strong>操作人</strong>
+            </th>
+            <th>
+               <strong>支出描述</strong>
+            </th>
+            <th>
+               <strong>总支出(元)</strong>
+            </th>
+         </tr>
+      </thead>
+      <tbody>
+         <tr>
+            <td>0001</td>
+            <td>03/11/2015</td>
+            <td>阮进益</td>
+            <td>主要用于椅子购买</td>
+            <td>-300</td>
+         </tr>
+      </tbody>
+   </table>
+</div>

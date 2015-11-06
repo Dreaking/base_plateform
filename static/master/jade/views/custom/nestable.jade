@@ -1,0 +1,39 @@
+h3 收支类型管理
+  .col-sm-2.pull-right
+      select(ng-model='nest.type' ng-change='nest.typeChange()').form-control
+        option(value='in') 收入
+        option(value='out') 支出
+  small Payment Type Management
+
+.container-fluid
+  .row
+    .col-md-1
+    .col-md-4
+      h4.text-left.Sub-heading 已存在的级联列表
+    .col-md-2
+    .col-md-4
+      h4.text-left.Sub-heading 未分配的级联列表
+    .col-md-1
+  .row
+    .col-md-1
+    .col-md-4
+      .panel.panel-default.well
+        div(ng-nestable='', ng-model='nest.items')
+          div
+            | {{$item}}
+    .col-md-2
+      div
+        p.text-left 请拖动编辑级联列表
+        small.text-muted 拖动右边的未分配级联项到左侧级级联菜单
+      button.btn.btn-default.block-center(ng-click='nest.saveChange()') 保存更改
+    .col-md-4
+      .panel.panel-default.well
+        .show-handlers(ng-nestable='', ng-model='nest.unuseitems')
+          div
+            | {{$item}}
+        form(ng-submit='nest.addNest(nest.item)').mb-xl
+          .form-group
+            input.form-control(ng-trim="true",name='item', type='text', ng-model='nest.item', placeholder='添加级联项', required)
+          button.btn.btn-primary.btn-block(type='submit') 添加
+    .col-md-1
+

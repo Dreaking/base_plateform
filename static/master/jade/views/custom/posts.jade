@@ -1,0 +1,65 @@
+h3 帖子管理
+  small Edit in Posts
+
+.table-grid.table-grid-desktop
+  .col.col-md
+    .panel-footer
+      .row.form-horizontal
+        .col-lg-6
+          .pull-left.col-lg-2
+            button.btn.btn-sm.btn-default(ng-click="pag.delectAllPosts()") 批量删除
+          .pull-left.col-lg-6
+            label.col-lg-4.control-label 模块
+            .col-lg-8
+              select.form-control(ng-model='pag.section_id' ng-change="pag.pageChanged()" ng-options='g.section_id as g.section_name for g in pag.sections')
+        .col-lg-6.text-right
+          pagination.pagination-sm(ng-if='pag.bigTotalItems',ng-change='pag.pageChanged()', total-items='pag.bigTotalItems', ng-model='pag.bigCurrentPage', max-size='pag.maxSize', boundary-links='true', rotate='false', num-pages='pag.numPages')
+    .table-responsive
+    table#table-ext-2.table.table-striped.table-bordered.table-hover
+      thead
+        tr
+          th(check-all)
+            .checkbox.c-checkbox
+              label
+                input(type='checkbox' ng-click='checkAll($event)')
+                span.fa.fa-check
+          th 帖子详情
+          th 操作
+      tbody
+        tr(ng-repeat='post in pag.posts')
+          td
+            .checkbox.c-checkbox
+              label
+                input(type='checkbox' ng-model='post.selected')
+                span.fa.fa-check
+          td
+            .media
+                a.pull-left
+                  img.media-object.img-responsive.img-circle(src="app/img/user/01.jpg",alt="")
+                .media-body
+                  div(style='cursor:pointer;' ui-sref='admin.postsview({id:{{post.post_id}}})')
+                    .pull-right.badge.baed-info {{::post.add_time|fromNow}}
+                    h4.media-heading(ng-bind="::post.title")
+                    p 发布团队: {{::post.nickname}}
+                    | {{::post.content | removeTag | limitTo:100}}
+          td.text-center
+            label
+              button.btn.btn-sm.btn-danger(title="删除" ng-click='pag.delectPost(post.post_id)') 删除
+    p.text-center(ng-show="!pag.posts||pag.posts.length<1")
+        | 暂无有效的帖子
+      //- template
+  script(type="text/ng-template", id="confirm")
+      .ngdialog-message.clearfix
+        h3.text-center
+          | 确定删除该帖子?
+          
+        button.btn.btn-primary.mr.pull-right(type='button', ng-click='confirm()') 确定
+        button.btn.btn-default.pull-left(type='button', ng-click="closeThisDialog()") 取消    
+  script(type="text/ng-template", id="allconfirm")
+      .ngdialog-message.clearfix
+        h3.text-center
+          | 确定删除选中的帖子?
+          
+        button.btn.btn-primary.mr.pull-right(type='button', ng-click='confirm()') 确定
+        button.btn.btn-default.pull-left(type='button', ng-click="closeThisDialog()") 取消  
+  

@@ -1,0 +1,104 @@
+[
+  {
+    "text": "二级管理员菜单",
+    "heading": "true",
+    "translate": "sidebar.heading.HEADER"
+  },
+  {
+    "text": "人员管理",
+    "sref": "#",
+    "icon": "icon-user-following",
+    "label": "label label-info", 
+    "submenu": [
+      {"text": "成员管理",       "sref": "admin.userManagement" }
+    ],
+    "translate": "sidebar.nav.PEOPLE"
+  },
+  {
+    "text": "团队管理",
+    "sref": "#",
+    "icon": "icon-users",
+    "label": "label label-info", 
+    "submenu": [
+      {"text": "团队列表",       "sref": "admin.teamList"},
+      {"text": "招聘管理",       "sref": "admin.joinTeam" }
+    ],
+    "translate": "sidebar.nav.TEAM"
+  },
+  {
+    "text": "资金管理",
+    "sref": "#",
+    "icon": "icon-wallet",
+    "label": "label label-info", 
+    "submenu": [
+      {"text": "团队补贴",       "sref": "admin.teamaccount" },
+      {"text": "团队流水",       "sref": "admin.teamrecord" }
+    ],
+    "translate": "sidebar.nav.MONEYMANEGE"
+  },
+  {
+    "text": "申请管理",
+    "sref": "#",
+    "icon": "icon-envelope-letter",
+    "label": "label label-info", 
+    "submenu": [
+      {"text": "申请审核","sref": "teamApplyCheck"}
+    ],
+    "translate": "sidebar.nav.APPLY"
+  },
+  {
+    "text": "基地管理",
+    "sref": "#",
+    "icon": "icon-home",
+    "label": "label label-info", 
+    "submenu": [
+      {"text": "基地介绍",       "sref": "admin.baseIntroduce"},
+      {"text": "基地通知",       "sref": "admin.baseNotice" },
+      {"text": "基地活动",       "sref": "admin.baseActivity" },
+      {"text": "比赛事项",       "sref": "admin.baseGame" }
+    ],
+    "translate": "sidebar.nav.BASE"
+  },
+  {
+    "text": "收支类型管理",
+    "sref": "admin.nestable",
+    "icon": "icon-pie-chart",
+    "label": "label label-info", 
+    "translate": "sidebar.nav.NESTABLE"
+  },
+  {
+    "text": "收费项目",
+    "sref": "admin.goods",
+    "icon": "icon-basket",
+    "label": "label label-info", 
+    "translate": "sidebar.nav.GOODS"
+  },
+  {
+    "text": "社区管理",
+    "sref": "#",
+    "icon": "icon-bubbles",
+    "label": "label label-info", 
+    "submenu": [
+      {"text": "板块",       "sref": "admin.modules"},
+      {"text": "帖子",       "sref": "admin.posts.folder" }
+    ],
+    "translate": "sidebar.nav.COMUNITY"
+  },
+  {
+    "text": "个人中心",
+    "sref": "#",
+    "icon": "icon-calculator",
+    "label": "label label-info", 
+    "submenu": [
+      {"text": "修改密码",       "sref": "admin.changepassword" }
+    ],
+    "translate": "sidebar.nav.PERSON"
+  },
+  {
+    "text": "收支类型管理",
+    "sref": "admin.nestable",
+    "icon": "icon-pie-chart",
+    "label": "label label-info", 
+    "translate": "sidebar.nav.NESTABLE"
+  }
+]

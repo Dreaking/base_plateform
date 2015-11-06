@@ -1,0 +1,59 @@
+h3 招聘管理
+  small Edit in Recruit
+
+.table-grid.table-grid-desktop(ng-controller='TeamPostController as pag')
+ .col.col-md 
+  .panel-footer
+    .row
+      .col-lg-4
+        button.btn.btn-sm.btn-default(ng-click="pag.delectAllPosts()") 批量删除
+      .col-lg-8.text-right
+        pagination.pagination-sm(ng-if='pag.bigTotalItems',ng-change='pag.pageChanged()', total-items='pag.bigTotalItems', ng-model='pag.bigCurrentPage', max-size='pag.maxSize', boundary-links='true', rotate='false', num-pages='pag.numPages')
+  .table-responsive
+    table#table-ext-2.table.table-striped.table-bordered.table-hover
+      thead
+        tr
+          th(check-all)
+            .checkbox.c-checkbox
+              label
+                input(type='checkbox' ng-click='pag.checkAll($event)')
+                span.fa.fa-check
+          th 招聘详情
+          th 操作
+      tbody
+        tr(ng-repeat='post in pag.posts')
+          td
+            .checkbox.c-checkbox
+              label
+                input(type='checkbox' ng-model='post.selected')
+                span.fa.fa-check
+          td
+            .media
+                a.pull-left
+                  img.media-object.img-responsive.img-circle(src="app/img/user/01.jpg",alt="")
+                .media-body
+                  div(style='cursor:pointer;' ui-sref='admin.view({mid:{{post.recruit_id}}})')
+                    .pull-right.badge.baed-info {{::add_time|fromNow}}
+                    h4.media-heading(ng-bind="::post.title")
+                    p 发布团队: {{::post.team_name}}
+                    | {{::post.content | removeTag | limitTo:100}}
+          td.text-center
+            label
+              button.btn.btn-sm.btn-danger(title="删除" ng-click='pag.delectPost(post.recruit_id)') 删除
+      //- template
+      script(type="text/ng-template", id="confirm")
+        .ngdialog-message.clearfix
+          h3.text-center
+            | 确定删除该招聘文章?
+          
+          button.btn.btn-primary.mr.pull-right(type='button', ng-click='confirm()') 确定
+          button.btn.btn-default.pull-left(type='button', ng-click="closeThisDialog()") 取消
+      script(type="text/ng-template", id="allconfirm")
+        .ngdialog-message.clearfix
+          h3.text-center
+            | 确定删除所有选中的文章?
+          
+          button.btn.btn-primary.mr.pull-right(type='button', ng-click='confirm()') 确定
+          button.btn.btn-default.pull-left(type='button', ng-click="closeThisDialog()") 取消
+
+  

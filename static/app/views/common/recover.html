@@ -1,0 +1,33 @@
+<div ng-controller="RecoverController as rec" class="block-center mt-xl wd-xl">
+   <!-- START panel-->
+   <div class="panel panel-dark panel-flat">
+      <div class="panel-heading text-center">
+         <a href="#">
+            <img src="app/img/logo.png" alt="Image" class="block-center img-rounded" />
+         </a>
+      </div>
+      <div class="panel-body clearfix">
+         <form role="form" name="rec.recoverForm" ng-submit="rec.resetPassword()" novalidate="" class="form-validate mb-lg">
+            <p class="text-center">填写您的手机号码</p>
+            <p class="text-center">我们将会通过短信发送验证码</p>
+            <div class="form-group has-feedback">
+               <label class="text-muted">手机号码</label>
+               <input type="text" ng-model="rec.recoverForm.phone" placeholder="请输入手机号码" ng-pattern="/^[1][0-9]{10}$/" autocomplete="off" required="" class="form-control" />
+               <span class="icon-call-end form-control-feedback text-muted"></span>
+               <span ng-show="rec.recoverForm.phone.$dirty &amp;&amp; rec.recoverForm.phone.$error.pattern" class="text-danger">请填写正确的手机号码</span>
+            </div>
+            <button type="submit" class="btn btn-danger btn-block">发送重置验证码</button>
+         </form>
+         <div ng-show="rec.authMsg" class="alert alert-info text-center">{{rec.authMsg}}</div>
+      </div>
+   </div>
+   <!-- END panel-->
+   <div class="p-lg text-center">
+      <span>&copy;</span>
+      <span ng-bind="app.year"></span>
+      <span>-</span>
+      <span ng-bind="app.name"></span>
+      <br/>
+      <span ng-bind="app.description"></span>
+   </div>
+</div>

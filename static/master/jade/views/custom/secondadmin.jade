@@ -1,0 +1,50 @@
+h3 二级管理员
+  small Edit in secondary admin
+
+.container-fluid(ng-controller="secondadminController as table")
+  // Editable row
+  h4.page-header 成员列表
+
+  table.table.table-bordered.table-hover.bg-white
+    tr(style='font-weight: bold')
+      td(style='width:20%') 用户名
+      td(style='width:15%') 姓名
+      td(style='width:20%') 联系方式
+      td(style='width:15%') 学院
+      td(style='width:15%') 专业
+      td(style='width:15%') 操作
+    tr(ng-repeat='user in table.users')
+      td
+        // editable username (text with validation)
+        span(editable-text='user.login_name', e-name='login_name', e-form='rowform',onbeforesave='table.checkLoginname($data)', e-required='') {{ user.login_name || &apos;暂无&apos; }}
+      td
+        // editable name (select-local)
+        span(editable-text='user.name', e-name='name', e-form='rowform',onbeforesave='table.checkName($data)', e-required='') {{ user.name || &apos;暂无&apos; }}        
+      td
+        // editable user.phone (select-remote)
+        span(editable-text='user.phone', e-name='phone', e-form='rowform',onbeforesave='table.checkPhone($data)', e-required='') {{ user.phone || &apos;暂无&apos; }}
+      td
+        // editable school_name (select-remote)
+        span(editable-select='user.school_name', e-name='school_name',onbeforesave='table.checkID($data)', onshow='table.loadColleges()', e-form='rowform',e-ng-change='table.loadMajors($data)', e-ng-options='g.school_id as g.school_name for g in table.colleges') {{ table.showColleges(user) }}
+      td
+        // editable major_name (select-remote)
+        span(editable-select='user.major_name', e-name='major_name', e-form='rowform',onbeforesave='table.checkID($data)', e-ng-options='g.major_id as g.major_name for g in table.majors') {{ table.showMajors(user) }}
+      td(style='white-space: nowrap')
+        // form
+        form.form-buttons.form-inline(editable-form='', name='rowform', onbeforesave='table.saveUser($data)', ng-show='rowform.$visible', shown='table.inserted == user')
+          button.btn.btn-sm.btn-info(type='submit', ng-disabled='rowform.$waiting', title="Save"): em.fa.fa-save
+          button.btn.btn-sm.btn-default(type='button', ng-disabled='rowform.$waiting', ng-click='table.cancel(rowform)', title="取消"): em.fa.fa-times
+        .buttons(ng-show='!rowform.$visible')
+          //- button.btn.btn-sm.btn-info(ng-click='rowform.$show()', title="Edit"): em.icon-pencil
+          button.btn.btn-sm.btn-danger(ng-click='table.removeUser($index,user.user_id)', title="删除"): em.icon-trash
+  p.text-center(ng-show='!table.users||table.users.length<1')
+            |暂无任何数据
+  button.btn.btn-default(ng-click='table.addUser()') 添加成员
+  //- template
+  script(type="text/ng-template", id="confirm")
+    .ngdialog-message.clearfix
+      h3.text-center
+        | 确定执行该操作?
+      
+      button.btn.btn-primary.mr.pull-right(type='button', ng-click='confirm()') 确定
+      button.btn.btn-default.pull-left(type='button', ng-click="closeThisDialog()") 取消

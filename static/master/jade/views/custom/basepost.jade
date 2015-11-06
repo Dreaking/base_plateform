@@ -1,0 +1,122 @@
+.row
+  // Blog Content
+  .col-lg-9
+    .panel.panel-default
+      .panel-heading
+        .bb
+          h2.text-lg 活动标题
+          p.clearfix
+            span.pull-left
+              small.mr-sm 作者:
+                a(href="") 波纹科技
+              small.mr-sm 2015/09/30
+              small 
+                strong 50
+                span 评论
+      .panel-body.text-md
+        p 富文本内容
+        hr
+    .panel
+      .panel-heading 3 Comments
+      .panel-body
+        .media
+          .media-left
+            a(href='#')
+              img.media-object.img-circle.thumb64(src="app/img/user/01.jpg")
+          .media-body
+            h4#media-heading.media-heading
+              a(href="") 波纹科技
+              small 10 分钟
+              a.anchorjs-link(href='#media-heading')
+                span.anchorjs-icon
+            p 一个劲评论 
+        hr
+        .media
+          .media-left
+            a(href='#')
+              img.media-object.img-circle.thumb64(src="app/img/user/03.jpg")
+          .media-body.mb-lg
+            h4#media-heading.media-heading
+              a(href="") 丽芬科技
+              small 20分钟前
+              a.anchorjs-link(href='#media-heading')
+                span.anchorjs-icon
+            | 一堆评论
+            hr
+            .media
+              .media-left
+                a(href='#')
+                  img.media-object.img-circle.thumb64(src="app/img/user/06.jpg")
+              .media-body
+                h4#nested-media-heading.media-heading
+                  a(href="") 乱七八糟科技
+                  small 1 小时
+                  a.anchorjs-link(href='#nested-media-heading')
+                    span.anchorjs-icon
+                | 评论内容
+    .panel
+      .panel-heading
+        em.fa.fa-pencil.mr
+        | Add your Comment
+      .panel-body
+        form.form-horizontal(action='/')
+          .form-group
+            .col-xs-6
+              input#post-firstname.form-control(type='text', name='post-firstname', placeholder='Your firstname')
+            .col-xs-6
+              input#post-lastname.form-control(type='text', name='post-lastname', placeholder='Your lastname')
+          .form-group
+            .col-xs-12
+              textarea#post-comment.form-control(name='post-comment', rows='4', placeholder='Comment here..')
+          .form-group
+            .col-xs-12
+              button.btn.btn-effect-ripple.btn-primary(type='submit') Send Comment
+  // Blog Sidebar
+  .col-lg-3
+    // Search
+    .panel.panel-default
+      .panel-heading Search
+      .panel-body
+        form.form-horizontal
+          .input-group
+            input.form-control(type='text', placeholder='Search for...')
+            span.input-group-btn
+              button.btn.btn-default(type='button')
+                em.fa.fa-search
+    // Categories
+    .panel.panel-default
+      .panel-heading Categories
+      .panel-body
+        ul.list-unstyled
+          li
+            a(href="") 
+              em.fa.fa-angle-right.fa-fw
+              | Smartphones
+          li
+            a(href="") 
+              em.fa.fa-angle-right.fa-fw
+              | Mobiles
+          li
+            a(href="") 
+              em.fa.fa-angle-right.fa-fw
+              | Tech
+          li
+            a(href="") 
+              em.fa.fa-angle-right.fa-fw
+              | Inpiration
+          li
+            a(href="") 
+              em.fa.fa-angle-right.fa-fw
+              | Workspace
+    // Tag Cloud
+    .panel.panel-default(ng-controller="WordCloudController as wc")
+      .panel-heading Tag Cloud
+      .panel-body
+        jqcloud.center-block(words='wc.words', width='240', height='200', steps='7')
+    // Ads
+    .panel.panel-default
+      .panel-heading Ads
+      .panel-body
+        a(href="")
+          img.img-responsive.img-thumbnail(src="app/img/mockup.png")  
+

@@ -1,0 +1,128 @@
+<h3>申请中心
+   <small>Apply For Room</small>
+</h3>
+<div ng-controller="ApplyThingController" class="panel">
+   <div class="panel-body">
+      <form name="applyForm" form-wizard="" validate-steps="true" validate-form="" steps="2">
+         <div class="form-wizard wizard-horizontal">
+            <!-- START wizard steps indicator-->
+            <ol class="row">
+               <li ng-class="{'active':wizard.active(1)}" ng-click="wizard.go(1)" class="col-md-6">
+                  <h4>选择申请事项</h4>
+                  <small class="text-muted">请选择要申请的会议室/物资</small>
+               </li>
+               <li ng-class="{'active':wizard.active(2)}" ng-click="wizard.go(2)" class="col-md-6">
+                  <h4>选择申请时间</h4>
+                  <small class="text-muted">请选择要申请的起止时间</small>
+               </li>
+            </ol>
+            <!-- END wizard steps indicator-->
+            <!-- START Wizard Step inputs -->
+            <div id="step1" ng-show="wizard.active(1)">
+               <fieldset>
+                  <legend>选择事项</legend>
+                  <div class="row">
+                     <div class="col-md-4"></div>
+                     <div class="col-md-2">
+                        <!-- START button group-->
+                        <div dropdown="dropdown" class="btn-group block-center">
+                           <button dropdown-toggle="" class="btn btn-default">{{apply.applything?apply.applything:'点击下拉选择申请事项'}} <b class="caret"></b>
+                           </button>
+                           <ul role="menu" class="dropdown-menu animated animated flipInX">
+                              <li><a ng-click="setApplyThing('教五会议室')">教五会议室</a>
+                              </li>
+                              <li><a ng-click="setApplyThing('教六会议室')">教六会议室</a>
+                              </li>
+                              <li><a ng-click="apply.setApplyThing('大厅使用')">大厅使用</a>
+                              </li>
+                           </ul>
+                        </div>
+                        <input type="text" name="applything" ng-model="apply.applything" data-parsley-group="step1" style="display:none;" required="required" class="form-control" />
+                     </div>
+                     <div class="col-md-2">
+                        <div class="form-group">
+                           <input type="text" placeholder="其他" name="applything" ng-model="apply.applything" class="form-control" />
+                        </div>
+                     </div>
+                  </div>
+                  <!-- END row -->
+               </fieldset>
+               <ul class="pager">
+                  <li class="next"><a ng-click="wizard.go(2)">下一步 <span>&rarr;</span></a>
+                  </li>
+               </ul>
+            </div>
+            <!-- END Wizard Step inputs -->
+            <!-- START Wizard Step inputs -->
+            <div id="step2" ng-show="wizard.active(2)">
+               <fieldset>
+                  <legend>选择时间</legend>
+                  <!-- START row -->
+                  <div class="row">
+                     <div class="col-md-6">
+                        <div class="form-group">
+                           <label class="col-md-7">
+                              <div class="col-md-7">开始使用时间</div>
+                           </label>
+                           <div class="col-md-12">
+                              <div style="margin-top: 31px;" class="col-md-7">
+                                 <p class="input-group">
+                                    <input type="text" datepicker-popup="{{format}}" ng-model="apply.starttime" is-open="apply.startopened" max-date="'2017-06-22'" datepicker-options="dateOptions" min-date="minDate" date-disabled="startdisabled(date, mode)"
+                                    ng-required="true" close-text="Close" class="form-control" />
+                                    <span class="input-group-btn">
+                                       <button type="button" ng-click="startopen($event)" class="btn btn-default">
+                                          <em class="icon-calendar"></em>
+                                       </button>
+                                    </span>
+                                 </p>
+                              </div>
+                              <div class="col-md-5">
+                                 <timepicker name="startMinue" required="" ng-model="apply.startMinue" ng-change="changed()" hour-step="apply.hstep" minute-step="apply.mstep" show-meridian="ismeridian"></timepicker>
+                                 <span ng-show="form.validateInput('startMinue', 'required')" class="text-danger">请输入时间</span>
+                                 <!--input.form-control(type='text', masked="",ng-model='apply.startMinue' data-inputmask="'mask': '99:99'", placeholder="请输入时间") -->
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="col-md-6">
+                        <div class="form-group">
+                           <label class="col-md-7">
+                              <div class="col-md-7">停止使用时间</div>
+                           </label>
+                           <div class="col-md-12">
+                              <div style="margin-top: 31px;" class="col-md-7">
+                                 <p class="input-group">
+                                    <input type="text" datepicker-popup="{{format}}" ng-model="apply.endtime" is-open="apply.endopened" min-date="apply.minDate" max-date="'2017-06-22'" datepicker-options="dateOptions" ng-required="true" close-text="Close"
+                                    class="form-control" />
+                                    <span class="input-group-btn">
+                                       <button type="button" ng-click="endopen($event)" class="btn btn-default">
+                                          <em class="icon-calendar"></em>
+                                       </button>
+                                    </span>
+                                 </p>
+                              </div>
+                              <div class="col-md-5">
+                                 <timepicker name="endMinue" required="" ng-model="apply.endMinue" ng-change="changed()" hour-step="apply.hstep" minute-step="apply.mstep" show-meridian="ismeridian"></timepicker>
+                                 <span ng-show="form.validateInput('endMinue', 'required')" class="text-danger">请输入时间</span>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <!-- END row -->
+                  </div>
+               </fieldset>
+               <ul class="pager">
+                  <li class="previous">
+                     <a ng-click="wizard.go(1)">
+                        <span>&larr; 上一步</span>
+                     </a>
+                  </li>
+                  <li class="next"><a ng-click="finishApply()">完成 </a>
+                  </li>
+               </ul>
+            </div>
+            <!-- END Wizard Step inputs -->
+         </div>
+      </form>
+   </div>
+</div>

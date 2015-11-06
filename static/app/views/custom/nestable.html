@@ -1,0 +1,53 @@
+<h3>收支类型管理
+   <div class="col-sm-2 pull-right">
+      <select ng-model="nest.type" ng-change="nest.typeChange()" class="form-control">
+         <option value="in">收入</option>
+         <option value="out">支出</option>
+      </select>
+   </div>
+   <small>Payment Type Management</small>
+</h3>
+<div class="container-fluid">
+   <div class="row">
+      <div class="col-md-1"></div>
+      <div class="col-md-4">
+         <h4 class="text-left Sub-heading">已存在的级联列表</h4>
+      </div>
+      <div class="col-md-2"></div>
+      <div class="col-md-4">
+         <h4 class="text-left Sub-heading">未分配的级联列表</h4>
+      </div>
+      <div class="col-md-1"></div>
+   </div>
+   <div class="row">
+      <div class="col-md-1"></div>
+      <div class="col-md-4">
+         <div class="panel panel-default well">
+            <div ng-nestable="" ng-model="nest.items">
+               <div>{{$item}}</div>
+            </div>
+         </div>
+      </div>
+      <div class="col-md-2">
+         <div>
+            <p class="text-left">请拖动编辑级联列表</p>
+            <small class="text-muted">拖动右边的未分配级联项到左侧级级联菜单</small>
+         </div>
+         <button ng-click="nest.saveChange()" class="btn btn-default block-center">保存更改</button>
+      </div>
+      <div class="col-md-4">
+         <div class="panel panel-default well">
+            <div ng-nestable="" ng-model="nest.unuseitems" class="show-handlers">
+               <div>{{$item}}</div>
+            </div>
+            <form ng-submit="nest.addNest(nest.item)" class="mb-xl">
+               <div class="form-group">
+                  <input ng-trim="true" name="item" type="text" ng-model="nest.item" placeholder="添加级联项" required="required" class="form-control" />
+               </div>
+               <button type="submit" class="btn btn-primary btn-block">添加</button>
+            </form>
+         </div>
+      </div>
+      <div class="col-md-1"></div>
+   </div>
+</div>

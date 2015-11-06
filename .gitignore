@@ -1,0 +1,5 @@
+.idea/
+*.pyc
+sessions/
+static/master/node_modules/
+static/master/sass/

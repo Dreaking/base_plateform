@@ -1,0 +1,69 @@
+<div ng-controller="RegisterController as reg" class="block-center mt-xl wd-xl">
+   <!-- START panel-->
+   <div class="panel panel-dark panel-flat">
+      <div class="panel-heading text-center">
+         <a href="#">
+            <img src="app/img/logo.png" alt="Image" class="block-center img-rounded" />
+         </a>
+      </div>
+      <div class="panel-body">
+         <form role="form" name="reg.registerForm" novalidate="" ng-submit="reg.register()" class="form-validate mb-lg">
+            <div class="form-group has-feedback">
+               <label class="text-muted"></label>
+               <input type="text" name="account_phone" placeholder="请填写手机号码" ng-pattern="/^[1][0-9]{10}$/" autocomplete="off" ng-model="reg.account.phone" required="" class="form-control" />
+               <span style="top:32px;" class="icon-user form-control-feedback text-muted"></span>
+               <span ng-show="reg.registerForm.account_phone.$dirty &amp;&amp; reg.registerForm.account_phone.$error.required" class="text-danger">请填写手机号码</span>
+               <span ng-show="phoneErrorMsg" class="text-danger">{{reg.phoneErrorMsg}}</span>
+               <span ng-show="reg.registerForm.account_phone.$dirty &amp;&amp; reg.registerForm.account_phone.$error.pattern" class="text-danger">请输入正确的手机号码</span>
+            </div>
+            <div class="form-group has-feedback clearfix">
+               <div style="padding-left:0px;" class="col-lg-4 pull-left">
+                  <button ng-class="{'btn-primary':reg.checkboxShow,'disaled':!reg.checkboxShow}" ng-click="reg.getCheckCode()" class="btn">
+                     <span ng-if="reg.checkboxShow">获取验证码</span>
+                     <span ng-if="!reg.checkboxShow">重发({{reg.time}}s)</span>
+                  </button>
+               </div>
+               <div style="padding-right:0px;" class="col-lg-8 pull-left">
+                  <input type="text" name="checkcode" ng-disabled="reg.checkboxShow" ng-model="reg.checkCode" ng-pattern="/^[0-9]{6}$/" placeholder="请输入验证码" required="" class="form-control" />
+                  <span ng-show="reg.registerForm.checkcode.$dirty &amp;&amp; reg.registerForm.checkcode.$error.pattern" class="text-danger">请输入正确的验证码</span>
+               </div>
+            </div>
+            <div class="form-group has-feedback">
+               <label class="text-muted"></label>
+               <input id="id-password" type="password" placeholder="请输入密码" name="account_password" ng-model="reg.register.password" ng-pattern="/^[a-zA-Z0-9]{6,10}$/" required="" class="form-control" />
+               <span style="top:32px;" class="icon-lock form-control-feedback text-muted"></span>
+               <span ng-show="reg.registerForm.account_password.$dirty &amp;&amp; reg.registerForm.account_password.$error.required" class="text-danger">请输入密码</span>
+               <span ng-show="reg.registerForm.account_password.$dirty &amp;&amp; reg.registerForm.account_password.$error.pattern" class="text-danger">密码为数字或者英文长度在6-10</span>
+            </div>
+            <div class="form-group has-feedback">
+               <label class="text-muted"></label>
+               <input type="password" placeholder="再输一次密码" name="account_password_confirm" ng-model="reg.register.account_password_confirm" ui-validate="'$value==reg.register.password'" ui-validate-watch="'password'" class="form-control" />
+               <span style="top:32px;" class="icon-lock form-control-feedback text-muted"></span>
+               <span ng-show="reg.registerForm.account_password_confirm.$dirty &amp;&amp; reg.registerForm.account_password_confirm.$error.validator" class="text-danger">密码不一致</span>
+            </div>
+            <div class="clearfix">
+               <div class="checkbox c-checkbox pull-left mt0">
+                  <label>
+                     <input type="checkbox" required="" name="account_agreed" ng-model="reg.account.agreed" />
+                     <span class="fa fa-check"></span>我同意<a href="#">《协议》</a>
+                  </label>
+               </div>
+            </div>
+            <div ng-show="reg.registerForm.account_agreed.$dirty &amp;&amp; reg.registerForm.account_agreed.$error.required" class="text-danger">你必须同样协议才可注册</div>
+            <button type="submit" class="btn btn-block btn-primary mt-lg">注册</button>
+         </form>
+         <div ng-show="reg.authMsg" class="alert alert-danger text-center">{{reg.authMsg}}</div>
+         <div ng-show="reg.successMsg" class="alert alert-success text-center">{{reg.successMsg}}</div>
+         <p class="pt-lg text-center">已经有账户了?</p><a ui-sref="page.login" class="btn btn-block btn-default">登录</a>
+      </div>
+   </div>
+   <!-- END panel-->
+   <div class="p-lg text-center">
+      <span>&copy;</span>
+      <span ng-bind="app.year"></span>
+      <span>-</span>
+      <span ng-bind="app.name"></span>
+      <br/>
+      <span ng-bind="app.description"></span>
+   </div>
+</div>

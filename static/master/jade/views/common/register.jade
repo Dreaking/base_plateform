@@ -1,0 +1,59 @@
+.block-center.mt-xl.wd-xl(ng-controller="RegisterController as reg")
+  // START panel
+  .panel.panel-dark.panel-flat
+    .panel-heading.text-center
+      a(href="#")
+        img.block-center.img-rounded(src='app/img/logo.png', alt='Image')
+    .panel-body
+      form.form-validate.mb-lg(role='form', name="reg.registerForm", novalidate='', ng-submit="reg.register()")
+        .form-group.has-feedback
+          label.text-muted 
+          input.form-control(type='text', name="account_phone" placeholder='请填写手机号码',ng-pattern="/^[1][0-9]{10}$/", autocomplete="off", ng-model="reg.account.phone", required='')
+          span.icon-user.form-control-feedback.text-muted(style="top:32px;")
+          span.text-danger(ng-show="reg.registerForm.account_phone.$dirty && reg.registerForm.account_phone.$error.required") 请填写手机号码
+          span.text-danger(ng-show="phoneErrorMsg") {{reg.phoneErrorMsg}}
+          span.text-danger(ng-show="reg.registerForm.account_phone.$dirty && reg.registerForm.account_phone.$error.pattern") 请输入正确的手机号码
+        .form-group.has-feedback.clearfix
+          div.col-lg-4.pull-left(style="padding-left:0px;")
+           button.btn(ng-class="{'btn-primary':reg.checkboxShow,'disaled':!reg.checkboxShow}" ng-click="reg.getCheckCode()")
+            span(ng-if="reg.checkboxShow") 获取验证码
+            span(ng-if="!reg.checkboxShow") 重发({{reg.time}}s)
+          div.col-lg-8.pull-left(style="padding-right:0px;")
+            input.form-control(type="text" name="checkcode" ng-disabled="reg.checkboxShow" ng-model="reg.checkCode" ng-pattern="/^[0-9]{6}$/"  placeholder="请输入验证码" required='')
+            span.text-danger(ng-show="reg.registerForm.checkcode.$dirty && reg.registerForm.checkcode.$error.pattern") 请输入正确的验证码
+        .form-group.has-feedback
+          label.text-muted 
+          input#id-password.form-control(type='password' placeholder="请输入密码" name="account_password", ng-model="reg.register.password", ng-pattern="/^[a-zA-Z0-9]{6,10}$/", required='')
+          span.icon-lock.form-control-feedback.text-muted(style="top:32px;")
+          span.text-danger(ng-show="reg.registerForm.account_password.$dirty && reg.registerForm.account_password.$error.required") 请输入密码
+          span.text-danger(ng-show="reg.registerForm.account_password.$dirty && reg.registerForm.account_password.$error.pattern") 密码为数字或者英文长度在6-10
+        .form-group.has-feedback
+          label.text-muted 
+          input.form-control(type='password' placeholder="再输一次密码" name="account_password_confirm", ng-model="reg.register.account_password_confirm", ui-validate="'$value==reg.register.password'" ui-validate-watch="'password'")
+          span.icon-lock.form-control-feedback.text-muted(style="top:32px;")
+          span.text-danger(ng-show="reg.registerForm.account_password_confirm.$dirty && reg.registerForm.account_password_confirm.$error.validator") 密码不一致
+        .clearfix
+          .checkbox.c-checkbox.pull-left.mt0
+            label
+              input(type='checkbox', required='', name="account_agreed", ng-model="reg.account.agreed")
+              span.fa.fa-check
+              |  我同意
+              a(href="#") 《协议》
+        .text-danger(ng-show="reg.registerForm.account_agreed.$dirty && reg.registerForm.account_agreed.$error.required") 你必须同样协议才可注册
+        
+        button.btn.btn-block.btn-primary.mt-lg(type='submit') 注册
+      
+      .alert.alert-danger.text-center(ng-show='reg.authMsg') {{reg.authMsg}}      
+      .alert.alert-success.text-center(ng-show='reg.successMsg') {{reg.successMsg}}      
+      
+      p.pt-lg.text-center 已经有账户了?
+      a(ui-sref="page.login").btn.btn-block.btn-default 登录
+
+  // END panel
+  .p-lg.text-center
+    span &copy; 
+    span(ng-bind="app.year") 
+    span  - 
+    span(ng-bind="app.name")
+    br
+    span(ng-bind="app.description")

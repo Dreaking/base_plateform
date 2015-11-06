@@ -1,0 +1,87 @@
+<!-- START action buttons-->
+<div class="button-toolbar clearfix mb">
+   <div class="btn-group">
+      <button type="button" ui-sref="team.recruit" class="btn btn-default btn-sm">返回</button>
+   </div>
+</div>
+<!-- END action buttons-->
+<div ng-controller="PostsViewController" class="panel panel-default">
+   <div class="panel-body">
+      <table class="table mb-mails mb-view">
+         <tbody>
+            <tr>
+               <td>
+                  <div class="media-left">
+                     <a href="#">
+                        <img src="app/img/user/01.jpg" class="media-object img-circle thumb64" />
+                     </a>
+                  </div>
+                  <div class="media-body">
+                     <h4 id="media-heading" class="media-heading"><a href="">{{::recruit.nickname}}</a>
+                     </h4>
+                     <p>时间:{{recruit.add_time|fromNow}}</p>
+                  </div>
+                  <div class="mt-lg">
+                     <h4>{{::recruit.title}}</h4>
+                     <div>
+                        <p ng-bind-html="::recruit.content"></p>
+                     </div>
+                  </div>
+               </td>
+            </tr>
+         </tbody>
+      </table>
+   </div>
+   <div class="panel">
+      <div class="panel-heading">评论区</div>
+      <div class="panel-body">
+         <div ng-repeat="comment in comments" class="media">
+            <div class="media-left">
+               <a href="#">
+                  <img src="app/img/user/01.jpg" class="media-object img-circle thumb64" />
+               </a>
+            </div>
+            <div class="media-body">
+               <h4 id="media-heading" class="media-heading"><a>{{comment.nickname}}</a>
+                  <small>{{comment.add_time|fromNow}}</small>
+                  <a href="#media-heading" class="anchorjs-link">
+                     <span class="anchorjs-icon"></span>
+                  </a>
+               </h4>
+               <p>{{comment.content}}</p>
+            </div>
+            <hr/>
+         </div>
+         <p ng-if="!notMore" class="text-center"><a ng-click="getMoreComment(comments[comments.length-1].reply_id)">加载更多</a>
+         </p>
+         <p ng-if="notMore" class="text-center">没有更多回复了</p>
+      </div>
+   </div>
+   <div ng-if="user.role&gt;1" class="panel">
+      <form name="replyFrom" validate-form="" novalidate="" ng-submit="replyTo()" class="form-horizontal">
+         <div class="panel-heading">
+            <div class="panel-title">评论区</div>
+         </div>
+         <div class="panel-body">
+            <fieldset>
+               <div class="form-group">
+                  <div class="col-lg-12">
+                     <div class="col-xs-12">
+                        <textarea style="resize:none;" placeholder="回复内容" type="text" name="reply" ng-model="reply" required="" class="form-control"></textarea>
+                     </div>
+                  </div>
+               </div>
+            </fieldset>
+            <fieldset>
+               <div class="form-group">
+                  <div class="col-lg-12">
+                     <div class="col-xs-12">
+                        <button type="submit" class="btn btn-info pull-left">提交评论</button>
+                     </div>
+                  </div>
+               </div>
+            </fieldset>
+         </div>
+      </form>
+   </div>
+</div>

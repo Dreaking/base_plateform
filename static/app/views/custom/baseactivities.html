@@ -1,0 +1,72 @@
+<h3>活动管理
+   <small>Edit in Activity</small>
+</h3>
+<div ng-controller="BaseActivityController as art" class="container-fluid">
+   <div style="border-width:0px;" class="row content-wrapper">
+      <p class="lead">历史活动列表</p>
+      <div class="panel">
+         <div class="table-responsive">
+            <table class="table table-hover">
+               <thead>
+                  <tr>
+                     <th>
+                        <strong>活动 ID</strong>
+                     </th>
+                     <th>
+                        <strong>时间</strong>
+                     </th>
+                     <th>
+                        <strong>标题</strong>
+                     </th>
+                     <th>
+                        <strong>内容</strong>
+                     </th>
+                     <th>
+                        <strong>操作</strong>
+                     </th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr ng-repeat="activity in art.activities">
+                     <td>{{activity.notice_id}}</td>
+                     <td>{{activity.add_time| NowTime }}</td>
+                     <td>{{activity.title | limitTo:10}}</td>
+                     <td>{{activity.content | removeTag |limitTo:50}}</td>
+                     <td>
+                        <button type="button" ng-click="art.downloadExcel(activity.notice_id)" class="btn btn-sm btn-default">
+                           <span>报名导出</span>
+                        </button>
+                        <button type="button" title="删除" ng-click="art.delecteActivity($index,activity)" class="btn btn-sm btn-danger">
+                           <em class="icon-trash"></em>
+                        </button>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+            <p ng-show="!art.activities||art.activities.length&lt;1" class="text-center">暂无任何数据</p>
+         </div>
+      </div>
+      <!-- Article Content-->
+      <div class="col-lg-1-1">
+         <div class="panel panel-default">
+            <div class="panel-body">
+               <form name="art.formValidate" ng-submit="art.addActivity(art.activity)" novalidate="" class="form-validate form-horizontal">
+                  <input type="text" name="title" required="" ng-maxlength="20" ng-model="art.activity.title" placeholder="标题" class="mb-lg form-control input-lg" />
+                  <span ng-show="art.validateInput('title', 'required')" class="mb-lg text-danger">请填写内容</span>
+                  <span ng-show="form.validateInput('length', 'maxlength')" class="text-danger">字数不能超过20</span>
+                  <!-- Wysiswyg editor-->
+                  <ueditor config="art.editorConfig" ng-model="art.activity.content" required=""></ueditor>
+                  <br/>
+                  <div class="pull-right">
+                     <button type="submit" class="btn btn-primary m-r-10 m-t-10">
+                        <em class="fa icon-paper-plane fa-fw"></em>发布</button>
+                  </div>
+               </form>
+            </div>
+         </div>
+      </div>
+      <script type="text/ng-template" id="confirm">
+         <div class="ngdialog-message clearfix"><h3 class="text-center">确定删除该活动?</h3><button type="button" ng-click="confirm()" class="btn btn-primary mr pull-right">确定</button><button type="button" ng-click="closeThisDialog()" class="btn btn-default pull-left">取消</button></div>
+      </script>
+   </div>
+</div>

@@ -1,0 +1,36 @@
+// START action buttons
+.button-toolbar.clearfix.mb
+  .btn-group
+    button.btn.btn-default.btn-sm(type="button" ui-sref="admin.joinTeam")
+     | 返回
+  //- .btn-group(dropdown='dropdown')
+  //- .btn-group(dropdown='dropdown')
+  //-   button.btn.btn-default.btn-sm(dropdown-toggle="")
+  //-     span.dropdown-label 操作
+  //-     span.caret
+  //-   ul.dropdown-menu
+  //-     li: a() 删除
+  //-     li: a() 置顶
+// END action buttons
+
+.panel.panel-default(ng-controller="RecruitViewController")
+  .panel-body
+    table.table.mb-mails.mb-view
+      tbody
+        tr
+          td
+            .clearfix
+              img.mb-mail-avatar(src="app/img/user/01.jpg")
+              .pull-left
+                span 发布人: 
+                span.mb-mail-from {{::recruit.team_name}}
+                p.mb-mail-to-list 时间: 
+                  a {{recruit.add_time|NowTime}}
+            .mt-lg
+              h4 {{::recruit.title}}
+              div
+                p
+                  |招聘人数:{{::recruit.recruit_num}}
+                p(ng-bind-html='::recruit.content')
+            
+

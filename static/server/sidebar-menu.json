@@ -1,0 +1,74 @@
+[
+  {
+    "text": "功能菜单",
+    "heading": "true",
+    "translate": "sidebar.heading.HEADER"
+  },
+  {
+    "text": "人员管理",
+    "sref": "#",
+    "icon": "icon-user-following",
+    "label": "label label-info", 
+    "submenu": [
+      {"text": "二级管理员",       "sref": "baseadmin.secondAdmin"},
+      {"text": "成员管理",       "sref": "baseadmin.userManagement" }
+    ],
+    "translate": "sidebar.nav.PEOPLE"
+  },
+  {
+    "text": "团队管理",
+    "sref": "#",
+    "icon": "icon-users",
+    "label": "label label-info", 
+    "submenu": [
+      {"text": "团队列表",       "sref": "baseadmin.teamList"},
+      {"text": "团队审核",       "sref": "baseadmin.teamCheck" },
+      {"text": "招聘管理",       "sref": "baseadmin.joinTeam" }
+    ],
+    "translate": "sidebar.nav.TEAM"
+  },
+  {
+    "text": "账号管理",
+    "sref": "#",
+    "icon": "icon-wallet",
+    "label": "label label-info", 
+    "submenu": [
+      {"text": "团队钱包",       "sref": "baseadmin.teamaccount" }
+    ],
+    "translate": "sidebar.nav.ACCOUNT"
+  },
+  {
+    "text": "基地管理",
+    "sref": "#",
+    "icon": "icon-home",
+    "label": "label label-info", 
+    "submenu": [
+      {"text": "基地介绍",       "sref": "baseadmin.baseIntroduce"},
+      {"text": "基地通知",       "sref": "baseadmin.baseNotice" },
+      {"text": "基地活动",       "sref": "baseadmin.baseActivity" },
+      {"text": "比赛事项",       "sref": "baseadmin.baseGame" }
+    ],
+    "translate": "sidebar.nav.BASE"
+  },
+  {
+    "text": "社区管理",
+    "sref": "#",
+    "icon": "icon-bubbles",
+    "label": "label label-info", 
+    "submenu": [
+      {"text": "板块",       "sref": "baseadmin.modules"},
+      {"text": "帖子",       "sref": "baseadmin.posts.folder" }
+    ],
+    "translate": "sidebar.nav.COMUNITY"
+  },
+  {
+    "text": "账户管理",
+    "sref": "#",
+    "icon": "icon-calculator",
+    "label": "label label-info", 
+    "submenu": [
+      {"text": "修改密码",       "sref": "baseadmin.changepassword" }
+    ],
+    "translate": "sidebar.nav.PERSON"
+  }
+]

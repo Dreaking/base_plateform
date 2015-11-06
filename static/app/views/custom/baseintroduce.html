@@ -1,0 +1,57 @@
+<h3>基地介绍
+   <small>Edit base Introduce</small>
+</h3>
+<!-- START panel-->
+<div class="panel panel-default">
+   <div class="panel-body">
+      <form method="get" ng-controller="BaseIntroduceCtroller as form" class="form-horizontal">
+         <div class="container-fluid">
+            <div class="row">
+               <div class="col-md-3">
+                  <div class="panel">
+                     <div class="panel-heading">
+                        <a href="#" ng-click="form.reset()" class="pull-right">
+                           <small class="fa fa-refresh text-muted"></small>
+                        </a>选择一张LOGO图片</div>
+                     <div class="panel-body">
+                        <div class="form-group">
+                           <input id="fileInput" filestyle="" type="file" data-class-button="btn btn-default" data-class-input="form-control" data-button-text="" class="form-control" />
+                        </div>
+                        <p class="pv">图形:</p>
+                        <div class="btn-group btn-group-justified mb">
+                           <label ng-model="form.imgcropType" btn-radio="'square'" class="btn btn-default">正方形</label>
+                           <label ng-model="form.imgcropType" btn-radio="'circle'" class="btn btn-default">圆形</label>
+                        </div>
+                        <br/>
+                        <div data-text="" class="imgcrop-preview">
+                           <img ng-src="{{form.myCroppedImage}}" />
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-md-9">
+                  <div class="panel">
+                     <div class="panel-body">
+                        <div class="imgcrop-area">
+                           <img-crop image="form.myImage" result-image="form.myCroppedImage" area-type="{{form.imgcropType}}"></img-crop>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <fieldset>
+            <ueditor config="form.editorConfig" ng-model="content" required=""></ueditor>
+         </fieldset>
+         <fieldset>
+            <div class="form-group">
+               <div class="col-sm-2 pull-right">
+                  <button type="submit" ng-click="form.reset()" class="btn btn-default">取消</button>
+                  <button type="submit" ng-click="form.saveIntroduce()" class="btn btn-primary">保存</button>
+               </div>
+            </div>
+         </fieldset>
+      </form>
+   </div>
+</div>
+<!-- END panel-->

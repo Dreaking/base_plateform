@@ -1,0 +1,19 @@
+[
+  {
+    "text": "普通用户菜单",
+    "heading": "true",
+    "translate": "sidebar.heading.HEADER"
+  },
+  {
+    "text": "完善个人信息",
+    "sref": "visitor.info",
+    "icon": "icon-user-following",
+    "translate": "sidebar.nav.INFO"
+  },
+  {
+    "text": "申请新团队",
+    "sref": "visitor.applyteam",
+    "icon": "icon-doc",
+    "translate": "sidebar.nav.APPLY"
+  }
+]

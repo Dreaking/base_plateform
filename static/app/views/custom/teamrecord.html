@@ -1,0 +1,75 @@
+<h3>团队流水
+   <small>Edit in User</small>
+</h3>
+<div class="container-fluid">
+   <form role="form" ng-submit="table.exportExcel()" class="form-inline">
+      <div class="row panel-heading form-horizontal">
+         <div class="form-group pull-right list-inline panel-heading">
+            <label class="col-sm-4 control-label">团队</label>
+            <div class="col-sm-8">
+               <select name="account" ng-change="table.changeList()" ng-options="team.team_id as team.team_name for team in table.teams" ng-model="selectTeam" class="form-control"></select>
+            </div>
+         </div>
+         <div class="form-group pull-right list-inline panel-heading">
+            <button type="submit" class="btn btn-default">导出Excel</button>
+         </div>
+         <div class="form-group pull-right list-inline panel-heading">
+            <div class="input-group">
+               <input type="text" ng-change="table.checkChange()" datepicker-popup="{{table.format}}" ng-model="table.endtime" is-open="table.endopened" max-date="'2017-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true"
+               close-text="Close" class="form-control" />
+               <span class="input-group-btn">
+                  <button type="button" ng-click="table.endopen($event)" class="btn btn-default">
+                     <em class="icon-calendar"></em>
+                  </button>
+               </span>
+            </div>
+         </div>
+         <div class="form-group pull-right list-inline panel-heading">
+            <label class="col-sm-4 control-label">至</label>
+         </div>
+         <div class="form-group pull-right list-inline panel-heading">
+            <div class="input-group">
+               <input type="text" ng-change="table.checkChange()" datepicker-popup="{{table.format}}" ng-model="table.starttime" is-open="table.startopened" max-date="'2017-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true"
+               close-text="Close" class="form-control" />
+               <span class="input-group-btn">
+                  <button type="button" ng-click="table.startopen($event)" class="btn btn-default">
+                     <em class="icon-calendar"></em>
+                  </button>
+               </span>
+            </div>
+         </div>
+      </div>
+   </form>
+</div>
+<div class="table-responsive b0">
+   <table datatable="ng" dt-options="table.dtOptions" dt-column-defs="table.dtColumnDefs" class="table table-hover">
+      <thead class="bg-white">
+         <tr>
+            <th style="width:80px">
+               <strong>ID</strong>
+            </th>
+            <th>
+               <strong>时间</strong>
+            </th>
+            <th>
+               <strong>支出类型</strong>
+            </th>
+            <th>
+               <strong>支出描述</strong>
+            </th>
+            <th>
+               <strong>总支出(元)</strong>
+            </th>
+         </tr>
+      </thead>
+      <tbody>
+         <tr ng-repeat="record in table.records">
+            <td>{{::record.payment_id}}</td>
+            <td>{{::record.add_time|NowTime}}</td>
+            <td>{{::record | TypeFilter}}</td>
+            <td>{{::record.reason}}</td>
+            <td>{{::record.amount| MoneyFilter}}</td>
+         </tr>
+      </tbody>
+   </table>
+</div>

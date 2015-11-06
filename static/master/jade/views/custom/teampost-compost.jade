@@ -1,0 +1,17 @@
+.panel.panel-default
+  .panel-body
+      
+    form(ng-controller="RecruitCmpostController as recruit", name='recruit.formValidate' ng-submit='recruit.newRecruit()' novalidate="")
+      .input-group.form-group
+        span.input-group-addon.text-sm(style="background-color:#fff;") 标题:
+        input.form-control(type='text' name='title' required='' placeholder='填写标题' ng-model='post.title')
+      span.form-group.show.text-danger(ng-show="recruit.validateInput('title', 'required')") 请输入标题
+      .input-group.form-group
+        span.input-group-addon.text-sm(style="background-color:#fff;") 招聘人数:
+        input.form-control(type='text', name='number',ng-pattern="/^[0-9]+$/" placeholder='填写招聘人数' required='', ng-model="post.recruit_num")
+      span.form-group.show.text-danger(ng-show="recruit.validateInput('number', 'pattern')") 请输入正确的招聘人数
+      span.form-group.show.text-danger(ng-show="recruit.validateInput('number', 'required')") 请输入招聘人数
+      ueditor(config="recruit.editorConfig" ng-model='post.content')
+      br
+      button(type="submit").btn.btn-primary.btn-sm.mb 发布
+

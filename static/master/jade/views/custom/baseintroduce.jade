@@ -1,0 +1,37 @@
+h3 基地介绍
+  small Edit base Introduce
+// START panel
+.panel.panel-default
+    .panel-body
+      form.form-horizontal(method='get', ng-controller="BaseIntroduceCtroller as form")
+        .container-fluid
+          .row
+            .col-md-3
+              .panel
+                .panel-heading 
+                  a.pull-right(href="#", ng-click="form.reset()"): small.fa.fa-refresh.text-muted
+                  | 选择一张LOGO图片
+                .panel-body
+                  .form-group
+                    input#fileInput.form-control(filestyle="", type='file', data-class-button='btn btn-default', data-class-input="form-control", data-button-text="")
+                  p.pv 图形:
+                  .btn-group.btn-group-justified.mb
+                    label.btn.btn-default(ng-model='form.imgcropType', btn-radio="'square'") 正方形
+                    label.btn.btn-default(ng-model='form.imgcropType', btn-radio="'circle'") 圆形
+                  br
+                  .imgcrop-preview(data-text="")
+                    img(ng-src='{{form.myCroppedImage}}')
+            .col-md-9
+              .panel
+                .panel-body
+                  .imgcrop-area
+                    img-crop(image='form.myImage', result-image='form.myCroppedImage', area-type="{{form.imgcropType}}")
+
+        fieldset
+          ueditor(config="form.editorConfig" ng-model="content" required="")
+        fieldset
+          .form-group
+            .col-sm-2.pull-right
+              button.btn.btn-default(type='submit' ng-click='form.reset()') 取消
+              button.btn.btn-primary(type='submit' ng-click='form.saveIntroduce()') 保存
+// END panel

@@ -1,0 +1,57 @@
+<h3>团队列表
+   <small>Edit in Team</small>
+</h3>
+<div ng-controller="TeamListController as table" class="container-fluid">
+   <!-- Editable row-->
+   <h4 class="page-header">团队列表</h4>
+   <table class="table table-bordered table-hover bg-white">
+      <tr style="font-weight: bold">
+         <td style="width:40%">团队名</td>
+         <td style="width:10%">负责人</td>
+         <td style="width:20%">联系方式</td>
+         <td style="width:30%">性质</td>
+         <td>操作</td>
+      </tr>
+      <tr ng-repeat="team in table.teams">
+         <td>
+            <!-- editable teamname (text with validation)-->
+            <span>{{ team.team_name || &apos;empty&apos; }}</span>
+         </td>
+         <td>
+            <!-- editable teamname (text with validation)-->
+            <span>{{ team.manager_name || &apos;empty&apos; }}</span>
+         </td>
+         <td>
+            <!-- editable teamname (text with validation)-->
+            <span>{{ team.phone || &apos;empty&apos; }}</span>
+         </td>
+         <td>
+            <!-- editable teamname (text with validation)-->
+            <span editable-select="team.is_settled" e-name="type" e-form="rowform" onbeforesave="table.checkID($data)" e-ng-options="g.id as g.name for g in table.states">{{table.showStates(team)}}</span>
+         </td>
+         <td style="white-space: nowrap">
+            <!-- form-->
+            <form editable-form="" name="rowform" onbeforesave="table.saveUser($data, team.team_id)" ng-show="rowform.$visible" shown="table.inserted == team" class="form-buttons form-inline">
+               <button type="submit" ng-disabled="rowform.$waiting" title="Save" class="btn btn-sm btn-info">
+                  <em class="fa fa-save"></em>
+               </button>
+               <button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()" title="Cancel" class="btn btn-sm btn-default">
+                  <em class="fa fa-times"></em>
+               </button>
+            </form>
+            <div ng-show="!rowform.$visible" class="buttons">
+               <button ng-click="rowform.$show()" title="Edit" class="btn btn-sm btn-info">
+                  <em class="icon-pencil"></em>
+               </button>
+               <button ng-click="table.removeTeam(team.team_name,team.team_id)" title="Delete" class="btn btn-sm btn-danger">
+                  <em class="icon-trash"></em>
+               </button>
+            </div>
+         </td>
+      </tr>
+   </table>
+   <p ng-show="!table.teams||table.teams.length&lt;1" class="text-center">暂无任何数据</p>
+   <script type="text/ng-template" id="confirm">
+      <div class="ngdialog-message clearfix"><h3 class="text-center">确定删除{{deletedTeam}}?</h3><button type="button" ng-click="confirm()" class="btn btn-primary mr pull-right">确定</button><button type="button" ng-click="closeThisDialog()" class="btn btn-default pull-left">取消</button></div>
+   </script>
+</div>

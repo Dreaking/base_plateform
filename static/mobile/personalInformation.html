@@ -1,0 +1,78 @@
+<!DOCTYPE html>  
+<html>
+
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0" charset="utf-8">
+<title>个人信息</title>
+<link rel="stylesheet" type="text/css" href="css/common.css">
+    <script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/personalInformation.js" type="text/javascript" charset="utf-8" async defer></script>
+</head>
+
+<body>
+<header>
+  
+  <a class="iconfont backgo" href="javascript:history.go(-1)">&#xe601;</a>
+  <span class="left">个人信息</span>
+
+</header>
+
+<form class="informationForm" name="myform" action="javascript:submit()">
+     <div><label for="name">姓名</label>
+     <input  type="text" name="name" id="name" placeholder="必填(中文字符)" onblur="return name_check()"/><span id="name_id"></span>
+     </div>
+     
+     <div>
+     <label for="nickname">昵称</label>
+     <input  type="text" id="nickname" name="nickname" placeholder="必填(中英文、数字和下划线)" onblur="return nickname_check()"/><span id="nickname_id"></span>
+     </div>
+
+     <div>
+     <label for="sex">性别</label>
+
+     <div class="sexChoose">
+     <input type="radio" checked name="sex" id="sex" value="0"/> <span>男</span>
+
+     
+     <input type="radio" name="sex" id="sex" value="1"> <span>女</span>
+     </label>
+     </div>
+     </div>
+
+    <div>
+     <label for="birthday">生日</label>
+     <input type="text" name="repw"  id="birthday" placeholder="选填(格式:2015-08-10)" onblur="return birthday_check()"/><span id="birthday_id"></span>
+    </div>
+
+    <div>
+    <label for="academy">学院</label>
+      <select name="academy" id="academy">
+       </select>
+    </div>
+
+    <div>
+    <label for="profession">专业</label>
+       <select name="profession" id="profession">
+       </select>
+    </div>
+
+    <div>
+      <label for="number">学号</label>
+      <input  type="text" name="number" id="number" placeholder="选填" onblur="return number_check()" />
+      <span id="number_id"></span>
+    </div>
+
+    <div>
+      <label for="qq">QQ</label>
+      <input  type="text" name="qq" id="qq" placeholder="选填" onblur="return qq_check()" /><span id="qq_id"></span>
+    </div>
+
+    <div>
+    <label>E-mail</label>
+    <input type='text' name='email' placeholder="选填" onblur="return email_check()" /><span id="email_id"></span>
+    </div>
+    <button class="sure">提交</button>
+</form>
+</body>
+
+</html>

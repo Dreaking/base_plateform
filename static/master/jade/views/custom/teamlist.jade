@@ -1,0 +1,45 @@
+h3 团队列表
+  small Edit in Team
+
+.container-fluid(ng-controller="TeamListController as table")
+  // Editable row
+  h4.page-header 团队列表
+
+  table.table.table-bordered.table-hover.bg-white
+    tr(style='font-weight: bold')
+      td(style='width:40%') 团队名
+      td(style='width:10%') 负责人
+      td(style='width:20%') 联系方式
+      td(style='width:30%') 性质
+      td 操作
+    tr(ng-repeat='team in table.teams')
+      td
+        // editable teamname (text with validation)
+        span {{ team.team_name || &apos;empty&apos; }}
+      td
+        // editable teamname (text with validation)
+        span {{ team.manager_name || &apos;empty&apos; }}
+      td
+        // editable teamname (text with validation)
+        span {{ team.phone || &apos;empty&apos; }}
+      td
+        // editable teamname (text with validation)
+        span(editable-select='team.is_settled', e-name='type', e-form='rowform',onbeforesave='table.checkID($data)', e-ng-options='g.id as g.name for g in table.states') {{table.showStates(team)}}
+      td(style='white-space: nowrap')
+        // form
+        form.form-buttons.form-inline(editable-form='', name='rowform', onbeforesave='table.saveUser($data, team.team_id)', ng-show='rowform.$visible', shown='table.inserted == team')
+          button.btn.btn-sm.btn-info(type='submit', ng-disabled='rowform.$waiting', title="Save"): em.fa.fa-save
+          button.btn.btn-sm.btn-default(type='button', ng-disabled='rowform.$waiting', ng-click='rowform.$cancel()', title="Cancel"): em.fa.fa-times
+        .buttons(ng-show='!rowform.$visible')
+          button.btn.btn-sm.btn-info(ng-click='rowform.$show()', title="Edit"): em.icon-pencil
+          button.btn.btn-sm.btn-danger(ng-click='table.removeTeam(team.team_name,team.team_id)', title="Delete"): em.icon-trash
+  p.text-center(ng-show='!table.teams||table.teams.length<1')
+            |暂无任何数据
+  //- button.btn.btn-default(ng-click='table.addTeam()') 添加团队
+  script(type="text/ng-template", id="confirm")
+    .ngdialog-message.clearfix
+      h3.text-center
+        | 确定删除{{deletedTeam}}?
+      
+      button.btn.btn-primary.mr.pull-right(type='button', ng-click='confirm()') 确定
+      button.btn.btn-default.pull-left(type='button', ng-click="closeThisDialog()") 取消

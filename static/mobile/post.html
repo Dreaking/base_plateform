@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0"
+          charset="utf-8">
+    <title>发帖</title>
+    <link rel="stylesheet" type="text/css" href="css/common.css">
+    <script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/write_post.js" type="text/javascript" charset="utf-8" async defer></script>
+</head>
+
+<body>
+<header>
+
+    <a class="iconfont backgo" href="javascript:history.go(-1)">&#xe601;</a>
+    <span class="left">发帖</span>
+
+</header>
+
+<form class="postArctile" name="myform">
+
+
+    <div class="postHeader">
+        <label for="postPlate"></label>
+        <select name="postPlate" id="postPlate">
+        </select>
+
+        <label for="postTitle"></label>
+        <input type="text" name="postTitle" id="postTitle" placeholder="标题"/>
+        <span id="verify_code_text"></span>
+    </div>
+    <textarea placeholder="内容" name="content"></textarea>
+    <button class="post_sure" id="confirm_post">发表</button>
+</form>
+</body>
+
+</html>

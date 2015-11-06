@@ -1,0 +1,38 @@
+.block-center.mt-xl.wd-xl(ng-controller="LoginController as login")
+  // START panel
+  .panel.panel-dark.panel-flat
+    .panel-heading.text-center
+      a(href="#")
+        img.block-center.img-rounded(src='app/img/logo.png', alt='Image')
+    .panel-body
+      form.form-validate(role='form', ng-submit="login.login()", name='login.loginForm', novalidate='').mb-lg
+        .form-group.has-feedback
+          input#exampleInputEmail1.form-control(type='text', name="account_username" placeholder='请输入账号', autocomplete="off", ng-model="login.account.username", required='')
+          span.icon-user.form-control-feedback.text-muted
+          span.text-danger(ng-show="login.loginForm.account_username.$dirty && login.loginForm.account_username.$error.required") 请输入账号
+        .form-group.has-feedback
+          input#exampleInputPassword1.form-control(type='password', name="account_password" placeholder='请输入密码', ng-model="login.account.password", required='')
+          span.icon-lock.form-control-feedback.text-muted
+          span.text-danger(ng-show="login.loginForm.account_password.$dirty && login.loginForm.account_password.$error.required") 请输入密码
+        .clearfix
+          .checkbox.c-checkbox.pull-left.mt0
+            label
+              input(type='checkbox', value='', name="account_remember", ng-model="login.account.remember")
+              span.fa.fa-check
+              |  自动登录
+          .pull-right
+            a.text-muted(ui-sref="page.recover") 忘记密码?
+        
+        button.btn.btn-block.btn-primary.mt-lg(type='submit') 登录
+      
+      .alert.alert-danger.text-center(ng-show='login.authMsg') {{login.authMsg}}
+      p.pt-lg.text-center -- or --
+      a(ui-sref="page.register").btn.btn-block.btn-default 立刻注册
+  // END panel
+  .p-lg.text-center
+    span &copy; 
+    span(ng-bind="app.year") 
+    span  - 
+    span(ng-bind="app.name")
+    br
+    span(ng-bind="app.description")

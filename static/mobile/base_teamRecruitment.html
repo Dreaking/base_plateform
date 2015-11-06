@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0"
+          charset="utf-8">
+    <title>团队招聘</title>
+    <link rel="stylesheet" type="text/css" href="css/common.css">
+    <script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/recruit_detail.js" type="text/javascript" charset="UTF-8" async defer></script>
+</head>
+
+<body>
+<header>
+    <a class="iconfont backgo" href="javascript:history.go(-1)">&#xe601;</a>
+    <span class="left">团队招聘</span>
+</header>
+
+<section class="recruitmentSection">
+    <ul>
+        <li><span class="recrutimenTitle" id="title"></span>
+            <span class="recrutimenNumber" id="count"></span>
+            <span class="recrutimenTeamName" id="team_name"></span>
+            <a href="teamIntroduce.html" class="signUp" id="team">团队介绍</a></li>
+        <li>招聘要求</li>
+        <li class="recrutimenArctile"><span id="content"></span></li>
+        <button class="join" onclick="applyTeam()" id="apply">申请加入</button>
+    </ul>
+</section>
+</body>
+
+</html>

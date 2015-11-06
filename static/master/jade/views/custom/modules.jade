@@ -1,0 +1,42 @@
+h3 模块管理
+  small Edit In Goods
+
+.container-fluid(ng-controller="ModulesListController as table")
+  // Editable row
+  h4.page-header 模块列表
+
+  table.table.table-bordered.table-hover.bg-white
+    tr(style='font-weight: bold')
+      td(style='width:20%') 模块ID
+      td(style='width:40%') 模块名
+      td(style='width:20%') 文章数
+      td(style='width:20%') 浏览次数
+    tr(ng-repeat='section in table.sections track by $index')
+      td
+        span {{ section.section_id }}
+      td
+        // editable sectionname (text with validation)
+        span(editable-text='section.section_name' e-name='name',onbeforesave='table.checkName($data)', e-form='rowform',  e-required='') {{ section.section_name || &apos;empty&apos; }}
+      td
+        span {{section.post_count}}
+      td
+        span {{section.view_count}}
+      td(style='white-space: nowrap')
+        // form
+        form.form-buttons.form-inline(editable-form='', name='rowform', onbeforesave='table.saveModule($data,section.section_id)', ng-show='rowform.$visible', shown='table.inserted == section')
+          button.btn.btn-sm.btn-info(type='submit', ng-disabled='rowform.$waiting', title="Save"): em.fa.fa-save
+          button.btn.btn-sm.btn-default(type='button', ng-disabled='rowform.$waiting', ng-click='table.cancel(rowform,section.section_id)', title="Cancel"): em.fa.fa-times
+        .buttons(ng-show='!rowform.$visible')
+          button.btn.btn-sm.btn-info(ng-click='rowform.$show()', title="Edit"): em.icon-pencil
+          button.btn.btn-sm.btn-danger(ng-click='table.removeModule($index,section)', title="Delete"): em.icon-trash
+  p.text-center(ng-show='!table.sections||table.sections.length<1')
+      |暂无任何数据
+  button.btn.btn-default(ng-click='table.addModule()') 添加新模块
+  script(type="text/ng-template", id="confirm")
+    .ngdialog-message.clearfix
+      h3.text-center
+        | 确定删除{{deletedModule}}模块?
+      p.text-center.text-danger
+        small 删除模块将会清空模块下的所有文章
+      button.btn.btn-primary.mr.pull-right(type='button', ng-click='confirm()') 确定
+      button.btn.btn-default.pull-left(type='button', ng-click="closeThisDialog()") 取消

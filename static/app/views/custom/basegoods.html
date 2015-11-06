@@ -1,0 +1,52 @@
+<h3>项目管理
+   <small>Edit In Goods</small>
+</h3>
+<div ng-controller="GoodListController as table" class="container-fluid">
+   <!-- Editable row-->
+   <h4 class="page-header">项目列表</h4>
+   <table class="table table-bordered table-hover bg-white">
+      <tr style="font-weight: bold">
+         <td style="width:30%">项目ID</td>
+         <td style="width:40%">项目名</td>
+         <td style="width:30%">价格</td>
+      </tr>
+      <tr ng-repeat="good in table.goods track by $index">
+         <td>
+            <!-- editable goodname (text with validation)-->
+            <span>{{ good.good_id }}</span>
+         </td>
+         <td>
+            <!-- editable goodname (text with validation)-->
+            <span editable-text="good.good_name" e-name="goods_name" onbeforesave="table.checkName($data)" e-form="rowform" e-required="">{{ good.good_name || &apos;empty&apos; }}</span>
+         </td>
+         <td>
+            <!-- editable goodname (text with validation)-->
+            <span editable-text="good.price" e-name="goods_price" onbeforesave="table.checkPrice($data)" e-form="rowform" e-required="">{{ good.price || &apos;empty&apos; }}</span>
+         </td>
+         <td style="white-space: nowrap">
+            <!-- form-->
+            <form editable-form="" name="rowform" onbeforesave="table.saveGood($data,good.good_id)" ng-show="rowform.$visible" shown="table.inserted == good" class="form-buttons form-inline">
+               <button type="submit" ng-disabled="rowform.$waiting" title="Save" class="btn btn-sm btn-info">
+                  <em class="fa fa-save"></em>
+               </button>
+               <button type="button" ng-disabled="rowform.$waiting" ng-click="table.cancel(rowform,good.good_id)" title="Cancel" class="btn btn-sm btn-default">
+                  <em class="fa fa-times"></em>
+               </button>
+            </form>
+            <div ng-show="!rowform.$visible" class="buttons">
+               <button ng-click="rowform.$show()" title="Edit" class="btn btn-sm btn-info">
+                  <em class="icon-pencil"></em>
+               </button>
+               <button ng-click="table.removeGood($index,good)" title="Delete" class="btn btn-sm btn-danger">
+                  <em class="icon-trash"></em>
+               </button>
+            </div>
+         </td>
+      </tr>
+   </table>
+   <p ng-show="!table.goods||table.goods.length&lt;1" class="text-center">暂无任何数据</p>
+   <button ng-click="table.addGood()" class="btn btn-default">添加新项目</button>
+   <script type="text/ng-template" id="confirm">
+      <div class="ngdialog-message clearfix"><h3 class="text-center">确定删除该项目?</h3><button type="button" ng-click="confirm()" class="btn btn-primary mr pull-right">确定</button><button type="button" ng-click="closeThisDialog()" class="btn btn-default pull-left">取消</button></div>
+   </script>
+</div>

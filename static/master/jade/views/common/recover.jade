@@ -1,0 +1,26 @@
+.block-center.mt-xl.wd-xl(ng-controller='RecoverController as rec')
+  // START panel
+  .panel.panel-dark.panel-flat
+    .panel-heading.text-center
+      a(href="#")
+        img.block-center.img-rounded(src='app/img/logo.png', alt='Image')
+    .panel-body.clearfix
+      form.form-validate.mb-lg(role='form', name="rec.recoverForm",ng-submit='rec.resetPassword()', novalidate='')
+        p.text-center 填写您的手机号码
+        p.text-center 我们将会通过短信发送验证码
+        .form-group.has-feedback
+          label.text-muted 手机号码
+          input.form-control(type='text',ng-model='rec.recoverForm.phone' placeholder='请输入手机号码',ng-pattern="/^[1][0-9]{10}$/", autocomplete="off", required='')
+          span.icon-call-end.form-control-feedback.text-muted
+          span.text-danger(ng-show="rec.recoverForm.phone.$dirty && rec.recoverForm.phone.$error.pattern") 请填写正确的手机号码
+        button.btn.btn-danger.btn-block(type='submit') 发送重置验证码
+      .alert.alert-info.text-center(ng-show='rec.authMsg') {{rec.authMsg}}  
+            
+  // END panel
+  .p-lg.text-center
+    span &copy; 
+    span(ng-bind="app.year") 
+    span  - 
+    span(ng-bind="app.name")
+    br
+    span(ng-bind="app.description")

@@ -1,0 +1,42 @@
+<h3>审核队列
+   <small>Check for apply</small>
+</h3>
+<div ng-controller="SuportListController as table" class="container-fluid">
+   <!-- Editable row-->
+   <h4 class="page-header">申请列表</h4>
+   <table class="table table-bordered table-hover bg-white">
+      <tr style="font-weight: bold">
+         <td>团队名</td>
+         <td>申请人</td>
+         <td>申请时间</td>
+         <td>开始时间</td>
+         <td>停止时间</td>
+         <td>申请地点</td>
+         <td>状态</td>
+      </tr>
+      <tr ng-repeat="apply in table.applys">
+         <td>
+            <span>{{ apply.team_name }}</span>
+         </td>
+         <td>
+            <span>{{ apply.name }}</span>
+         </td>
+         <td>
+            <span>{{ apply.add_time | NowTime }}</span>
+         </td>
+         <td>
+            <span>{{ apply.begin_time | NowTime }}</span>
+         </td>
+         <td>
+            <span>{{ apply.end_time | NowTime }}</span>
+         </td>
+         <td>
+            <span>{{ apply.place_name}}</span>
+         </td>
+         <td>
+            <span ng-class="{&quot;label label-info&quot;:apply.status==0,&quot;label label-success&quot;:apply.status==1,&quot;label label-danger&quot;:apply.status==2}">{{ apply.status | statusFilter }}</span>
+         </td>
+      </tr>
+   </table>
+   <p ng-show="!table.applys||table.applys.length&lt;1" class="text-center">暂无任何数据</p>
+</div>

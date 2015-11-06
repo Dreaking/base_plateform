@@ -1,0 +1,59 @@
+// START action buttons
+.button-toolbar.clearfix.mb
+  .btn-group
+    button.btn.btn-default.btn-sm(type="button" ui-sref="team.recruit")
+     | 返回
+// END action buttons
+
+.panel.panel-default(ng-controller="PostsViewController")
+  .panel-body
+    table.table.mb-mails.mb-view
+      tbody
+        tr
+          td
+            .media-left
+              a(href='#')
+                img.media-object.img-circle.thumb64(src="app/img/user/01.jpg")
+            .media-body
+              h4#media-heading.media-heading
+                a(href="") {{::recruit.nickname}}
+              p 时间:{{recruit.add_time|fromNow}}
+            .mt-lg
+              h4 {{::recruit.title}}
+              div
+                p(ng-bind-html='::recruit.content')
+  .panel
+      .panel-heading 评论区
+      .panel-body
+        .media(ng-repeat='comment in comments')
+          .media-left
+            a(href='#')
+              img.media-object.img-circle.thumb64(src="app/img/user/01.jpg")
+          .media-body
+            h4#media-heading.media-heading
+              a {{comment.nickname}}
+              small {{comment.add_time|fromNow}}
+              a.anchorjs-link(href='#media-heading')
+                span.anchorjs-icon
+            p {{comment.content}}
+          hr
+        p.text-center(ng-if='!notMore')
+          a(ng-click='getMoreComment(comments[comments.length-1].reply_id)') 加载更多
+        p.text-center(ng-if='notMore') 没有更多回复了
+   .panel(ng-if='user.role>1')
+      form.form-horizontal(name='replyFrom' validate-form='', novalidate='' ng-submit='replyTo()')
+        .panel-heading
+          .panel-title 评论区
+        .panel-body
+          fieldset
+            .form-group
+              .col-lg-12
+                .col-xs-12
+                  textarea.form-control(style='resize:none;' placeholder='回复内容' type='text', name='reply',ng-model='reply' required="")
+          fieldset
+            .form-group
+              .col-lg-12
+                .col-xs-12
+                  button.btn.btn-info.pull-left(type='submit') 提交评论            
+            
+

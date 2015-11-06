@@ -1,0 +1,25 @@
+<h3>成员管理
+   <small>Edit in User</small>
+</h3>
+<div ng-controller="teamworkerController as table" class="container-fluid">
+   <table class="table table-bordered table-hover bg-white">
+      <tr style="font-weight: bold">
+         <td style="width:50%">姓名</td>
+         <td style="width:50%">职位</td>
+      </tr>
+      <tr ng-repeat="user in table.users">
+         <td>
+            <!-- editable username (text with validation)-->
+            <span>{{ user.name || &apos;empty&apos; }}</span>
+         </td>
+         <td ng-if="user.type!='0'">
+            <!-- editable userrole (select-remote)-->
+            <span>{{ table.showRole(user) }}</span>
+         </td>
+         <td ng-if="user.type=='0'">
+            <!-- editable userrole (select-remote)-->
+            <span>{{ table.showRole(user) }}</span>
+         </td>
+      </tr>
+   </table>
+</div>

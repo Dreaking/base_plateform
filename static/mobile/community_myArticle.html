@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0"
+          charset="utf-8">
+    <title>帖子</title>
+    <link rel="stylesheet" type="text/css" href="css/common.css">
+    <script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/post_detail.js" type="text/javascript" charset="utf-8" async defer></script>
+</head>
+
+<body>
+<header>
+    <a class="iconfont backgo" href="javascript:history.go(-1)">&#xe601;</a>
+    <span class="left">帖子</span>
+</header>
+
+<div class="functionOptions" id="delete_dialog">
+    <ul>
+        <li>删除</li>
+    </ul>
+</div>
+
+<section class="conmuntiy">
+    <ul id="list">
+    </ul>
+</section>
+
+<footer class="replyForm">
+    <form name="myform" novalidate>
+        <input type="text" class="replyText" name="reply_content" id="reply_content"
+               onfocus="javascript:this.value=''"/>
+    </form>
+    <button class="replySure" id="send_reply">回复</button>
+</footer>
+</body>
+
+</html>

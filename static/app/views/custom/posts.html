@@ -1,0 +1,79 @@
+<h3>帖子管理
+   <small>Edit in Posts</small>
+</h3>
+<div class="table-grid table-grid-desktop">
+   <div class="col col-md">
+      <div class="panel-footer">
+         <div class="row form-horizontal">
+            <div class="col-lg-6">
+               <div class="pull-left col-lg-2">
+                  <button ng-click="pag.delectAllPosts()" class="btn btn-sm btn-default">批量删除</button>
+               </div>
+               <div class="pull-left col-lg-6">
+                  <label class="col-lg-4 control-label">模块</label>
+                  <div class="col-lg-8">
+                     <select ng-model="pag.section_id" ng-change="pag.pageChanged()" ng-options="g.section_id as g.section_name for g in pag.sections" class="form-control"></select>
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-6 text-right">
+               <pagination ng-if="pag.bigTotalItems" ng-change="pag.pageChanged()" total-items="pag.bigTotalItems" ng-model="pag.bigCurrentPage" max-size="pag.maxSize" boundary-links="true" rotate="false" num-pages="pag.numPages" class="pagination-sm"></pagination>
+            </div>
+         </div>
+      </div>
+      <div class="table-responsive"></div>
+      <table id="table-ext-2" class="table table-striped table-bordered table-hover">
+         <thead>
+            <tr>
+               <th check-all="check-all">
+                  <div class="checkbox c-checkbox">
+                     <label>
+                        <input type="checkbox" ng-click="checkAll($event)" />
+                        <span class="fa fa-check"></span>
+                     </label>
+                  </div>
+               </th>
+               <th>帖子详情</th>
+               <th>操作</th>
+            </tr>
+         </thead>
+         <tbody>
+            <tr ng-repeat="post in pag.posts">
+               <td>
+                  <div class="checkbox c-checkbox">
+                     <label>
+                        <input type="checkbox" ng-model="post.selected" />
+                        <span class="fa fa-check"></span>
+                     </label>
+                  </div>
+               </td>
+               <td>
+                  <div class="media">
+                     <a class="pull-left">
+                        <img src="app/img/user/01.jpg" alt="" class="media-object img-responsive img-circle" />
+                     </a>
+                     <div class="media-body">
+                        <div style="cursor:pointer;" ui-sref="admin.postsview({id:{{post.post_id}}})">
+                           <div class="pull-right badge baed-info">{{::post.add_time|fromNow}}</div>
+                           <h4 ng-bind="::post.title" class="media-heading"></h4>
+                           <p>发布团队: {{::post.nickname}}</p>{{::post.content | removeTag | limitTo:100}}</div>
+                     </div>
+                  </div>
+               </td>
+               <td class="text-center">
+                  <label>
+                     <button title="删除" ng-click="pag.delectPost(post.post_id)" class="btn btn-sm btn-danger">删除</button>
+                  </label>
+               </td>
+            </tr>
+         </tbody>
+      </table>
+      <p ng-show="!pag.posts||pag.posts.length&lt;1" class="text-center">暂无有效的帖子</p>
+   </div>
+   <script type="text/ng-template" id="confirm">
+      <div class="ngdialog-message clearfix"><h3 class="text-center">确定删除该帖子?</h3><button type="button" ng-click="confirm()" class="btn btn-primary mr pull-right">确定</button><button type="button" ng-click="closeThisDialog()" class="btn btn-default pull-left">取消    </button></div>
+   </script>
+   <script type="text/ng-template" id="allconfirm">
+      <div class="ngdialog-message clearfix"><h3 class="text-center">确定删除选中的帖子?</h3><button type="button" ng-click="confirm()" class="btn btn-primary mr pull-right">确定</button><button type="button" ng-click="closeThisDialog()" class="btn btn-default pull-left">取消  </button></div>
+   </script>
+</div>

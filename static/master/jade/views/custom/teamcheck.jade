@@ -1,0 +1,59 @@
+h3 团队审核
+  small Check for Team
+
+.container-fluid(ng-controller="TeamCheckController as table")
+  // Editable row
+  h4.page-header 申请列表
+
+  table.table.table-bordered.table-hover.bg-white
+    tr(style='font-weight: bold')
+      td 团队名
+      td 负责人
+      td 联系方式
+      td 申请材料     
+      td 申请时间     
+      td 操作
+    tr(ng-repeat='team in table.teams')
+      td
+        span {{ team.new_team_name || &apos;暂无&apos; }}
+      td
+        span {{ team.name || &apos;暂无&apos; }}
+      td
+        span {{ team.phone || &apos;暂无&apos; }}
+      td
+        a(href="", ng-dialog-class='ngdialog-theme-default', ng-click="table.showApplyDetail(team.application_id)", ng-dialog-show-close='false') 查看详情
+      td
+        span {{ team.add_time | NowTime }}
+      td(style='white-space: nowrap')
+        // form
+        form.form-buttons.form-inline(editable-form='', name='rowform', onbeforesave='table.saveUser($data, team.id)', ng-show='rowform.$visible', shown='table.inserted == team')
+        .buttons(ng-show='!rowform.$visible')
+          button.btn.btn-sm.btn-default(ng-click='getExcel(team.application_id)') 导出EXCEL
+          button.btn.btn-sm.btn-info(title="同意" ng-click='passApply(team.application_id)') 同意
+          button.btn.btn-sm.btn-danger(title="否决" ng-click='rejectApply(team.application_id)') 否决
+  p.text-center(ng-show='!table.teams||table.teams.length<1')
+            |暂无任何数据
+  script(type="text/ng-template", id="ApplyDetail")
+      div
+        h3.mt0.text-center 申请材料
+        .panel-body.loader-demo(ng-show="!!!detail")
+          .sk-spinner.sk-spinner-double-bounce
+            .sk-double-bounce1
+            .sk-double-bounce2
+        p(ng-show='theme' ng-bind-html='detail')
+  script(type="text/ng-template", id="passconfirm")
+    .ngdialog-message.clearfix
+      h3.text-center
+        | 确定通过该团队申请?
+      
+      button.btn.btn-primary.mr.pull-right(type='button', ng-click='confirm()') 确定
+      button.btn.btn-default.pull-left(type='button', ng-click="closeThisDialog()") 取消
+  script(type="text/ng-template", id="rejectconfirm")
+    .ngdialog-message.clearfix
+      h3.text-center
+        | 确定否决该团队申请?
+      
+      button.btn.btn-primary.mr.pull-right(type='button', ng-click='confirm()') 确定
+      button.btn.btn-default.pull-left(type='button', ng-click="closeThisDialog()") 取消
+
+  

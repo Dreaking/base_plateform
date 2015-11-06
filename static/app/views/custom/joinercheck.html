@@ -1,0 +1,45 @@
+<h3>招聘成员
+   <small>Check for Teamworker</small>
+</h3>
+<div ng-controller="JoinerController as table" class="container-fluid">
+   <!-- Editable row-->
+   <h4 class="page-header">申请列表</h4>
+   <table class="table table-bordered table-hover bg-white">
+      <tr style="font-weight: bold">
+         <td style="width:30%">招聘标题</td>
+         <td style="width:20%">姓名</td>
+         <td style="width:20%">手机号码</td>
+         <td style="width:15%">QQ</td>
+         <td style="width:15%">操作</td>
+      </tr>
+      <tr ng-repeat="joiner in table.joiners">
+         <td>
+            <span>{{ joiner.title}}</span>
+         </td>
+         <td>
+            <span>{{ joiner.name }}</span>
+         </td>
+         <td>
+            <span>{{ joiner.mobile }}</span>
+         </td>
+         <td>
+            <span>{{ joiner.qq }}</span>
+         </td>
+         <td style="white-space: nowrap">
+            <!-- form-->
+            <form editable-form="" name="rowform" onbeforesave="table.savejoiner($data, joiner.id)" ng-show="rowform.$visible" shown="table.inserted == joiner" class="form-buttons form-inline"></form>
+            <div ng-show="!rowform.$visible" class="buttons">
+               <button title="同意" ng-click="passApply(joiner.request_id)" class="btn btn-sm btn-info">同意</button>
+               <button title="否决" ng-click="rejectApply(joiner.request_id)" class="btn btn-sm btn-danger">否决</button>
+            </div>
+         </td>
+      </tr>
+   </table>
+   <p ng-show="!table.joiners||table.joiners.length&lt;1" class="text-center">暂无任何数据</p>
+   <script type="text/ng-template" id="passconfirm">
+      <div class="ngdialog-message clearfix"><h3 class="text-center">确定通过该申请?</h3><button type="button" ng-click="confirm()" class="btn btn-primary mr pull-right">确定</button><button type="button" ng-click="closeThisDialog()" class="btn btn-default pull-left">取消</button></div>
+   </script>
+   <script type="text/ng-template" id="rejectconfirm">
+      <div class="ngdialog-message clearfix"><h3 class="text-center">确定否决该申请?</h3><button type="button" ng-click="confirm()" class="btn btn-primary mr pull-right">确定</button><button type="button" ng-click="closeThisDialog()" class="btn btn-default pull-left">取消</button></div>
+   </script>
+</div>

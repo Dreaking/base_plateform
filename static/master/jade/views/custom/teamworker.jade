@@ -1,0 +1,34 @@
+h3 成员管理
+  small Edit in User
+
+.container-fluid(ng-controller="teamworkerController as table")
+
+  table.table.table-bordered.table-hover.bg-white
+    tr(style='font-weight: bold')
+      td(style='width:50%') 姓名
+      td(style='width:40%') 职位
+      td 操作
+    tr(ng-repeat='user in table.users')
+      td
+        span {{ user.name }}
+      td(ng-if="user.type!=0")
+        span(editable-select='user.type', e-name='type',onbeforesave='table.checkID($data)', e-form='rowform', e-ng-options='g.id as g.name for g in table.types') {{ table.showRole(user) }}
+      td(ng-if="user.type==0")
+        span {{ table.showRole(user) }}
+      td(style='white-space: nowrap')
+        form.form-buttons.form-inline(editable-form='', name='rowform', onbeforesave='table.saveUser($data,user.type,user.user_id)', ng-show='rowform.$visible', shown='table.inserted == user')
+          button.btn.btn-sm.btn-info(type='submit', ng-disabled='rowform.$waiting', title="Save"): em.fa.fa-save
+          button.btn.btn-sm.btn-default(type='button', ng-disabled='rowform.$waiting', ng-click='rowform.$cancel()', title="Cancel"): em.fa.fa-times
+        .buttons(ng-show='!rowform.$visible' ng-if='user.type!=0')
+          button.btn.btn-sm.btn-info(ng-click='rowform.$show()', title="Edit"): em.fa.fa-pencil
+          button.btn.btn-sm.btn-danger(ng-click='table.removeUser($index,user.user_id)', title="Delete"): em.fa.fa-trash
+  p.text-center(ng-show='!table.users||table.users.length<1')
+            |暂无任何数据
+  //- button.btn.btn-default(ng-click='table.addUser()') 添加成员
+  script(type="text/ng-template", id="confirm")
+    .ngdialog-message.clearfix
+      h3.text-center
+        | 确定删除该成员?
+      
+      button.btn.btn-primary.mr.pull-right(type='button', ng-click='confirm()') 确定
+      button.btn.btn-default.pull-left(type='button', ng-click="closeThisDialog()") 取消

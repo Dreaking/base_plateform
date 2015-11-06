@@ -1,0 +1,22 @@
+{
+  "mails":[
+    {
+      "id": 10,
+      "subject": "帖子标题",
+      "content":"帖子的内容~帖子的内容~帖子的内容~帖子的内容~帖子的内容~帖子的内容~帖子的内容~帖子的内容~帖子的内容~",
+      "from": {
+        "name": "Evelyn Holmes", "email" : "evelyn@example.com",
+        "avatar": "app/img/user/01.jpg"
+      },
+      "to":[
+        {"name":"John", "email":"John.mail@example.com"}
+      ],
+      "attach":[
+        {"name":"IMG_4.jpg", "url":"app/img/bg4.jpg"},
+        {"name":"IMG_5.jpg", "url":"app/img/bg5.jpg"}
+      ],
+      "date":"18:20 11/23/2014",
+      "folder":"important"
+    }
+  ]
+}

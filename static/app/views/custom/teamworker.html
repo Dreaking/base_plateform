@@ -1,0 +1,45 @@
+<h3>成员管理
+   <small>Edit in User</small>
+</h3>
+<div ng-controller="teamworkerController as table" class="container-fluid">
+   <table class="table table-bordered table-hover bg-white">
+      <tr style="font-weight: bold">
+         <td style="width:50%">姓名</td>
+         <td style="width:40%">职位</td>
+         <td>操作</td>
+      </tr>
+      <tr ng-repeat="user in table.users">
+         <td>
+            <span>{{ user.name }}</span>
+         </td>
+         <td ng-if="user.type!=0">
+            <span editable-select="user.type" e-name="type" onbeforesave="table.checkID($data)" e-form="rowform" e-ng-options="g.id as g.name for g in table.types">{{ table.showRole(user) }}</span>
+         </td>
+         <td ng-if="user.type==0">
+            <span>{{ table.showRole(user) }}</span>
+         </td>
+         <td style="white-space: nowrap">
+            <form editable-form="" name="rowform" onbeforesave="table.saveUser($data,user.type,user.user_id)" ng-show="rowform.$visible" shown="table.inserted == user" class="form-buttons form-inline">
+               <button type="submit" ng-disabled="rowform.$waiting" title="Save" class="btn btn-sm btn-info">
+                  <em class="fa fa-save"></em>
+               </button>
+               <button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()" title="Cancel" class="btn btn-sm btn-default">
+                  <em class="fa fa-times"></em>
+               </button>
+            </form>
+            <div ng-show="!rowform.$visible" ng-if="user.type!=0" class="buttons">
+               <button ng-click="rowform.$show()" title="Edit" class="btn btn-sm btn-info">
+                  <em class="fa fa-pencil"></em>
+               </button>
+               <button ng-click="table.removeUser($index,user.user_id)" title="Delete" class="btn btn-sm btn-danger">
+                  <em class="fa fa-trash"></em>
+               </button>
+            </div>
+         </td>
+      </tr>
+   </table>
+   <p ng-show="!table.users||table.users.length&lt;1" class="text-center">暂无任何数据</p>
+   <script type="text/ng-template" id="confirm">
+      <div class="ngdialog-message clearfix"><h3 class="text-center">确定删除该成员?</h3><button type="button" ng-click="confirm()" class="btn btn-primary mr pull-right">确定</button><button type="button" ng-click="closeThisDialog()" class="btn btn-default pull-left">取消</button></div>
+   </script>
+</div>

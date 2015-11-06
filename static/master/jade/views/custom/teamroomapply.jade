@@ -1,0 +1,91 @@
+h3 申请中心
+  small Apply For Room
+.panel(ng-controller="ApplyThingController")
+  .panel-body
+    form(name='applyForm' form-wizard="", validate-steps="true", validate-form="", steps="2")
+      .form-wizard.wizard-horizontal
+        // START wizard steps indicator
+        ol.row
+          li.col-md-6(ng-class="{'active':wizard.active(1)}", ng-click="wizard.go(1)")
+            h4 选择申请事项
+            small.text-muted 请选择要申请的会议室/物资
+          li.col-md-6(ng-class="{'active':wizard.active(2)}", ng-click="wizard.go(2)")
+            h4 选择申请时间
+            small.text-muted 请选择要申请的起止时间 
+        // END wizard steps indicator
+
+        // START Wizard Step inputs 
+        div#step1(ng-show="wizard.active(1)")
+          fieldset
+            legend 选择事项
+            .row
+              .col-md-4
+              .col-md-2
+                  // START button group
+                  .btn-group.block-center(dropdown='dropdown')
+                    button.btn.btn-default(dropdown-toggle="")
+                      | {{apply.applything?apply.applything:'点击下拉选择申请事项'}} 
+                      b.caret
+                    ul.dropdown-menu(role='menu', class="animated animated flipInX")
+                      li
+                        a(ng-click="setApplyThing('教五会议室')") 教五会议室
+                      li
+                        a(ng-click="setApplyThing('教六会议室')") 教六会议室
+                      li
+                        a(ng-click="apply.setApplyThing('大厅使用')") 大厅使用
+                  input.form-control(type='text', name='applything',ng-model='apply.applything',data-parsley-group="step1",style='display:none;', required)
+              .col-md-2
+                .form-group
+                  input.form-control(type='text',placeholder='其他' name='applything',ng-model='apply.applything')
+            // END row 
+          ul.pager
+            li.next
+              a(ng-click="wizard.go(2)")
+                | 下一步 
+                span &rarr;
+        // END Wizard Step inputs 
+        // START Wizard Step inputs 
+        div#step2(ng-show="wizard.active(2)")
+          fieldset
+            legend 选择时间
+            // START row 
+            .row
+              .col-md-6
+                .form-group
+                  label.col-md-7 
+                    .col-md-7 开始使用时间
+                  .col-md-12
+                    .col-md-7(style='margin-top: 31px;')
+                      p.input-group
+                        input.form-control(type='text', datepicker-popup='{{format}}', ng-model='apply.starttime', is-open='apply.startopened', max-date="'2017-06-22'", datepicker-options='dateOptions',min-date='minDate', date-disabled='startdisabled(date, mode)', ng-required='true', close-text='Close')
+                        span.input-group-btn
+                          button.btn.btn-default(type='button', ng-click='startopen($event)')
+                            em.icon-calendar
+                    .col-md-5
+                      timepicker(name="startMinue", required='', ng-model='apply.startMinue', ng-change='changed()', hour-step='apply.hstep', minute-step='apply.mstep', show-meridian='ismeridian')
+                      span.text-danger(ng-show="form.validateInput('startMinue', 'required')") 请输入时间
+                      //input.form-control(type='text', masked="",ng-model='apply.startMinue' data-inputmask="'mask': '99:99'", placeholder="请输入时间") 
+              .col-md-6
+                .form-group
+                  label.col-md-7 
+                    .col-md-7 停止使用时间
+                  .col-md-12
+                    .col-md-7(style='margin-top: 31px;')
+                      p.input-group
+                        input.form-control(type='text', datepicker-popup='{{format}}', ng-model='apply.endtime', is-open='apply.endopened',min-date="apply.minDate", max-date="'2017-06-22'", datepicker-options='dateOptions',  ng-required='true', close-text='Close')
+                        span.input-group-btn
+                          button.btn.btn-default(type='button', ng-click='endopen($event)')
+                            em.icon-calendar
+                    .col-md-5
+                      timepicker(name="endMinue", required='', ng-model='apply.endMinue', ng-change='changed()', hour-step='apply.hstep', minute-step='apply.mstep', show-meridian='ismeridian')
+                      span.text-danger(ng-show="form.validateInput('endMinue', 'required')") 请输入时间
+              // END row 
+          ul.pager
+            li.previous
+              a(ng-click="wizard.go(1)")
+                span &larr; 上一步
+            li.next
+              a(ng-click="finishApply()")
+                | 完成 
+        // END Wizard Step inputs 
+        

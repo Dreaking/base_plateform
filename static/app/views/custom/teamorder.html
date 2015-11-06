@@ -1,0 +1,68 @@
+<h3>团队补贴
+   <small>Team Expense Calendar</small>
+</h3>
+<div class="container-fluid">
+   <form role="form" ng-submit="table.exportExcel()" class="form-inline">
+      <div class="row panel-heading form-horizontal">
+         <div class="form-group pull-left list-inline panel-heading">
+            <div class="input-group">
+               <input type="text" ng-change="table.checkChange()" datepicker-popup="{{table.format}}" ng-model="table.starttime" is-open="table.startopened" max-date="'2017-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true"
+               close-text="Close" class="form-control" />
+               <span class="input-group-btn">
+                  <button type="button" ng-click="table.startopen($event)" class="btn btn-default">
+                     <em class="icon-calendar table-responsive b0"></em>
+                  </button>
+               </span>
+            </div>
+         </div>
+         <div class="form-group pull-left list-inline panel-heading">
+            <label class="col-sm-4 control-label">至</label>
+         </div>
+         <div class="form-group pull-left list-inline panel-heading">
+            <div class="input-group">
+               <input type="text" ng-change="table.checkChange()" datepicker-popup="{{table.format}}" ng-model="table.endtime" is-open="table.endopened" max-date="'2017-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true"
+               close-text="Close" class="form-control" />
+               <span class="input-group-btn">
+                  <button type="button" ng-click="table.endopen($event)" class="btn btn-default">
+                     <em class="icon-calendar"></em>
+                  </button>
+               </span>
+            </div>
+         </div>
+      </div>
+   </form>
+</div>
+<table datatable="ng" dt-options="table.dtOptions" dt-column-defs="table.dtColumnDefs" class="table table-hover">
+   <thead class="bg-white">
+      <tr>
+         <th style="width:80px">
+            <strong>ID</strong>
+         </th>
+         <th>
+            <strong>时间</strong>
+         </th>
+         <th>
+            <strong>支出类型</strong>
+         </th>
+         <th>
+            <strong>数量</strong>
+         </th>
+         <th>
+            <strong>支出描述</strong>
+         </th>
+         <th>
+            <strong>总支出(元)</strong>
+         </th>
+      </tr>
+   </thead>
+   <tbody>
+      <tr ng-repeat="record in table.records">
+         <td>{{::record.payment_id}}</td>
+         <td>{{::record.add_time|NowTime}}</td>
+         <td>{{::record.type | TypeFilter}}</td>
+         <td>{{::record.count}}</td>
+         <td>{{::record.reason}}</td>
+         <td>{{::record.amount| MoneyFilter}}</td>
+      </tr>
+   </tbody>
+</table>

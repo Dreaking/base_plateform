@@ -1,0 +1,20 @@
+h3 成员管理
+  small Edit in User
+
+.container-fluid(ng-controller="teamworkerController as table")
+
+  table.table.table-bordered.table-hover.bg-white
+    tr(style='font-weight: bold')
+      td(style='width:50%') 姓名
+      td(style='width:50%') 职位
+    tr(ng-repeat='user in table.users')
+      td
+        // editable username (text with validation)
+        span {{ user.name || &apos;empty&apos; }}
+      td(ng-if="user.type!='0'")
+        // editable userrole (select-remote)
+        span {{ table.showRole(user) }}
+      td(ng-if="user.type=='0'")
+        // editable userrole (select-remote)
+        span {{ table.showRole(user) }}
+      

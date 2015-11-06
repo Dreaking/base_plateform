@@ -1,0 +1,40 @@
+h3 项目管理
+  small Edit In Goods
+
+.container-fluid(ng-controller="GoodListController as table")
+  // Editable row
+  h4.page-header 项目列表
+
+  table.table.table-bordered.table-hover.bg-white
+    tr(style='font-weight: bold')
+      td(style='width:30%') 项目ID
+      td(style='width:40%') 项目名
+      td(style='width:30%') 价格
+    tr(ng-repeat='good in table.goods track by $index')
+      td
+        // editable goodname (text with validation)
+        span {{ good.good_id }}
+      td
+        // editable goodname (text with validation)
+        span(editable-text='good.good_name' e-name='goods_name',onbeforesave='table.checkName($data)', e-form='rowform',  e-required='') {{ good.good_name || &apos;empty&apos; }}
+      td
+        // editable goodname (text with validation)
+        span(editable-text='good.price' e-name='goods_price',onbeforesave='table.checkPrice($data)', e-form='rowform', e-required='') {{ good.price || &apos;empty&apos; }}
+      td(style='white-space: nowrap')
+        // form
+        form.form-buttons.form-inline(editable-form='', name='rowform', onbeforesave='table.saveGood($data,good.good_id)', ng-show='rowform.$visible', shown='table.inserted == good')
+          button.btn.btn-sm.btn-info(type='submit', ng-disabled='rowform.$waiting', title="Save"): em.fa.fa-save
+          button.btn.btn-sm.btn-default(type='button', ng-disabled='rowform.$waiting', ng-click='table.cancel(rowform,good.good_id)', title="Cancel"): em.fa.fa-times
+        .buttons(ng-show='!rowform.$visible')
+          button.btn.btn-sm.btn-info(ng-click='rowform.$show()', title="Edit"): em.icon-pencil
+          button.btn.btn-sm.btn-danger(ng-click='table.removeGood($index,good)', title="Delete"): em.icon-trash
+  p.text-center(ng-show='!table.goods||table.goods.length<1')
+            |暂无任何数据
+  button.btn.btn-default(ng-click='table.addGood()') 添加新项目
+  script(type="text/ng-template", id="confirm")
+    .ngdialog-message.clearfix
+      h3.text-center
+        | 确定删除该项目?
+      
+      button.btn.btn-primary.mr.pull-right(type='button', ng-click='confirm()') 确定
+      button.btn.btn-default.pull-left(type='button', ng-click="closeThisDialog()") 取消

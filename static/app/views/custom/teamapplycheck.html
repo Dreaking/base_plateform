@@ -1,0 +1,53 @@
+<h3>申请审核
+   <small>Check for Team</small>
+</h3>
+<div ng-controller="CheckApplyThingController as table" class="container-fluid">
+   <!-- Editable row-->
+   <h4 class="page-header">申请列表</h4>
+   <table class="table table-bordered table-hover bg-white">
+      <tr style="font-weight: bold">
+         <td>团队名</td>
+         <td>申请人</td>
+         <td>申请时间</td>
+         <td>开始时间</td>
+         <td>停止时间</td>
+         <td>申请地点</td>
+         <td>操作</td>
+      </tr>
+      <tr ng-repeat="apply in table.applys">
+         <td>
+            <span>{{ apply.team_name }}</span>
+         </td>
+         <td>
+            <span>{{ apply.name }}</span>
+         </td>
+         <td>
+            <span>{{ apply.add_time | NowTime }}</span>
+         </td>
+         <td>
+            <span>{{ apply.begin_time | NowTime }}</span>
+         </td>
+         <td>
+            <span>{{ apply.end_time | NowTime }}</span>
+         </td>
+         <td>
+            <span>{{ apply.place_name}}</span>
+         </td>
+         <td style="white-space: nowrap">
+            <!-- form-->
+            <form class="form-buttons form-inline"></form>
+            <div class="buttons">
+               <button title="同意" ng-click="passApply(apply.room_apply_id)" class="btn btn-sm btn-info">同意</button>
+               <button title="否决" ng-click="rejectApply(apply.room_apply_id)" class="btn btn-sm btn-danger">否决</button>
+            </div>
+         </td>
+      </tr>
+   </table>
+   <p ng-show="!table.applys||table.applys.length&lt;1" class="text-center">暂无任何数据</p>
+   <script type="text/ng-template" id="passconfirm">
+      <div class="ngdialog-message clearfix"><h3 class="text-center">确定通过该团队的物资申请?</h3><button type="button" ng-click="confirm()" class="btn btn-primary mr pull-right">确定</button><button type="button" ng-click="closeThisDialog()" class="btn btn-default pull-left">取消</button></div>
+   </script>
+   <script type="text/ng-template" id="rejectconfirm">
+      <div class="ngdialog-message clearfix"><h3 class="text-center">确定否决该团队的物资申请?</h3><button type="button" ng-click="confirm()" class="btn btn-primary mr pull-right">确定</button><button type="button" ng-click="closeThisDialog()" class="btn btn-default pull-left">取消</button></div>
+   </script>
+</div>

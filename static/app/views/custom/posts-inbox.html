@@ -1,0 +1,45 @@
+<!-- START action buttons-->
+<div class="clearfix mb form-horizontal">
+   <div class="btn-group pull-left"></div>
+   <div class="btn-group pull-right">
+      <div class="pull-right">
+         <label class="col-sm-4 control-label">职位</label>
+         <div class="col-sm-8">
+            <select name="account" class="form-control">
+               <option ng-value="1">板块1</option>
+               <option ng-value="2">板块2</option>
+               <option ng-value="3">板块3</option>
+            </select>
+         </div>
+      </div>
+   </div>
+</div>
+<!-- END action buttons-->
+<div ng-controller="MailFolderController as mailfolder" class="panel panel-default">
+   <div class="panel-body">
+      <p ng-if="!(mailfolder.mails | filter:mailfolder.folder).length" class="lead text-center">No mails here</p>
+      <table ng-if="(mailfolder.mails | filter:mailfolder.folder).length" class="table table-hover mb-mails">
+         <tbody>
+            <tr ng-repeat="mail in mailfolder.mails | filter:mailfolder.folder" ng-class="{'mb-mail-active': mail.unread}">
+               <td>
+                  <div class="checkbox c-checkbox">
+                     <label>
+                        <input type="checkbox" />
+                     </label>
+                  </div>
+               </td>
+               <td ui-sref="admin.posts.view({mid: mail.id})">
+                  <img ng-src="{{mail.from.avatar}}" alt="Mail Avatar" class="mb-mail-avatar pull-left" />
+                  <div class="mb-mail-date pull-right">{{mail.date}}</div>
+                  <div class="mb-mail-meta">
+                     <div class="pull-left">
+                        <div class="mb-mail-subject">{{mail.subject}}</div>
+                     </div>
+                     <div ng-bind-html="mail.content | limitTo:100" class="mb-mail-preview"></div>
+                  </div>
+               </td>
+            </tr>
+         </tbody>
+      </table>
+   </div>
+</div>

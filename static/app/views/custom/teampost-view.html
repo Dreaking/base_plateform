@@ -1,0 +1,37 @@
+<!-- START action buttons-->
+<div class="button-toolbar clearfix mb">
+   <div class="btn-group">
+      <button type="button" ui-sref="team.recruit" class="btn btn-default btn-sm">
+         <em class="fa fa-mail-reply text-gray-dark"></em>
+      </button>
+   </div>
+</div>
+<!-- END action buttons-->
+<div ng-controller="RecruitViewController" class="panel panel-default">
+   <div class="panel-body">
+      <table class="table mb-mails mb-view">
+         <tbody>
+            <tr>
+               <td>
+                  <div class="clearfix">
+                     <img src="app/img/user/01.jpg" class="mb-mail-avatar" />
+                     <div class="pull-left">
+                        <span>发布人:</span>
+                        <span class="mb-mail-from">{{::recruit.team_name}}</span>
+                        <p class="mb-mail-to-list">时间: <a>{{recruit.add_time|NowTime}}</a>
+                        </p>
+                     </div>
+                  </div>
+                  <div class="mt-lg">
+                     <h4>{{::recruit.title}}</h4>
+                     <div>
+                        <p>招聘人数:{{::recruit.recruit_num}}</p>
+                        <p ng-bind-html="::recruit.content"></p>
+                     </div>
+                  </div>
+               </td>
+            </tr>
+         </tbody>
+      </table>
+   </div>
+</div>

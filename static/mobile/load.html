@@ -1,0 +1,28 @@
+<!DOCTYPE html>  
+<html>
+
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0" charset="utf-8">
+<title>登陆</title>
+<link rel="stylesheet" type="text/css" href="css/common.css">
+<script src="js/load.js" type="text/javascript" charset="utf-8" async defer></script>
+<script src="js/jquery.js" type="text/javascript" charset="utf-8" async defer></script>
+</head>
+
+<body>
+<header>
+  <a class="registerLink" href="register.html">注册</a>
+  <span class="right">登陆</span>
+</header>
+
+<form class="loadForm" name="myform" novalidate>
+     <input type="text" name="phone"  placeholder="手机号" onblur="return phone_check()"/>
+     <span id="phone_id"></span>
+     <input  type="password" name="pw"  placeholder="密码"/>
+     <span id="pw_id"></span>
+     <button class="load" onclick="login(event)">登录</button>
+</form>
+  <a class="forgetPassword" href="forgetPassword.html">忘记密码?</a>
+</body>
+
+</html>

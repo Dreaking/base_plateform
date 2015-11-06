@@ -1,0 +1,48 @@
+<h3>成员管理
+   <small>Edit in User</small>
+</h3>
+<div ng-controller="usermanagementController as table" class="container-fluid">
+   <form role="form" class="form-inline">
+      <div class="row panel-heading form-horizontal">
+         <div class="form-group pull-right list-inline panel-heading">
+            <label class="col-sm-4 control-label">团队</label>
+            <div class="col-sm-8">
+               <select name="account" ng-change="table.loadUserList()" ng-options="team.team_id as team.team_name for team in table.teams" ng-model="selectTeam" class="form-control"></select>
+            </div>
+         </div>
+         <div class="form-group pull-right list-inline panel-heading">
+            <label class="col-sm-4 control-label">职位</label>
+            <div class="col-sm-8">
+               <select name="account" ng-change="table.loadUserList()" ng-options="type.id as type.name for type in table.types" ng-model="selectType" class="form-control"></select>
+            </div>
+         </div>
+      </div>
+   </form>
+   <table class="table table-bordered table-hover bg-white">
+      <tr style="font-weight: bold">
+         <td style="width:25%">姓名</td>
+         <td style="width:25%">类型</td>
+         <td style="width:20%">学院</td>
+         <td style="width:20%">专业</td>
+      </tr>
+      <tr ng-repeat="user in table.users">
+         <td>
+            <!-- editable username (text with validation)-->
+            <span editable-text="user.name" e-name="name" e-form="rowform" onbeforesave="table.checkName($data, user.id)" e-required="">{{ user.name || &apos;empty&apos; }}</span>
+         </td>
+         <td>
+            <!-- editable userrole (select-remote)-->
+            <span editable-select="user.type" e-name="school_name" onbeforesave="table.checkID($data)" e-form="rowform" e-ng-options="g.id as g.name for g in table.types">{{ table.showRole(user) }}</span>
+         </td>
+         <td>
+            <!-- editable school_name (select-remote)-->
+            <span editable-select="user.school_name" e-name="school_name" onbeforesave="table.checkID($data)" onshow="table.loadColleges()" e-placeholder="请选择" e-form="rowform" e-ng-change="table.loadMajors($data)" e-ng-options="g.school_id as g.school_name for g in table.colleges">{{ table.showColleges(user) }}</span>
+         </td>
+         <td>
+            <!-- editable major_name (select-remote)-->
+            <span editable-select="user.major_name" e-name="major_name" e-form="rowform" onbeforesave="table.checkID($data)" e-placeholder="请选择" e-ng-options="g.major_id as g.major_name for g in table.majors">{{ table.showMajors(user) }}</span>
+         </td>
+      </tr>
+   </table>
+   <p ng-show="!table.users||table.users.length&lt;1" class="text-center">暂无任何数据</p>
+</div>

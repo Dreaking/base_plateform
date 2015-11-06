@@ -1,0 +1,82 @@
+<h3>记账本
+   <div class="col-sm-2 pull-right">
+      <select ng-model="todo.selectDate" ng-change="todo.gotoTarget($event,todo.selectDate)" class="form-control">
+         <option ng-repeat="item in todo.dateList track by $index" ng-value="item">{{item}}</option>
+      </select>
+   </div>
+   <small>Book For Team Record</small>
+</h3>
+<div class="table-grid todo">
+   <div class="col col-lg">
+      <div class="pr-lg">
+         <form ng-submit="todo.addTodo(todo)" class="mb-xl">
+            <div class="form-group">
+               <input ng-trim="true" name="amount" type="text" ng-model="todo.todo.amount" placeholder="账单支出" required="required" class="form-control" />
+            </div>
+            <div class="form-group clearfix">
+               <label class="col-sm-3 control-label">类型</label>
+               <div class="col-sm-9">
+                  <label class="radio-inline c-radio">
+                     <input id="inlineradio1" type="radio" ng-model="todo.todo.type" value="in" ng-click="todo.getTypeList()" />
+                     <span class="fa fa-circle"></span>收入</label>
+                  <label class="radio-inline c-radio">
+                     <input id="inlineradio2" type="radio" ng-model="todo.todo.type" value="out" ng-click="todo.getTypeList()" />
+                     <span class="fa fa-circle"></span>支出</label>
+               </div>
+            </div>
+            <div class="form-group clearfix">
+               <div style="padding:0;padding-right:10px;" class="col-md-6">
+                  <select ng-model="todo.firstType" ng-change="todo.getSecondList()" class="form-control">
+                     <option ng-repeat="item in todo.typeItems" ng-value="item.item">{{item.item}}</option>
+                  </select>
+               </div>
+               <div style="padding:0;padding-right:10px;" class="col-md-6">
+                  <select ng-model="todo.secondType" class="form-control">
+                     <option ng-repeat="item in todo.secondTypeItems" ng-value="item.item">{{item.item}}</option>
+                  </select>
+               </div>
+            </div>
+            <div class="form-group">
+               <textarea ng-trim="true" ng-model="todo.todo.description" placeholder="账单描述" rows="8" class="form-control"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">{{todo.editingTodo ? '编辑' : '添加'}}</button>
+         </form>
+      </div>
+   </div>
+   <div class="col todo-item-list">
+      <div ng-repeat="(key,value) in todo.items track by $index">
+         <ul ng-class="timelineAlt ? 'timeline-alt' : 'timeline'" ng-init="timelineAlt=true">
+            <li data-datetime="{{::key}}" id="{{key}}" class="timeline-separator"></li>
+            <!-- START timeline item-->
+            <li ng-repeat="item in value">
+               <div ng-class="item.class">
+                  <em class="icon-bag"></em>
+               </div>
+               <div class="timeline-panel">
+                  <div ng-class="timelineAlt ? 'right' : 'left'" class="popover">
+                     <span ng-click="todo.removeTodo(item.flow_id)" style="padding-right: 8px;" class="md-lg close">×</span>
+                     <h4 class="popover-title">{{::item.amount}}</h4>
+                     <div class="arrow"></div>
+                     <div class="popover-content">
+                        <abbr title="{{::item.payment_type_name}}">{{::item.payment_type_name}}</abbr>
+                        <p style="padding-top:5px;">{{::item.description}}</p>
+                     </div>
+                  </div>
+               </div>
+            </li>
+            <li ng-if="$last" class="timeline-end">
+               <a ng-click="todo.gotoEdit()" class="timeline-badge">
+                  <em class="fa fa-plus"></em>
+               </a>
+            </li>
+         </ul>
+      </div>
+      <div ng-if="todo.isEmpty(todo.items)" class="text-center">
+         <p>暂无流水单</p>
+         <small class="text-muted">请在右侧添加新的流水单</small>
+      </div>
+   </div>
+   <script type="text/ng-template" id="confirm">
+      <div class="ngdialog-message clearfix"><h3 class="text-center">确定删除该流水?</h3><button type="button" ng-click="confirm()" class="btn btn-primary mr pull-right">确定</button><button type="button" ng-click="closeThisDialog()" class="btn btn-default pull-left">取消</button></div>
+   </script>
+</div>

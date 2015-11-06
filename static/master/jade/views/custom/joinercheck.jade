@@ -1,0 +1,45 @@
+h3 招聘成员
+  small Check for Teamworker
+
+.container-fluid(ng-controller="JoinerController as table")
+  // Editable row
+  h4.page-header 申请列表
+
+  table.table.table-bordered.table-hover.bg-white
+    tr(style='font-weight: bold')
+      td(style='width:30%') 招聘标题
+      td(style='width:20%') 姓名
+      td(style='width:20%') 手机号码
+      td(style='width:15%') QQ 
+      td(style='width:15%') 操作    
+    tr(ng-repeat='joiner in table.joiners')
+      td
+        span {{ joiner.title}}
+      td
+        span {{ joiner.name  }}
+      td
+        span {{ joiner.mobile }}
+      td
+        span {{ joiner.qq }}
+      td(style='white-space: nowrap')
+        // form
+        form.form-buttons.form-inline(editable-form='', name='rowform', onbeforesave='table.savejoiner($data, joiner.id)', ng-show='rowform.$visible', shown='table.inserted == joiner')
+        .buttons(ng-show='!rowform.$visible')
+          button.btn.btn-sm.btn-info(title="同意" ng-click='passApply(joiner.request_id)')同意
+          button.btn.btn-sm.btn-danger(title="否决" ng-click='rejectApply(joiner.request_id)')否决
+  p.text-center(ng-show='!table.joiners||table.joiners.length<1')
+            |暂无任何数据
+  script(type="text/ng-template", id="passconfirm")
+    .ngdialog-message.clearfix
+      h3.text-center
+        | 确定通过该申请?
+      
+      button.btn.btn-primary.mr.pull-right(type='button', ng-click='confirm()') 确定
+      button.btn.btn-default.pull-left(type='button', ng-click="closeThisDialog()") 取消
+  script(type="text/ng-template", id="rejectconfirm")
+    .ngdialog-message.clearfix
+      h3.text-center
+        | 确定否决该申请?
+      
+      button.btn.btn-primary.mr.pull-right(type='button', ng-click='confirm()') 确定
+      button.btn.btn-default.pull-left(type='button', ng-click="closeThisDialog()") 取消
