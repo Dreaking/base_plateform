@@ -8,7 +8,7 @@ from route import route
 from output import output
 from database import *
 
-@route('/room/apply/decline')
+@route('/place/apply/decline')
 class RoomApplyDecline:
     def POST(self):
         input = web.input(room_apply_id = None)

@@ -7401,14 +7401,14 @@ Axis.prototype = {
 					pointRange = mathMax(pointRange, seriesPointRange);
 					
 					// minPointOffset is the value padding to the left of the axis in order to make
-					// room for points with a pointRange, typically columns. When the pointPlacement option
+					// place for points with a pointRange, typically columns. When the pointPlacement option
 					// is 'between' or 'on', this padding does not apply.
 					minPointOffset = mathMax(
 						minPointOffset, 
 						isString(pointPlacement) ? 0 : seriesPointRange / 2
 					);
 					
-					// Determine the total padding needed to the length of the axis to make room for the 
+					// Determine the total padding needed to the length of the axis to make place for the
 					// pointRange. If the series' pointPlacement is 'on', no padding is added.
 					pointRangePadding = mathMax(
 						pointRangePadding,
@@ -11240,7 +11240,7 @@ Chart.prototype = {
 			options = this.options,
 			titleOptions = options.title,
 			subtitleOptions = options.subtitle,
-			autoWidth = this.spacingBox.width - 44; // 44 makes room for default context button
+			autoWidth = this.spacingBox.width - 44; // 44 makes place for default context button
 
 		if (title) {
 			title

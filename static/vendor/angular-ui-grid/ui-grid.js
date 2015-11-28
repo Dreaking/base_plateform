@@ -1351,7 +1351,7 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
               // canvasWidth = canvasWidth + 1;
 
               // if we have a grid menu, then we prune the width of the last column header
-              // to allow room for the button whilst still getting to the column menu
+              // to allow place for the button whilst still getting to the column menu
               if (columnCache.length > 0) { // && grid.options.enableGridMenu) {
                 columnCache[columnCache.length - 1].headerWidth = columnCache[columnCache.length - 1].drawnWidth - 30;
               }

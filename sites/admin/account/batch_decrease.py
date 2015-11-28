@@ -13,7 +13,7 @@ from database import *
 @route('/team/account/batch/decrease')
 class TeamAccountDecrease:
     def POST(self):
-        input = web.input(team_ids = None, amount = None, reason = None)
+        input = web.input(team_ids = None, amount = None, reason = None, layout_two_id = None)
         if input.team_ids == None or input.amount == None or input.reason == None:
             return output(110)
 
@@ -39,6 +39,14 @@ class TeamAccountDecrease:
             return output(410)
 
         db = getDb()
+        results = db.select('layout_two', vars = {'id':input.layout_two_id},
+                            where = "id=$id and (type='all' or type='payment')", what = "parent_id")
+        if len(results) == 0:
+            return output(475)
+        type = db.select('layout_one', vars = {'id':results[0].parent_id},
+                            where = "id=$id", what = 'type')[0].type
+        if type == 'increment':
+            return output(475)
 
         t = db.transaction()
         try:
@@ -48,9 +56,10 @@ class TeamAccountDecrease:
                 vars['id'] = i
                 if len(db.select('team', vars = vars, where = "team_id=$id and balance>=$amount",
                                  what = "team_id")) > 0:
-                    db.query(sql, vars = {'id':input.team_id, 'amount': input.amount})
-                    db.insert('payment', reason = input.reason, amount = input.amount, team_id = input.team_id,
-                      add_time = int(time.mktime(time.localtime())), type = 'admin-de', num = 1)
+                    if db.query(sql, vars = vars) > 0:
+                        db.insert('payment', reason = input.reason, amount = vars['amount'],
+                              team_id = vars['id'], add_time = int(time.mktime(time.localtime())),
+                              layout_two_id = input.layout_two_id, num = 1)
             t.commit()
         except:
             t.rollback()

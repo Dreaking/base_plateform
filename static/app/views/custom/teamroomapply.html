@@ -23,26 +23,20 @@
                   <legend>选择事项</legend>
                   <div class="row">
                      <div class="col-md-4"></div>
+                     <div class="col-md-1"></div>
                      <div class="col-md-2">
-                        <!-- START button group-->
                         <div dropdown="dropdown" class="btn-group block-center">
-                           <button dropdown-toggle="" class="btn btn-default">{{apply.applything?apply.applything:'点击下拉选择申请事项'}} <b class="caret"></b>
+                           <button dropdown-toggle="" class="btn btn-default">{{apply.applything.name?apply.applything.name:'点击下拉选择申请事项'}} <b class="caret"></b>
                            </button>
                            <ul role="menu" class="dropdown-menu animated animated flipInX">
-                              <li><a ng-click="setApplyThing('教五会议室')">教五会议室</a>
+                              <li ng-if="roomLists.length&lt;1"><a>暂无可申请的事项</a>
                               </li>
-                              <li><a ng-click="setApplyThing('教六会议室')">教六会议室</a>
-                              </li>
-                              <li><a ng-click="apply.setApplyThing('大厅使用')">大厅使用</a>
+                              <li ng-repeat="room in roomLists" ng-click="setApplyThing(room)">
+                                 <a ng-bind="::room.name"></a>
                               </li>
                            </ul>
                         </div>
-                        <input type="text" name="applything" ng-model="apply.applything" data-parsley-group="step1" style="display:none;" required="required" class="form-control" />
-                     </div>
-                     <div class="col-md-2">
-                        <div class="form-group">
-                           <input type="text" placeholder="其他" name="applything" ng-model="apply.applything" class="form-control" />
-                        </div>
+                        <input type="text" name="applything" ng-model="apply.applything.id" data-parsley-group="step1" style="display:none;" required="required" class="form-control" />
                      </div>
                   </div>
                   <!-- END row -->

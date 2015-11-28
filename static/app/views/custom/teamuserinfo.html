@@ -30,6 +30,19 @@
                   </fieldset>
                   <fieldset>
                      <div class="form-group">
+                        <label class="col-sm-3 control-label">性别</label>
+                        <div class="col-sm-6">
+                           <label class="radio-inline c-radio">
+                              <input id="inlineradio1" type="radio" name="male" value="1" ng-model="form.user.is_male" />
+                              <span class="fa fa-circle"></span>男</label>
+                           <label class="radio-inline c-radio">
+                              <input id="inlineradio2" type="radio" name="male" value="0" ng-model="form.user.is_male" />
+                              <span class="fa fa-circle"></span>女</label>
+                        </div>
+                     </div>
+                  </fieldset>
+                  <fieldset>
+                     <div class="form-group">
                         <label class="col-sm-3 control-label">学号</label>
                         <div class="col-sm-6">
                            <input type="text" name="student_number" ng-pattern="/^[0-9]{10}$/" placeholder="请输入学号" required="" ng-model="form.user.sid" class="form-control" />
@@ -40,11 +53,31 @@
                   </fieldset>
                   <fieldset>
                      <div class="form-group">
+                        <label class="col-sm-3 control-label">邮箱</label>
+                        <div class="col-sm-6">
+                           <input type="text" name="student_email" ng-pattern="/^([a-zA-Z0-9_.-])+@(([a-zA-Z0-9-])+.)+([a-zA-Z0-9]{2,4})+$/" placeholder="请输入邮箱" required="" ng-model="form.user.email" class="form-control" />
+                           <span ng-show="form.validateInput('student_email', 'required')" class="text-danger">这项是必填项</span>
+                           <span ng-show="form.validateInput('student_email', 'pattern')" class="text-danger">请输入正确邮箱</span>
+                        </div>
+                     </div>
+                  </fieldset>
+                  <fieldset>
+                     <div class="form-group">
                         <label class="col-sm-3 control-label">手机号码</label>
                         <div class="col-sm-6">
                            <input type="text" name="phone_number" ng-pattern="/^[1][0-9]{10}$/" required="" ng-model="form.user.phone" class="form-control" />
                            <span ng-show="form.validateInput('phone_number', 'required')" class="text-danger">这项是必填项</span>
                            <span ng-show="form.validateInput('phone_number', 'pattern')" class="text-danger">请输入正确手机号码</span>
+                        </div>
+                     </div>
+                  </fieldset>
+                  <fieldset>
+                     <div class="form-group">
+                        <label class="col-sm-3 control-label">年级</label>
+                        <div class="col-sm-6">
+                           <input type="text" name="grade" ng-pattern="/^[2][0-9]{3}$/" required="" ng-model="form.user.grade" placeholder="年级/例:2013" class="form-control" />
+                           <span ng-show="form.validateInput('grade', 'required')" class="text-danger">这项是必填项</span>
+                           <span ng-show="form.validateInput('grade', 'pattern')" class="text-danger">请输入正确年级</span>
                         </div>
                      </div>
                   </fieldset>
@@ -62,6 +95,135 @@
                         <div class="col-sm-6">
                            <select name="major" required="" ng-options="g.major_id as g.major_name for g in form.majors" ng-model="form.user.major_id" class="form-control"></select>
                            <span ng-show="form.validateInput('major', 'required')" class="text-danger">请输入正确手机号码</span>
+                        </div>
+                     </div>
+                  </fieldset>
+                  <fieldset>
+                     <div class="input-group">
+                        <label class="col-sm-3 control-label">生日</label>
+                        <div class="col-sm-6">
+                           <div class="input-group">
+                              <input type="text" name="brthday" datepicker-popup="{{form.format}}" ng-model="form.user.birthday" is-open="form.dateopened" max-date="'2017-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true"
+                              close-text="Close" class="form-control" />
+                              <span class="input-group-btn">
+                                 <button type="button" ng-click="form.dateopen($event)" class="btn btn-default">
+                                    <em class="icon-calendar table-responsive b0"></em>
+                                 </button>
+                              </span>
+                           </div>
+                           <span ng-show="form.validateInput('brthday', 'required')" class="text-danger">这项是必填项</span>
+                           <span ng-show="form.validateInput('brthday', 'pattern')" class="text-danger">请输入正确生日</span>
+                        </div>
+                     </div>
+                  </fieldset>
+                  <fieldset>
+                     <div class="form-group">
+                        <label class="col-sm-3 control-label">户口性质</label>
+                        <div class="col-sm-6">
+                           <ui-select ng-model="form.user.characters" theme="bootstrap" required="required">
+                              <ui-select-match placeholder="户口性质或输入关键词">{{$select.selected}}</ui-select-match>
+                              <ui-select-choices repeat="home in form.HOMETYPE | singleFilter: $select.search">
+                                 <div ng-bind="::home | highlight: $select.search"></div>
+                              </ui-select-choices>
+                           </ui-select>
+                        </div>
+                     </div>
+                  </fieldset>
+                  <fieldset>
+                     <div class="form-group">
+                        <label class="col-sm-3 control-label">身份证件类型</label>
+                        <div class="col-sm-6">
+                           <select ng-model="form.user.id_type" required="required" class="form-control">
+                              <option value="{{idcardtype}}" ng-repeat="idcardtype in form.IDCARDTYPE">{{::idcardtype}}</option>
+                           </select>
+                        </div>
+                     </div>
+                  </fieldset>
+                  <fieldset>
+                     <div class="form-group">
+                        <label class="col-sm-3 control-label">身份证件号码</label>
+                        <div class="col-sm-6">
+                           <input type="text" name="grade" ng-pattern="/(^[0-9]{15}$)|(^[0-9]{17}([0-9]|X)$)/" required="" ng-model="form.user.id_number" placeholder="身份证件号码" class="form-control" />
+                           <span ng-show="form.validateInput('grade', 'required')" class="text-danger">这项是必填项</span>
+                           <span ng-show="form.validateInput('grade', 'pattern')" class="text-danger">请输入正确身份证件号码</span>
+                        </div>
+                     </div>
+                  </fieldset>
+                  <fieldset>
+                     <div class="form-group">
+                        <label class="col-sm-3 control-label">政治面貌</label>
+                        <div class="col-sm-6">
+                           <select ng-model="form.user.political_face" required="required" class="form-control">
+                              <option value="{{role}}" ng-repeat="role in form.ROLE">{{::role}}</option>
+                           </select>
+                        </div>
+                     </div>
+                  </fieldset>
+                  <fieldset>
+                     <div class="form-group">
+                        <label class="col-sm-3 control-label">民族</label>
+                        <div class="col-sm-6">
+                           <select ng-model="form.user.nationality" required="required" class="form-control">
+                              <option value="{{nation}}" ng-repeat="nation in form.NATIONS">{{::nation}}</option>
+                           </select>
+                        </div>
+                     </div>
+                  </fieldset>
+                  <fieldset>
+                     <div class="form-group">
+                        <label class="col-sm-3 control-label">文化程度</label>
+                        <div class="col-sm-6">
+                           <select ng-model="form.user.education_degree" required="required" class="form-control">
+                              <option value="{{iq}}" ng-repeat="iq in form.IQ">{{::iq}}</option>
+                           </select>
+                        </div>
+                     </div>
+                  </fieldset>
+                  <fieldset>
+                     <div class="form-group">
+                        <label class="col-sm-3 control-label">国籍</label>
+                        <div class="col-sm-6">
+                           <ui-select ng-model="form.user.citizenship" theme="bootstrap" required="required">
+                              <ui-select-match placeholder="选择国籍或输入区号搜索">{{$select.selected}}</ui-select-match>
+                              <ui-select-choices repeat="county in form.COUNTYS | singleFilter: $select.search">
+                                 <div ng-bind="::county | highlight: $select.search"></div>
+                              </ui-select-choices>
+                           </ui-select>
+                        </div>
+                     </div>
+                  </fieldset>
+                  <fieldset>
+                     <div class="form-group">
+                        <label class="col-sm-3 control-label">户口性质</label>
+                        <div class="col-sm-6">
+                           <ui-select ng-model="form.user.characters" theme="bootstrap" required="required">
+                              <ui-select-match placeholder="户口性质或输入关键词">{{$select.selected}}</ui-select-match>
+                              <ui-select-choices repeat="home in form.HOMETYPE | singleFilter: $select.search">
+                                 <div ng-bind="::home | highlight: $select.search"></div>
+                              </ui-select-choices>
+                           </ui-select>
+                        </div>
+                     </div>
+                  </fieldset>
+                  <fieldset>
+                     <div class="form-group">
+                        <label class="col-sm-3 control-label">户籍地址（所属行政区划）</label>
+                        <div class="col-sm-6">
+                           <ui-select ng-model="form.user.address" theme="bootstrap" reset-search-input="false" required="required">
+                              <ui-select-match placeholder="请输入区号搜索">{{$select.selected}}</ui-select-match>
+                              <ui-select-choices repeat="address in form.addresses track by $index" refresh="form.refreshAddresses($select.search)" refresh-delay="1000">
+                                 <div ng-bind-html="address | highlight: $select.search"></div>
+                              </ui-select-choices>
+                           </ui-select>
+                        </div>
+                     </div>
+                  </fieldset>
+                  <fieldset>
+                     <div class="form-group">
+                        <label class="col-sm-3 control-label">户籍地址（详细地址）</label>
+                        <div class="col-sm-6">
+                           <input type="text" name="grade" required="" ng-model="form.user.address_detail" placeholder="详细地址" class="form-control" />
+                           <span ng-show="form.validateInput('grade', 'required')" class="text-danger">这项是必填项</span>
                         </div>
                      </div>
                   </fieldset>

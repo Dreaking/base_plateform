@@ -40,6 +40,8 @@ h3 招聘管理
           td.text-center
             label
               button.btn.btn-sm.btn-danger(title="删除" ng-click='pag.delectPost(post.recruit_id)') 删除
+    p.text-center(ng-show='!pag.posts||pag.posts.length<1')
+            |暂无任何数据
       //- template
       script(type="text/ng-template", id="confirm")
         .ngdialog-message.clearfix

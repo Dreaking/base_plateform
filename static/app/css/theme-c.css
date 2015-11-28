@@ -159,3 +159,6 @@ body,
   background-color: #ffffff;
   color: #515253;
 }
+.form-wizard > ol > li.active {
+  background-color: #9289ca;
+}

@@ -59,12 +59,23 @@ class TeamFlowExcelExport:
         for i in results:
             add_time = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(i.add_time))
             flow_list.append({'flow_id':i.flow_id, 'description':i.description, 'amount':i.amount,
-                                'operator_name':i.operator_name, 'add_time':add_time})
+                                'operator_name':i.operator_name, 'add_time':add_time,
+                              'layout_two_id':i.layout_two_id})
+        for i in flow_list:
+            layout_two = db.select('layout_two', vars = {'id':i['layout_two_id']}, where = 'id=$id',
+                                   what = 'parent_id,name')[0]
+            i['layout_one_id'] = layout_two.parent_id
+            i['layout_two_name'] = layout_two.name
+            layout_one = db.select('layout_one', vars = {'id':layout_two.parent_id},
+                                             where = "id=$id", what = 'name, type')[0]
+            i['layout_one_name'] = layout_one.name
+            i['layout_one_type'] = layout_one.type
 
         excel_file = xlwt.Workbook()
         sheet = excel_file.add_sheet('flow_list')
-        li = [u'id', u'描述', u'操作人', u'金额', u'增加时间']
-        col_name = ['flow_id', 'description', 'operator_name', 'amount', 'add_time']
+        li = [u'id', u'描述', u'一级类型名', u'二级类型名', u'操作人', u'金额', u'添加时间']
+        col_name = ['flow_id', 'description', 'layout_one_name', 'layout_two_name',
+                    'operator_name', 'amount', 'add_time']
         for col, data in enumerate(li):
             sheet.write(0, col, data)
 
@@ -72,6 +83,21 @@ class TeamFlowExcelExport:
             row += 1
             for col, name in enumerate(col_name):
                 sheet.write(row, col, data[name])
+
+        total_expend = 0
+        total_income = 0
+        for i in flow_list:
+            if i['layout_one_type'] == 'increment':
+                total_income += i['amount']
+            else:
+                total_expend += i['amount']
+        length = len(flow_list)
+        sheet.write(length + 2, 0, u'总收入')
+        sheet.write(length + 2, 1, total_income)
+        sheet.write(length + 3, 0, u'总支出')
+        sheet.write(length + 3, 1, total_expend)
+        sheet.write(length + 4, 0, u'总利润')
+        sheet.write(length + 4, 1, total_income - total_expend)
 
         data = StringIO.StringIO()
         excel_file.save(data)
@@ -86,7 +112,7 @@ class TeamFlowExcelExport:
         except:
             return output(700)
 
-        return output(200, {'file_url':'http://120.24.209.197/excel/file/' + filename})
+        return output(200, {'file_url':'/excel/file/' + filename})
 
 
 

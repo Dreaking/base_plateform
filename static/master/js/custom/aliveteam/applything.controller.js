@@ -5,13 +5,13 @@
     .module('app.controllers')
     .controller('ApplyThingController', ApplyThingController);
 
-  ApplyThingController.$inject = ['$scope', '$http', '$timeout', '$state', 'teamResourceApi', 'ngDialog'];
+  ApplyThingController.$inject = ['$scope', '$http', '$timeout', '$state', 'teamResourceApi','schoolResourceApi', 'ngDialog'];
 
-  function ApplyThingController($scope, $http, $timeout, $state, teamResourceApi, ngDialog) {
+  function ApplyThingController($scope, $http, $timeout, $state, teamResourceApi,schoolResourceApi, ngDialog) {
     var vm = $scope,
     NOW=new Date();
     vm.apply = {
-      applything: '',
+      applything: {name:'',id:''},
       endtime:null,
       starttime:null,
       startMinue:NOW,
@@ -25,6 +25,13 @@
       mstep: [1, 5, 10, 15, 25, 30]
     };
     vm.ismeridian = true;
+    vm.getRoomList=function(){
+      schoolResourceApi.PlaceQuery().$promise.then(function(data){
+        console.log(data);
+        vm.roomLists=data.data;
+        console.log(vm.roomLists)
+      })
+    }
     vm.toggleMode = function() {
       vm.ismeridian = !vm.ismeridian;
     };
@@ -35,12 +42,12 @@
       vm.mytime = d;
     };
 
-    vm.changed = function() {
-      console.log('Time changed to: ' + vm.apply.startMinue);
-    };
-
-    vm.setApplyThing = function(value) {
-      vm.apply.applything = value;
+    vm.getRoomList()
+    vm.setApplyThing = function(room) {
+      $timeout(function(){
+      vm.apply.applything.name = room.name;
+      vm.apply.applything.id = room.id;
+      },0,true)
     }
     vm.clear = function() {
       vm.apply.endtime = '';
@@ -86,7 +93,7 @@
         endtime = Math.round(new Date(vm.apply.endtime).getTime() / 1000) + (new Date(vm.apply.endMinue).getHours()) * 3600 + (new Date(vm.apply.endMinue).getMinutes()) * 60;
       if (starttime < endtime && vm.apply.applything != '')
         teamResourceApi.ApplyForThing({
-          place_name: vm.apply.applything,
+          place_id: vm.apply.applything.id,
           start_time: starttime,
           end_time: endtime
         }, function(data) {

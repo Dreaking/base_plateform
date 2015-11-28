@@ -268,7 +268,7 @@
         templateUrl: helper.basepath('custom/posts.html')
       })
       .state('admin.changepassword', {
-        url: '/changepassword',
+        url: '/ChangePassword',
         title: 'changepassword',
         data: {
           authorizedRoles: [USER_ROLES.baseadmin, USER_ROLES.admin]
@@ -287,11 +287,11 @@
         resolve: helper.resolveFor('datatables')
       })
       .state('admin.nestable', {
-        url: '/nestable',
-        title: 'Nestable',
-        templateUrl: helper.basepath('custom/nestable.html'),
-        controller:'NestableController',
-        controllerAs:'nest',
+        url: '/Cascade',
+        title: '级联列表管理',
+        templateUrl: helper.basepath('custom/cascade.html'),
+        controller:'CascadeController',
+        controllerAs:'cascade',
         data: {
           authorizedRoles: [USER_ROLES.baseadmin, USER_ROLES.admin]
         },
@@ -395,7 +395,8 @@
       .state('team.recruit', {
         url: '/recruit',
         title: '招聘管理',
-        controller: 'TeamRecruitController',
+        controller: 'TeamPostController',
+        controllerAs:'pag',
         data: {
           authorizedRoles: [USER_ROLES.teamleader, USER_ROLES.teamworker]
         },
@@ -458,6 +459,7 @@
           authorizedRoles: [USER_ROLES.teamleader, USER_ROLES.teamworker]
         },
         templateUrl: helper.basepath('custom/teamuserinfo.html'),
+        resolve: helper.resolveFor('ui.select','ngDialog')
       })
       .state('visitor', {
         abstract: true,
@@ -468,6 +470,7 @@
         url: '/perfectinfo',
         title: '个人信息',
         templateUrl: helper.basepath('custom/visitorinfo.html'),
+        resolve: helper.resolveFor('ui.select','ngDialog'),
         data: {
           authorizedRoles: [USER_ROLES.visitor]
         }
@@ -475,11 +478,13 @@
       .state('visitor.applyteam', {
         url: '/applyteam',
         title: '申请新团队',
+        controller:'ApplyTeamController',
+        controllerAs:'apply',
         templateUrl: helper.basepath('custom/applyteam.html'),
         data: {
           authorizedRoles: [USER_ROLES.visitor]
         },
-        resolve: helper.resolveFor('ueditor','angularFileUpload', 'ngDialog')
+        resolve: helper.resolveFor('ueditor','xeditable','parsley','ui.select','ngDialog')
       })
       // 
       // CUSTOM RESOLVES

@@ -1,0 +1,448 @@
+<h3>级联列表管理
+   <small>Cascade List Management</small>
+</h3>
+<div class="panel panel-default">
+   <div class="panel-heading">收入类型级联</div>
+   <div style="overflow-x: visible;" class="table-responsive">
+      <table class="table table-striped table-bordered table-hover">
+         <thead>
+            <tr>
+               <th>名称</th>
+               <th class="text-center">一级级联</th>
+               <th class="text-center">二级级联</th>
+            </tr>
+         </thead>
+         <tbody>
+            <tr>
+               <td>通用类型</td>
+               <td class="form-inline editable-wrap text-center">
+                  <div dropdown="dropdown" class="btn-group">
+                     <button type="button" ng-disabled="disabled" dropdown-toggle="" class="btn btn-default btn-sm">
+                        <em class="fa fa-angle-down fa-fw"></em>{{cascade.incomeCommonOneSelected?cascade.incomeCommonOneSelected.name:'请选择要操作的级联'}}</button>
+                     <ul role="menu" class="dropdown-menu">
+                        <li ng-if="cascade.incomeCommonBrige.length&lt;1"><a>暂无级联选项</a>
+                        </li>
+                        <li ng-repeat="(key,value) in cascade.incomeCommonBrige track by $index">
+                           <a ng-bind="key" ng-click="cascade.changeOneSelected(cascade.incomeCommon,cascade.incomeCommonOneSelected,cascade.incomeCommonTwoSelected,key,value)"></a>
+                        </li>
+                     </ul>
+                  </div>
+                  <div class="editable-controls form-group">
+                     <input type="text" ng-model="cascade.incomeCommonOneSelected.name" class="editable-has-buttons editable-input form-control input-sm" />
+                     <span class="editable-buttons">
+                        <button type="button" ng-click="cascade.layoutOneEdit(cascade.incomeCommonOneSelected,cascade.incomeCommonBrige)" class="btn btn-success btn-sm">
+                           <span class="fa fa-check"></span>
+                        </button>
+                        <button type="button" ng-click="cascade.layoutOneDelect(cascade.incomeCommonOneSelected,cascade.incomeCommonBrige)" class="btn btn-danger btn-sm">
+                           <span class="fa fa-minus"></span>
+                        </button>
+                     </span>
+                     <span class="editable-buttons">
+                        <button type="button" ng-click="cascade.layoutOneAdd(cascade.incomeCommonOneSelected,cascade.incomeCommonBrige,0)" class="btn btn-default btn-sm">
+                           <span class="fa fa-plus"></span>
+                        </button>
+                     </span>
+                  </div>
+               </td>
+               <td class="form-inline editable-wrap text-center">
+                  <div dropdown="dropdown" class="btn-group">
+                     <button type="button" ng-disabled="disabled" dropdown-toggle="" class="btn btn-default btn-sm">
+                        <em class="fa fa-angle-down fa-fw"></em>{{cascade.incomeCommonTwoSelected.name?cascade.incomeCommonTwoSelected.name:'请选择要操作的级联'}}</button>
+                     <ul role="menu" class="dropdown-menu">
+                        <li ng-if="!cascade.incomeCommon[cascade.incomeCommonOneSelected.name]||cascade.incomeCommon[cascade.incomeCommonOneSelected.name].length&lt;1"><a>暂无级联选项</a>
+                        </li>
+                        <li ng-repeat="item in cascade.incomeCommon[cascade.incomeCommonOneSelected.name] track by $index" ng-if="cascade.incomeCommonOneSelected">
+                           <a value="item.layout_two_id" ng-bind="item.name" ng-click="cascade.changeSelected(cascade.incomeCommonTwoSelected,item.name)"></a>
+                        </li>
+                     </ul>
+                  </div>
+                  <div class="editable-controls form-group">
+                     <input type="text" ng-model="cascade.incomeCommonTwoSelected.name" class="editable-has-buttons editable-input form-control input-sm" />
+                     <span class="editable-buttons">
+                        <button type="button" ng-click="cascade.layoutTwoEdit(cascade.incomeCommonTwoSelected,cascade.incomeCommon[cascade.incomeCommonOneSelected.name])" class="btn btn-success btn-sm">
+                           <span class="fa fa-check"></span>
+                        </button>
+                        <button type="button" ng-click="cascade.layoutTwoDelect(cascade.incomeCommonTwoSelected,cascade.incomeCommon[cascade.incomeCommonOneSelected.name])" class="btn btn-danger btn-sm">
+                           <span class="fa fa-minus"></span>
+                        </button>
+                     </span>
+                  </div>
+                  <span class="editable-buttons">
+                     <button type="button" ng-click="cascade.layoutTwoAdd(cascade.incomeCommonOneSelected,cascade.incomeCommonTwoSelected,cascade.incomeCommon[cascade.incomeCommonOneSelected.name],0)" class="btn btn-default btn-sm">
+                        <span class="fa fa-plus"></span>
+                     </button>
+                  </span>
+               </td>
+            </tr>
+            <tr>
+               <td>补贴类型</td>
+               <td class="form-inline editable-wrap text-center">
+                  <div dropdown="dropdown" class="btn-group">
+                     <button type="button" ng-disabled="disabled" dropdown-toggle="" class="btn btn-default btn-sm">
+                        <em class="fa fa-angle-down fa-fw"></em>{{cascade.incomePaymentOneSelected?cascade.incomePaymentOneSelected.name:'请选择要操作的级联'}}</button>
+                     <ul role="menu" class="dropdown-menu">
+                        <li ng-if="cascade.incomePaymentBrige.length&lt;1"><a>暂无级联选项</a>
+                        </li>
+                        <li ng-repeat="(key,value) in cascade.incomePaymentBrige track by $index">
+                           <a ng-bind="key" ng-click="cascade.changeOneSelected(cascade.incomePayment,cascade.incomePaymentOneSelected,cascade.incomePaymentTwoSelected,key,value)"></a>
+                        </li>
+                     </ul>
+                  </div>
+                  <div class="editable-controls form-group">
+                     <input type="text" ng-model="cascade.incomePaymentOneSelected.name" class="editable-has-buttons editable-input form-control input-sm" />
+                     <span class="editable-buttons">
+                        <button type="button" ng-click="cascade.layoutOneEdit(cascade.incomePaymentOneSelected,cascade.incomePaymentBrige)" class="btn btn-success btn-sm">
+                           <span class="fa fa-check"></span>
+                        </button>
+                        <button type="button" ng-click="cascade.layoutOneDelect(cascade.incomePaymentOneSelected,cascade.incomePaymentBrige)" class="btn btn-danger btn-sm">
+                           <span class="fa fa-minus"></span>
+                        </button>
+                     </span>
+                     <span class="editable-buttons">
+                        <button type="button" ng-click="cascade.layoutOneAdd(cascade.incomePaymentOneSelected,cascade.incomePaymentBrige,0)" class="btn btn-default btn-sm">
+                           <span class="fa fa-plus"></span>
+                        </button>
+                     </span>
+                  </div>
+               </td>
+               <td class="form-inline editable-wrap text-center">
+                  <div dropdown="dropdown" class="btn-group">
+                     <button type="button" ng-disabled="disabled" dropdown-toggle="" class="btn btn-default btn-sm">
+                        <em class="fa fa-angle-down fa-fw"></em>{{cascade.incomePaymentTwoSelected.name?cascade.incomePaymentTwoSelected.name:'请选择要操作的级联'}}</button>
+                     <ul role="menu" class="dropdown-menu">
+                        <li ng-if="!cascade.incomePayment[cascade.incomePaymentOneSelected.name]||cascade.incomePayment[cascade.incomePaymentOneSelected.name].length&lt;1"><a>暂无级联选项</a>
+                        </li>
+                        <li ng-repeat="item in cascade.incomePayment[cascade.incomePaymentOneSelected.name] track by $index" ng-if="cascade.incomePaymentOneSelected">
+                           <a value="item.layout_two_id" ng-bind="item.name" ng-click="cascade.changeSelected(cascade.incomePaymentTwoSelected,item.name)"></a>
+                        </li>
+                     </ul>
+                  </div>
+                  <div class="editable-controls form-group">
+                     <input type="text" ng-model="cascade.incomePaymentTwoSelected.name" class="editable-has-buttons editable-input form-control input-sm" />
+                     <span class="editable-buttons">
+                        <button type="button" ng-click="cascade.layoutTwoEdit(cascade.incomePaymentTwoSelected,cascade.incomePayment[cascade.incomePaymentOneSelected.name])" class="btn btn-success btn-sm">
+                           <span class="fa fa-check"></span>
+                        </button>
+                        <button type="button" ng-click="cascade.layoutTwoDelect(cascade.incomePaymentTwoSelected,cascade.incomePayment[cascade.incomePaymentOneSelected.name])" class="btn btn-danger btn-sm">
+                           <span class="fa fa-minus"></span>
+                        </button>
+                     </span>
+                  </div>
+                  <span class="editable-buttons">
+                     <button type="button" ng-click="cascade.layoutTwoAdd(cascade.incomePaymentOneSelected,cascade.incomePaymentTwoSelected,cascade.incomePayment[cascade.incomePaymentOneSelected.name],1)" class="btn btn-default btn-sm">
+                        <span class="fa fa-plus"></span>
+                     </button>
+                  </span>
+               </td>
+            </tr>
+            <tr>
+               <td>流水类型</td>
+               <td class="form-inline editable-wrap text-center">
+                  <div dropdown="dropdown" class="btn-group">
+                     <button type="button" ng-disabled="disabled" dropdown-toggle="" class="btn btn-default btn-sm">
+                        <em class="fa fa-angle-down fa-fw"></em>{{cascade.incomeFlowOneSelected?cascade.incomeFlowOneSelected.name:'请选择要操作的级联'}}</button>
+                     <ul role="menu" class="dropdown-menu">
+                        <li ng-if="cascade.incomeFlowBrige.length&lt;1"><a>暂无级联选项</a>
+                        </li>
+                        <li ng-repeat="(key,value) in cascade.incomeFlowBrige track by $index">
+                           <a ng-bind="key" ng-click="cascade.changeOneSelected(cascade.incomeFlow,cascade.incomeFlowOneSelected,cascade.incomeFlowTwoSelected,key,value)"></a>
+                        </li>
+                     </ul>
+                  </div>
+                  <div class="editable-controls form-group">
+                     <input type="text" ng-model="cascade.incomeFlowOneSelected.name" class="editable-has-buttons editable-input form-control input-sm" />
+                     <span class="editable-buttons">
+                        <button type="button" ng-click="cascade.layoutOneEdit(cascade.incomeFlowOneSelected,cascade.incomeFlowBrige)" class="btn btn-success btn-sm">
+                           <span class="fa fa-check"></span>
+                        </button>
+                        <button type="button" ng-click="cascade.layoutOneDelect(cascade.incomeFlowOneSelected,cascade.incomeFlowBrige)" class="btn btn-danger btn-sm">
+                           <span class="fa fa-minus"></span>
+                        </button>
+                     </span>
+                     <span class="editable-buttons">
+                        <button type="button" ng-click="cascade.layoutOneAdd(cascade.incomeFlowOneSelected,cascade.incomeFlowBrige,0)" class="btn btn-default btn-sm">
+                           <span class="fa fa-plus"></span>
+                        </button>
+                     </span>
+                  </div>
+               </td>
+               <td class="form-inline editable-wrap text-center">
+                  <div dropdown="dropdown" class="btn-group">
+                     <button type="button" ng-disabled="disabled" dropdown-toggle="" class="btn btn-default btn-sm">
+                        <em class="fa fa-angle-down fa-fw"></em>{{cascade.incomeFlowTwoSelected.name?cascade.incomeFlowTwoSelected.name:'请选择要操作的级联'}}</button>
+                     <ul role="menu" class="dropdown-menu">
+                        <li ng-if="!cascade.incomeFlow[cascade.incomeFlowOneSelected.name]||cascade.incomeFlow[cascade.incomeFlowOneSelected.name].length&lt;1"><a>暂无级联选项</a>
+                        </li>
+                        <li ng-repeat="item in cascade.incomeFlow[cascade.incomeFlowOneSelected.name] track by $index" ng-if="cascade.incomeFlowOneSelected">
+                           <a value="item.layout_two_id" ng-bind="item.name" ng-click="cascade.changeSelected(cascade.incomeFlowTwoSelected,item.name)"></a>
+                        </li>
+                     </ul>
+                  </div>
+                  <div class="editable-controls form-group">
+                     <input type="text" ng-model="cascade.incomeFlowTwoSelected.name" class="editable-has-buttons editable-input form-control input-sm" />
+                     <span class="editable-buttons">
+                        <button type="button" ng-click="cascade.layoutTwoEdit(cascade.incomeFlowTwoSelected,cascade.incomeFlow[cascade.incomeFlowOneSelected.name])" class="btn btn-success btn-sm">
+                           <span class="fa fa-check"></span>
+                        </button>
+                        <button type="button" ng-click="cascade.layoutTwoDelect(cascade.incomeFlowTwoSelected,cascade.incomeFlow[cascade.incomeFlowOneSelected.name])" class="btn btn-danger btn-sm">
+                           <span class="fa fa-minus"></span>
+                        </button>
+                     </span>
+                  </div>
+                  <span class="editable-buttons">
+                     <button type="button" ng-click="cascade.layoutTwoAdd(cascade.incomeFlowOneSelected,cascade.incomeFlowTwoSelected,cascade.incomeFlow[cascade.incomeFlowOneSelected.name],2)" class="btn btn-default btn-sm">
+                        <span class="fa fa-plus"></span>
+                     </button>
+                  </span>
+               </td>
+            </tr>
+         </tbody>
+      </table>
+   </div>
+</div>
+<div class="panel panel-default">
+   <div class="panel-heading">支出类型级联</div>
+   <div style="overflow-x: visible;" class="table-responsive">
+      <table class="table table-striped table-bordered table-hover">
+         <thead>
+            <tr>
+               <th>名称</th>
+               <th class="text-center">一级级联</th>
+               <th class="text-center">二级级联</th>
+            </tr>
+         </thead>
+         <tbody>
+            <tr>
+               <td>通用类型</td>
+               <td class="form-inline editable-wrap text-center">
+                  <div dropdown="dropdown" class="btn-group">
+                     <button type="button" ng-disabled="disabled" dropdown-toggle="" class="btn btn-default btn-sm">
+                        <em class="fa fa-angle-down fa-fw"></em>{{cascade.payoutCommonOneSelected?cascade.payoutCommonOneSelected.name:'请选择要操作的级联'}}</button>
+                     <ul role="menu" class="dropdown-menu">
+                        <li ng-if="cascade.payoutCommonBrige.length&lt;1"><a>暂无级联选项</a>
+                        </li>
+                        <li ng-repeat="(key,value) in cascade.payoutCommonBrige track by $index">
+                           <a ng-bind="key" ng-click="cascade.changeOneSelected(cascade.payoutCommon,cascade.payoutCommonOneSelected,cascade.payoutCommonTwoSelected,key,value)"></a>
+                        </li>
+                     </ul>
+                  </div>
+                  <div class="editable-controls form-group">
+                     <input type="text" ng-model="cascade.payoutCommonOneSelected.name" class="editable-has-buttons editable-input form-control input-sm" />
+                     <span class="editable-buttons">
+                        <button type="button" ng-click="cascade.layoutOneEdit(cascade.payoutCommonOneSelected,cascade.payoutCommonBrige)" class="btn btn-success btn-sm">
+                           <span class="fa fa-check"></span>
+                        </button>
+                        <button type="button" ng-click="cascade.layoutOneDelect(cascade.payoutCommonOneSelected,cascade.payoutCommonBrige)" class="btn btn-danger btn-sm">
+                           <span class="fa fa-minus"></span>
+                        </button>
+                     </span>
+                     <span class="editable-buttons">
+                        <button type="button" ng-click="cascade.layoutOneAdd(cascade.payoutCommonOneSelected,cascade.payoutCommonBrige,1)" class="btn btn-default btn-sm">
+                           <span class="fa fa-plus"></span>
+                        </button>
+                     </span>
+                  </div>
+               </td>
+               <td class="form-inline editable-wrap text-center">
+                  <div dropdown="dropdown" class="btn-group">
+                     <button type="button" ng-disabled="disabled" dropdown-toggle="" class="btn btn-default btn-sm">
+                        <em class="fa fa-angle-down fa-fw"></em>{{cascade.payoutCommonTwoSelected.name?cascade.payoutCommonTwoSelected.name:'请选择要操作的级联'}}</button>
+                     <ul role="menu" class="dropdown-menu">
+                        <li ng-if="!cascade.payoutCommon[cascade.payoutCommonOneSelected.name]||cascade.payoutCommon[cascade.payoutCommonOneSelected.name].length&lt;1"><a>暂无级联选项</a>
+                        </li>
+                        <li ng-repeat="item in cascade.payoutCommon[cascade.payoutCommonOneSelected.name] track by $index" ng-if="cascade.payoutCommonOneSelected">
+                           <a value="item.layout_two_id" ng-bind="item.name" ng-click="cascade.changeSelected(cascade.payoutCommonTwoSelected,item.name)"></a>
+                        </li>
+                     </ul>
+                  </div>
+                  <div class="editable-controls form-group">
+                     <input type="text" ng-model="cascade.payoutCommonTwoSelected.name" class="editable-has-buttons editable-input form-control input-sm" />
+                     <span class="editable-buttons">
+                        <button type="button" ng-click="cascade.layoutTwoEdit(cascade.payoutCommonTwoSelected,cascade.payoutCommon[cascade.payoutCommonOneSelected.name])" class="btn btn-success btn-sm">
+                           <span class="fa fa-check"></span>
+                        </button>
+                        <button type="button" ng-click="cascade.layoutTwoDelect(cascade.payoutCommonTwoSelected,cascade.payoutCommon[cascade.payoutCommonOneSelected.name])" class="btn btn-danger btn-sm">
+                           <span class="fa fa-minus"></span>
+                        </button>
+                     </span>
+                  </div>
+                  <span class="editable-buttons">
+                     <button type="button" ng-click="cascade.layoutTwoAdd(cascade.payoutCommonOneSelected,cascade.payoutCommonTwoSelected,cascade.payoutCommon[cascade.payoutFlowOneSelected.name],0)" class="btn btn-default btn-sm">
+                        <span class="fa fa-plus"></span>
+                     </button>
+                  </span>
+               </td>
+            </tr>
+            <tr>
+               <td>补贴类型</td>
+               <td class="form-inline editable-wrap text-center">
+                  <div dropdown="dropdown" class="btn-group">
+                     <button type="button" ng-disabled="disabled" dropdown-toggle="" class="btn btn-default btn-sm">
+                        <em class="fa fa-angle-down fa-fw"></em>{{cascade.payoutPaymentOneSelected?cascade.payoutPaymentOneSelected.name:'请选择要操作的级联'}}</button>
+                     <ul role="menu" class="dropdown-menu">
+                        <li ng-if="cascade.payoutPaymentBrige.length&lt;1"><a>暂无级联选项</a>
+                        </li>
+                        <li ng-repeat="(key,value) in cascade.payoutPaymentBrige track by $index">
+                           <a ng-bind="key" ng-click="cascade.changeOneSelected(cascade.payoutPayment,cascade.payoutPaymentOneSelected,cascade.payoutPaymentTwoSelected,key,value)"></a>
+                        </li>
+                     </ul>
+                  </div>
+                  <div class="editable-controls form-group">
+                     <input type="text" ng-model="cascade.payoutPaymentOneSelected.name" class="editable-has-buttons editable-input form-control input-sm" />
+                     <span class="editable-buttons">
+                        <button type="button" ng-click="cascade.layoutOneEdit(cascade.payoutPaymentOneSelected,cascade.payoutPaymentBrige)" class="btn btn-success btn-sm">
+                           <span class="fa fa-check"></span>
+                        </button>
+                        <button type="button" ng-click="cascade.layoutOneDelect(cascade.payoutPaymentOneSelected,cascade.payoutPaymentBrige)" class="btn btn-danger btn-sm">
+                           <span class="fa fa-minus"></span>
+                        </button>
+                     </span>
+                     <span class="editable-buttons">
+                        <button type="button" ng-click="cascade.layoutOneAdd(cascade.payoutPaymentOneSelected,cascade.payoutPaymentBrige,1)" class="btn btn-default btn-sm">
+                           <span class="fa fa-plus"></span>
+                        </button>
+                     </span>
+                  </div>
+               </td>
+               <td class="form-inline editable-wrap text-center">
+                  <div dropdown="dropdown" class="btn-group">
+                     <button type="button" ng-disabled="disabled" dropdown-toggle="" class="btn btn-default btn-sm">
+                        <em class="fa fa-angle-down fa-fw"></em>{{cascade.payoutPaymentTwoSelected.name?cascade.payoutPaymentTwoSelected.name:'请选择要操作的级联'}}</button>
+                     <ul role="menu" class="dropdown-menu">
+                        <li ng-if="!cascade.payoutPayment[cascade.payoutPaymentOneSelected.name]||cascade.payoutPayment[cascade.payoutPaymentOneSelected.name].length&lt;1"><a>暂无级联选项</a>
+                        </li>
+                        <li ng-repeat="item in cascade.payoutPayment[cascade.payoutPaymentOneSelected.name] track by $index" ng-if="cascade.payoutPaymentOneSelected">
+                           <a value="item.layout_two_id" ng-bind="item.name" ng-click="cascade.changeSelected(cascade.payoutPaymentTwoSelected,item.name)"></a>
+                        </li>
+                     </ul>
+                  </div>
+                  <div class="editable-controls form-group">
+                     <input type="text" ng-model="cascade.payoutPaymentTwoSelected.name" class="editable-has-buttons editable-input form-control input-sm" />
+                     <span class="editable-buttons">
+                        <button type="button" ng-click="cascade.layoutTwoEdit(cascade.payoutPaymentTwoSelected,cascade.payoutPayment[cascade.payoutPaymentOneSelected.name])" class="btn btn-success btn-sm">
+                           <span class="fa fa-check"></span>
+                        </button>
+                        <button type="button" ng-click="cascade.layoutTwoDelect(cascade.payoutPaymentTwoSelected,cascade.payoutPayment[cascade.payoutPaymentOneSelected.name])" class="btn btn-danger btn-sm">
+                           <span class="fa fa-minus"></span>
+                        </button>
+                     </span>
+                  </div>
+                  <span class="editable-buttons">
+                     <button type="button" ng-click="cascade.layoutTwoAdd(cascade.payoutPaymentOneSelected,cascade.payoutPaymentTwoSelected,cascade.payoutPayment[cascade.payoutPaymentOneSelected.name],1)" class="btn btn-default btn-sm">
+                        <span class="fa fa-plus"></span>
+                     </button>
+                  </span>
+               </td>
+            </tr>
+            <tr>
+               <td>流水类型</td>
+               <td class="form-inline editable-wrap text-center">
+                  <div dropdown="dropdown" class="btn-group">
+                     <button type="button" ng-disabled="disabled" dropdown-toggle="" class="btn btn-default btn-sm">
+                        <em class="fa fa-angle-down fa-fw"></em>{{cascade.payoutCommonOneSelected?cascade.payoutCommonOneSelected.name:'请选择要操作的级联'}}</button>
+                     <ul role="menu" class="dropdown-menu">
+                        <li ng-if="cascade.payoutCommonBrige.length&lt;1"><a>暂无级联选项</a>
+                        </li>
+                        <li ng-repeat="(key,value) in cascade.payoutCommonBrige track by $index">
+                           <a ng-bind="key" ng-click="cascade.changeOneSelected(cascade.payoutCommon,cascade.payoutCommonOneSelected,cascade.payoutCommonTwoSelected,key,value)"></a>
+                        </li>
+                     </ul>
+                  </div>
+                  <div class="editable-controls form-group">
+                     <input type="text" ng-model="cascade.payoutCommonOneSelected.name" class="editable-has-buttons editable-input form-control input-sm" />
+                     <span class="editable-buttons">
+                        <button type="button" ng-click="cascade.layoutOneEdit(cascade.payoutCommonOneSelected,cascade.payoutCommonBrige)" class="btn btn-success btn-sm">
+                           <span class="fa fa-check"></span>
+                        </button>
+                        <button type="button" ng-click="cascade.layoutOneDelect(cascade.payoutCommonOneSelected,cascade.payoutCommonBrige)" class="btn btn-danger btn-sm">
+                           <span class="fa fa-minus"></span>
+                        </button>
+                     </span>
+                     <span class="editable-buttons">
+                        <button type="button" ng-click="cascade.layoutOneAdd(cascade.payoutCommonOneSelected,cascade.payoutCommonBrige,1)" class="btn btn-default btn-sm">
+                           <span class="fa fa-plus"></span>
+                        </button>
+                     </span>
+                  </div>
+               </td>
+               <td class="form-inline editable-wrap text-center">
+                  <div dropdown="dropdown" class="btn-group">
+                     <button type="button" ng-disabled="disabled" dropdown-toggle="" class="btn btn-default btn-sm">
+                        <em class="fa fa-angle-down fa-fw"></em>{{cascade.payoutFlowTwoSelected.name?cascade.payoutFlowTwoSelected.name:'请选择要操作的级联'}}</button>
+                     <ul role="menu" class="dropdown-menu">
+                        <li ng-if="!cascade.payoutFlow[cascade.payoutFlowOneSelected.name]||cascade.payoutFlow[cascade.payoutFlowOneSelected.name].length&lt;1"><a>暂无级联选项</a>
+                        </li>
+                        <li ng-repeat="item in cascade.payoutFlow[cascade.payoutFlowOneSelected.name] track by $index" ng-if="cascade.payoutFlowOneSelected">
+                           <a value="item.layout_two_id" ng-bind="item.name" ng-click="cascade.changeSelected(cascade.payoutFlowTwoSelected,item.name)"></a>
+                        </li>
+                     </ul>
+                  </div>
+                  <div class="editable-controls form-group">
+                     <input type="text" ng-model="cascade.payoutFlowTwoSelected.name" class="editable-has-buttons editable-input form-control input-sm" />
+                     <span class="editable-buttons">
+                        <button type="button" ng-click="cascade.layoutTwoEdit(cascade.payoutFlowTwoSelected,cascade.payoutFlow[cascade.payoutFlowOneSelected.name])" class="btn btn-success btn-sm">
+                           <span class="fa fa-check"></span>
+                        </button>
+                        <button type="button" ng-click="cascade.layoutTwoDelect(cascade.payoutFlowTwoSelected,cascade.payoutFlow[cascade.payoutFlowOneSelected.name])" class="btn btn-danger btn-sm">
+                           <span class="fa fa-minus"></span>
+                        </button>
+                     </span>
+                  </div>
+                  <span class="editable-buttons">
+                     <button type="button" ng-click="cascade.layoutTwoAdd(cascade.payoutFlowOneSelected,cascade.payoutFlowTwoSelected,cascade.payoutFlow[cascade.payoutFlowOneSelected.name],2)" class="btn btn-default btn-sm">
+                        <span class="fa fa-plus"></span>
+                     </button>
+                  </span>
+               </td>
+            </tr>
+         </tbody>
+      </table>
+   </div>
+</div>
+<div class="panel panel-default">
+   <div class="panel-heading">申请物资列表管理</div>
+   <div style="overflow-x: visible;" class="table-responsive">
+      <table class="table table-striped table-bordered table-hover">
+         <thead>
+            <tr>
+               <th>名称</th>
+               <th class="text-center">一级级联</th>
+            </tr>
+         </thead>
+         <tbody>
+            <tr>
+               <td>物资列表</td>
+               <td class="form-inline editable-wrap text-center">
+                  <div dropdown="dropdown" class="btn-group">
+                     <button type="button" ng-disabled="disabled" dropdown-toggle="" class="btn btn-default btn-sm">
+                        <em class="fa fa-angle-down fa-fw"></em>{{cascade.placeSelected.name?cascade.placeSelected.name:'暂无级联列表'}}</button>
+                     <ul role="menu" class="dropdown-menu">
+                        <li ng-if="cascade.placeList.length&lt;1"><a>暂无级联列表</a>
+                        </li>
+                        <li ng-repeat="place in cascade.placeList">
+                           <a ng-bind="place.name" ng-click="cascade.changePlaceSelected(place)"></a>
+                        </li>
+                     </ul>
+                  </div>
+                  <div class="editable-controls form-group">
+                     <input type="text" ng-model="cascade.placeSelected.name" class="editable-has-buttons editable-input form-control input-sm" />
+                     <span class="editable-buttons">
+                        <button type="button" ng-click="cascade.editPlace(cascade.placeSelected)" class="btn btn-success btn-sm">
+                           <span class="fa fa-check"></span>
+                        </button>
+                        <button type="button" ng-click="cascade.deletePlace(cascade.placeSelected)" class="btn btn-danger btn-sm">
+                           <span class="fa fa-minus"></span>
+                        </button>
+                     </span>
+                     <span class="editable-buttons">
+                        <button type="button" ng-click="cascade.addPlace(cascade.placeSelected)" class="btn btn-default btn-sm">
+                           <span class="fa fa-plus"></span>
+                        </button>
+                     </span>
+                  </div>
+               </td>
+            </tr>
+         </tbody>
+      </table>
+   </div>
+</div>

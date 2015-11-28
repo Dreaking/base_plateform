@@ -68,15 +68,15 @@ class UserTeamRecordList:
 
         results = db.select('payment', vars = vars, where = where, order = order, limit = limit)
         for i in results:
-            if i.type == 'admin-de':
-                type = 1
-            elif i.type == 'admin-in':
-                type = 0
-            else:
-                type = 2
             record_list.append({'payment_id':i.payment_id, 'reason':i.reason, 'amount':i.amount,
-                                'count':i.num, 'add_time':i.add_time, 'type':type})
-
+                                'count':i.num, 'add_time':i.add_time, 'layout_two_id':i.layout_two_id})
+        for i in record_list:
+            layout_two = db.select('layout_two', vars = {'id':i['layout_two_id']}, where = 'id=$id',
+                                   what = 'parent_id,name')[0]
+            i['layout_one_id'] = layout_two.parent_id
+            i['layout_two_name'] = layout_two.name
+            i['layout_one_name'] = db.select('layout_one', vars = {'id':layout_two.parent_id},
+                                             where = "id=$id", what = 'name')[0].name
         amount = db.select('team', vars = {'id': session['team_id']}, where = "team_id=$id",
                            what = "balance")[0].balance
 

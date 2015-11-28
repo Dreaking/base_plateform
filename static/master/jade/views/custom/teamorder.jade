@@ -3,20 +3,21 @@ h3 团队补贴
 .container-fluid
   form.form-inline(role='form' ng-submit="table.exportExcel()")
         .row.panel-heading.form-horizontal
-          .form-group.pull-left.list-inline.panel-heading
-            .input-group
-              input.form-control(type='text',ng-change='table.checkChange()' datepicker-popup='{{table.format}}', ng-model='table.starttime', is-open='table.startopened', max-date="'2017-06-22'", datepicker-options='dateOptions', date-disabled='disabled(date, mode)', ng-required='true', close-text='Close')
-              span.input-group-btn
-                button.btn.btn-default(type='button', ng-click='table.startopen($event)')
-                  em.icon-calendar.table-responsive.b0
-          .form-group.pull-left.list-inline.panel-heading
-             label.col-sm-4.control-label 至
-          .form-group.pull-left.list-inline.panel-heading
-             .input-group
-              input.form-control(type='text',ng-change='table.checkChange()' datepicker-popup='{{table.format}}', ng-model='table.endtime', is-open='table.endopened', max-date="'2017-06-22'", datepicker-options='dateOptions', date-disabled='disabled(date, mode)', ng-required='true', close-text='Close')
-              span.input-group-btn
-                button.btn.btn-default(type='button', ng-click='table.endopen($event)')
-                  em.icon-calendar
+          .pull-right
+            .form-group.pull-left.list-inline.panel-heading
+              .input-group
+                input.form-control(type='text',ng-change='table.checkChange()' datepicker-popup='{{table.format}}', ng-model='table.starttime', is-open='table.startopened', max-date="'2017-06-22'",   datepicker-options='dateOptions',datepicker-mode='enddatemode.mode',  ng-required='true')
+                span.input-group-btn
+                  button.btn.btn-default(type='button', ng-click='table.startopen($event)')
+                    em.icon-calendar.table-responsive.b0
+            .form-group.pull-left.list-inline.panel-heading
+               label.col-sm-4.control-label 至
+            .form-group.pull-left.list-inline.panel-heading
+               .input-group
+                input.form-control(type='text',ng-change='table.checkChange()' datepicker-popup='{{table.format}}', ng-model='table.endtime', is-open='table.endopened', max-date="'2017-06-22'",   datepicker-options='dateOptions',datepicker-mode='enddatemode.mode',  ng-required='true')
+                span.input-group-btn
+                  button.btn.btn-default(type='button', ng-click='table.endopen($event)')
+                    em.icon-calendar
 table.table.table-hover(datatable='ng' dt-options="table.dtOptions" dt-column-defs="table.dtColumnDefs")
     thead.bg-white
       tr
@@ -25,7 +26,9 @@ table.table.table-hover(datatable='ng' dt-options="table.dtOptions" dt-column-de
         th
           strong 时间
         th
-          strong 支出类型
+          strong 一级类型
+        th
+          strong 二级类型
         th
           strong 数量
         th
@@ -36,7 +39,8 @@ table.table.table-hover(datatable='ng' dt-options="table.dtOptions" dt-column-de
       tr(ng-repeat='record in table.records')
         td {{::record.payment_id}}
         td {{::record.add_time|NowTime}}
-        td {{::record.type | TypeFilter}}
+        td {{::record.layout_one_name}}
+        td {{::record.layout_two_name}}
         td {{::record.count}}
         td {{::record.reason}}
         td {{::record.amount| MoneyFilter}}

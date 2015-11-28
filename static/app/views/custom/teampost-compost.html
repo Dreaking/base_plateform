@@ -3,16 +3,16 @@
       <form ng-controller="RecruitCmpostController as recruit" name="recruit.formValidate" ng-submit="recruit.newRecruit()" novalidate="">
          <div class="input-group form-group">
             <span style="background-color:#fff;" class="input-group-addon text-sm">标题:</span>
-            <input type="text" name="title" required="" placeholder="填写标题" ng-model="post.title" class="form-control" />
+            <input type="text" name="title" required="" placeholder="填写标题" ng-model="recruit.post.title" class="form-control" />
          </div>
          <span ng-show="recruit.validateInput('title', 'required')" class="form-group show text-danger">请输入标题</span>
          <div class="input-group form-group">
             <span style="background-color:#fff;" class="input-group-addon text-sm">招聘人数:</span>
-            <input type="text" name="number" ng-pattern="/^[0-9]+$/" placeholder="填写招聘人数" required="" ng-model="post.recruit_num" class="form-control" />
+            <input type="text" name="number" ng-pattern="/^[0-9]+$/" placeholder="填写招聘人数" required="" ng-model="recruit.post.recruit_num" class="form-control" />
          </div>
          <span ng-show="recruit.validateInput('number', 'pattern')" class="form-group show text-danger">请输入正确的招聘人数</span>
          <span ng-show="recruit.validateInput('number', 'required')" class="form-group show text-danger">请输入招聘人数</span>
-         <ueditor config="recruit.editorConfig" ng-model="post.content"></ueditor>
+         <ueditor config="recruit.editorConfig" ng-model="recruit.post.content"></ueditor>
          <br/>
          <button type="submit" class="btn btn-primary btn-sm mb">发布</button>
       </form>

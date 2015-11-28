@@ -4,7 +4,7 @@ h3 团队审核
 .container-fluid(ng-controller="TeamCheckController as table")
   // Editable row
   h4.page-header 申请列表
-
+  iframe(ng-src='{{table.exportUrl}}' style='display:none;')
   table.table.table-bordered.table-hover.bg-white
     tr(style='font-weight: bold')
       td 团队名
@@ -40,7 +40,33 @@ h3 团队审核
           .sk-spinner.sk-spinner-double-bounce
             .sk-double-bounce1
             .sk-double-bounce2
-        p(ng-show='theme' ng-bind-html='detail')
+        .table-responsive
+          table.table.table-bordered
+            tbody
+              tr
+                td 团队名
+                td(ng-bind='::detail.team_name') 
+              tr
+                td 项目经营范围
+                td(ng-bind='::detail.operate_range') 
+              tr
+                td 项目负责人
+                td(ng-bind='::detail.manager_name') 
+              tr
+                td 指导老师
+                td(ng-bind='::detail.guide_teacher') 
+              tr
+                td 负责人院系、班级
+                td(ng-bind='::detail.class_name') 
+              tr
+                td 团队介绍
+                td(ng-bind-html='::detail.team_desc')
+              tr
+                td 项目介绍
+                td(ng-bind-html='::detail.project_desc')
+              tr
+                td 申请理由
+                td(ng-bind-html='::detail.apply_reason')
   script(type="text/ng-template", id="passconfirm")
     .ngdialog-message.clearfix
       h3.text-center

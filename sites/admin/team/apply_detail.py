@@ -34,9 +34,21 @@ class TeamApplyDetailGet:
 
         db = getDb()
         results = db.select('application', vars = {'id':input.application_id},
-                            where = "application_id=$id", what = "materials")
+                            where = "application_id=$id")
         if len(results) == 0:
             return output(469)
 
-        return output(200, {'content':results[0].materials})
+
+        results = results[0]
+        detail = {}
+        detail['team_name'] = results.new_team_name
+        detail['operate_range'] = results.operate_range
+        detail['manager_name'] = results.manager_name
+        detail['guide_teacher'] = results.guide_teacher
+        detail['class_name'] = results.class_name
+        detail['project_desc'] = results.project_desc
+        detail['team_desc'] = results.team_desc
+        detail['apply_reason'] = results.apply_reason
+        detail['user_list'] = results.user_list
+        return output(200, detail)
 

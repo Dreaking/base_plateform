@@ -81,5 +81,5 @@ class ActivityApplyExcelGet:
         except:
             return output(700)
 
-        return output(200, {'file_url':'http://120.24.209.197/excel/file/' + filename})
+        return output(200, {'file_url':'/excel/file/' + filename})
 

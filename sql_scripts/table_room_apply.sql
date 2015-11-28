@@ -5,7 +5,7 @@ create table room_apply(
   room_apply_id int primary key auto_increment,
   team_name varchar(20) not null,
   user_id int not null,
-  place_name varchar(30) not null,
+  place_id int not null,
   begin_time varchar(30) not null,
   end_time varchar(30) not null,
   add_time bigint not null,

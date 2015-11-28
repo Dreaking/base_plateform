@@ -1,8 +1,9 @@
 h3 活动管理
   small Edit in Activity
-.container-fluid(ng-controller="BaseActivityController as art")
+.container-fluid(ng-controller="BaseActivityController as active")
 
   .row.content-wrapper(style='border-width:0px;')
+      iframe(ng-src='{{active.exportUrl}}' style='display:none;')
       p.lead 历史活动列表
       .panel
         .table-responsive
@@ -20,28 +21,28 @@ h3 活动管理
                 th
                   strong 操作
             tbody
-              tr(ng-repeat="activity in art.activities")
+              tr(ng-repeat="activity in active.activities")
                 td {{activity.notice_id}}
                 td {{activity.add_time| NowTime }}
                 td {{activity.title | limitTo:10}}
                 td {{activity.content | removeTag |limitTo:50}}
                 td
-                  button(type="button" ng-click="art.downloadExcel(activity.notice_id)").btn.btn-sm.btn-default
+                  button(type="button" ng-click="active.downloadExcel(activity.notice_id)").btn.btn-sm.btn-default
                     span 报名导出
-                  button(type="button" title='删除' ng-click="art.delecteActivity($index,activity)").btn.btn-sm.btn-danger
+                  button(type="button" title='删除' ng-click="active.delecteActivity($index,activity)").btn.btn-sm.btn-danger
                     em.icon-trash
-          p.text-center(ng-show='!art.activities||art.activities.length<1')
+        p.text-center.small-margin-top(ng-show='!active.activities||active.activities.length<1')
             |暂无任何数据
-      // Article Content
+      // activeicle Content
       .col-lg-1-1
         .panel.panel-default
           .panel-body
-            form.form-validate.form-horizontal(name="art.formValidate", ng-submit="art.addActivity(art.activity)", novalidate="")
-              input.mb-lg.form-control.input-lg(type="text", name="title",required="",ng-maxlength='20',ng-model='art.activity.title', placeholder="标题")
-              span.mb-lg.text-danger(ng-show="art.validateInput('title', 'required')") 请填写内容
+            form.form-validate.form-horizontal(name="active.formValidate", ng-submit="active.addActivity(active.activity)", novalidate="")
+              input.mb-lg.form-control.input-lg(type="text", name="title",required="",ng-maxlength='20',ng-model='active.activity.title', placeholder="标题")
+              span.text-danger(ng-show="active.validateInput('title', 'required')") 请填写内容
               span.text-danger(ng-show="form.validateInput('length', 'maxlength')") 字数不能超过20
               // Wysiswyg editor
-              ueditor(config="art.editorConfig" ng-model="art.activity.content" required="")
+              ueditor(config="active.editorConfig" ng-model="active.activity.content" required="")
               br
               .pull-right
                   button.btn.btn-primary.m-r-10.m-t-10(type="submit")

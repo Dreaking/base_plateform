@@ -53,6 +53,13 @@ class UserTeamFlowList:
         for i in results:
             flow_list.append({'flow_id':i.flow_id, 'description':i.description, 'amount':i.amount,
                                 'operator_name':i.operator_name, 'add_time':i.add_time,
-                              'payment_type_name':i.payment_type_name})
+                              'layout_two_id':i.layout_two_id})
+        for i in flow_list:
+            layout_two = db.select('layout_two', vars = {'id':i['layout_two_id']}, where = 'id=$id',
+                                   what = 'parent_id,name')[0]
+            i['layout_one_id'] = layout_two.parent_id
+            i['layout_two_name'] = layout_two.name
+            i['layout_one_name'] = db.select('layout_one', vars = {'id':layout_two.parent_id},
+                                             where = "id=$id", what = 'name')[0].name
         return output(200, flow_list)
 

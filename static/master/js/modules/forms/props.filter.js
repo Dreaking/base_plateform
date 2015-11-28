@@ -10,8 +10,38 @@
 
     angular
         .module('app.forms')
-        .filter('propsFilter', propsFilter);
+        .filter('propsFilter', propsFilter)
+        .filter('singleFilter', singleFilter);
+    function singleFilter() {
+        return filterFilter;
 
+        ////////////////
+        function filterFilter(items, props) {
+          var out = [];
+
+          if (angular.isArray(items)) {
+            items.forEach(function(item) {
+              var itemMatches = false;
+              for (var i = 0; i < items.length; i++) {
+                var text = props.toLowerCase();
+                if (item.toString().toLowerCase().indexOf(text) !== -1) {
+                  itemMatches = true;
+                  break;
+                }
+              }
+
+              if (itemMatches) {
+                out.push(item);
+              }
+            });
+          } else {
+            // Let the output be the input untouched
+            out = items;
+          }
+
+          return out;
+        }
+    }
     function propsFilter() {
         return filterFilter;
 

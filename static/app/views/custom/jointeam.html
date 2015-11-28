@@ -59,13 +59,8 @@
                   </td>
                </tr>
             </tbody>
-            <script type="text/ng-template" id="confirm">
-               <div class="ngdialog-message clearfix"><h3 class="text-center">确定删除该招聘文章?</h3><button type="button" ng-click="confirm()" class="btn btn-primary mr pull-right">确定</button><button type="button" ng-click="closeThisDialog()" class="btn btn-default pull-left">取消</button></div>
-            </script>
-            <script type="text/ng-template" id="allconfirm">
-               <div class="ngdialog-message clearfix"><h3 class="text-center">确定删除所有选中的文章?</h3><button type="button" ng-click="confirm()" class="btn btn-primary mr pull-right">确定</button><button type="button" ng-click="closeThisDialog()" class="btn btn-default pull-left">取消</button></div>
-            </script>
          </table>
+         <p ng-show="!pag.posts||pag.posts.length&lt;1" class="text-center">暂无任何数据</p>
       </div>
    </div>
 </div>

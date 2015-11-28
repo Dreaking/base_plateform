@@ -41,6 +41,13 @@ h3 团队补贴
             label.col-lg-2.control-label 理由
             .col-lg-10
               input.form-control(type='text' ng-model='Increase.reason' placeholder='例:年终奖')
+          .form-group.clearfix
+            label.col-md-2.control-label 类别
+            .col-md-5
+              select.form-control(ng-model='firstType' ng-change='getSecondList()')
+                option( ng-repeat='(item,value) in typeItems' value='{{item}}' ng-bind='item')
+            .col-md-5
+              select.form-control(ng-model='Increase.layout_two_id' ng-options='g.layout_two_id as g.name for g in secondTypeItems')
         button.btn.btn-default.mr.pull-left(type='button', ng-click="closeThisDialog('Cancel')") 取消
         button.btn.btn-primary.pull-right(type='button', ng-click="confirm(Increase)") 保存
   script(type="text/ng-template", id="Decrease")
@@ -56,6 +63,13 @@ h3 团队补贴
             label.col-lg-2.control-label 理由
             .col-lg-10
               input.form-control(type='text' ng-model='Decrease.reason' placeholder='例:拖欠电费' require='')
+        .form-group.clearfix
+            label.col-md-2.control-label 类别
+            .col-md-5
+              select.form-control(ng-model='firstType' ng-change='getSecondList()')
+                option( ng-repeat='(item,value) in typeItems' value='{{item}}' ng-bind='item')
+            .col-md-5
+              select.form-control(ng-model='Decrease.layout_two_id' ng-options='g.layout_two_id as g.name for g in secondTypeItems')
         button.btn.btn-default.mr.pull-left(type='button', ng-click="closeThisDialog('Cancel')") 取消
         button.btn.btn-primary.pull-right(type='button', ng-click="confirm(Decrease)") 保存
   script(type="text/ng-template", id="AllIncrease")
@@ -71,6 +85,13 @@ h3 团队补贴
             label.col-lg-2.control-label 理由
             .col-lg-10
               input.form-control(type='text' ng-model='Increase.reason' placeholder='例:年终奖')
+          .form-group.clearfix
+            label.col-md-2.control-label 类别
+            .col-md-5
+              select.form-control(ng-model='firstType' ng-change='getSecondList()')
+                option( ng-repeat='(item,value) in typeItems' value='{{item}}' ng-bind='item')
+            .col-md-5
+              select.form-control(ng-model='Increase.layout_two_id' ng-options='g.layout_two_id as g.name for g in secondTypeItems')
         button.btn.btn-default.mr.pull-left(type='button', ng-click="closeThisDialog('Cancel')") 取消
         button.btn.btn-primary.pull-right(type='button', ng-click="confirm(Increase)") 保存
   script(type="text/ng-template", id="AllDecrease")
@@ -86,5 +107,12 @@ h3 团队补贴
             label.col-lg-2.control-label 理由
             .col-lg-10
               input.form-control(type='text' ng-model='Decrease.reason' placeholder='例:拖欠电费' require='')
+          .form-group.clearfix
+            label.col-md-2.control-label 类别
+            .col-md-5
+              select.form-control(ng-model='firstType' ng-change='getSecondList()')
+                option( ng-repeat='(item,value) in typeItems' value='{{item}}' ng-bind='item')
+            .col-md-5
+              select.form-control(ng-model='Decrease.layout_two_id' ng-options='g.layout_two_id as g.name for g in secondTypeItems')
         button.btn.btn-default.mr.pull-left(type='button', ng-click="closeThisDialog('Cancel')") 取消
         button.btn.btn-primary.pull-right(type='button', ng-click="confirm(Decrease)") 保存

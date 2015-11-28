@@ -10,32 +10,17 @@
     .module('app.controllers')
     .controller('BaseTeamOrderController', BaseTeamOrderController)
     .filter('NowTime', NowTime)
-    .filter('TypeFilter', TypeFilter)
-    .filter('MoneyFilter', MoneyFilter);
 
   function NowTime() {
     return function(input, params) {
       return moment.unix(input).format('l');
     }
   }
+  BaseTeamOrderController.$inject = ['$scope', '$timeout','$sce', 'DTOptionsBuilder', 'DTColumnDefBuilder', 'schoolResourceApi', 'teamResourceApi', 'adminResourceApi'];
 
-  function MoneyFilter() {
-    return function(input, params) {
-      return input > 0 ? '+' + input : input;
-    }
-  }
-
-  function TypeFilter() {
-    return function(input, params) {
-      return input == 0 ? '管理员加钱' : input == 1 ? '管理员扣钱' : '团队支出';
-    }
-  }
-
-  BaseTeamOrderController.$inject = ['$scope', '$timeout', 'DTOptionsBuilder', 'DTColumnDefBuilder', 'schoolResourceApi', 'teamResourceApi', 'adminResourceApi'];
-
-  function BaseTeamOrderController($scope, $timeout, DTOptionsBuilder, DTColumnDefBuilder, schoolResourceApi, teamResourceApi, adminResourceApi) {
+  function BaseTeamOrderController($scope, $timeout,$sce, DTOptionsBuilder, DTColumnDefBuilder, schoolResourceApi, teamResourceApi, adminResourceApi) {
     var vm = this;
-    vm.dtOptions = DTOptionsBuilder.newOptions().withPaginationType('full_numbers').withDisplayLength(2);
+    vm.dtOptions = DTOptionsBuilder.newOptions().withPaginationType('full_numbers');
     vm.dtColumnDefs = [
       DTColumnDefBuilder.newColumnDef(0),
       DTColumnDefBuilder.newColumnDef(1),
@@ -50,7 +35,7 @@
         start_date: vm.starttimeunix,
         end_date: vm.endtimeunix
       }, function(data) {
-        window.open(data.data.file_url);
+        $timeout(function(){vm.exportUrl=$sce.trustAsResourceUrl(data.data.file_url);},0,true)
       })
     }
     vm.checkChange = function() {
@@ -70,6 +55,9 @@
         page_num: 1,
         page_size: 1000
       }).$promise.then(function(data) {
+        for(var i in data.data.record_list){
+         data.data.record_list[i].amount=data.data.record_list[i].layout_one_type==0?'+'+data.data.record_list[i].amount:'-'+data.data.record_list[i].amount;
+        }
         vm.records = data.data.record_list;
       })
     }
@@ -80,17 +68,15 @@
         page_num: 1,
         page_size: 1000
       }).$promise.then(function(data) {
+        for(var i in data.data.record_list){
+         data.data.record_list[i].amount=data.data.record_list[i].layout_one_type==0?'+'+data.data.record_list[i].amount:'-'+data.data.record_list[i].amount;
+        }
         vm.records = data.data.record_list;
       })
     }
     vm.clear = function() {
       vm.apply.endtime = '';
       vm.apply.starttime = '';
-    };
-
-    // Disable weekend selection
-    vm.disabled = function(date, mode) {
-      return (mode === 'day' && (date.getDay() === 0 || date.getDay() === 6));
     };
 
     vm.toggleMin = function() {
@@ -121,17 +107,19 @@
       });
       setTimeout(function() {
         dialog.close();
-      }, 2000);
+      }, 1000);
     };
-    vm.dateOptions = {
+    $scope.dateOptions = {
       formatYear: '@',
       startingDay: 1,
-      navigationAsDateFormat: true
+      minMode:'month'
     };
-    vm.initDate = new Date('2019-10-20');
+    $scope.enddatemode={
+      mode:'month'
+    }
+    $scope.startdatemode=angular.copy($scope.enddatemode)
     vm.format = 'yyyy年-MM月';
     $scope.$on('$stateChangeSuccess', function(event, toState, toParams) {
-      console.log(toParams)
       $scope.selectTeam = toParams.id;
       getRecordListWithOutTime(toParams.id)
     });

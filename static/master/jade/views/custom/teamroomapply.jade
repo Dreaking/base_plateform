@@ -20,23 +20,18 @@ h3 申请中心
             legend 选择事项
             .row
               .col-md-4
+              .col-md-1
               .col-md-2
-                  // START button group
                   .btn-group.block-center(dropdown='dropdown')
                     button.btn.btn-default(dropdown-toggle="")
-                      | {{apply.applything?apply.applything:'点击下拉选择申请事项'}} 
+                      | {{apply.applything.name?apply.applything.name:'点击下拉选择申请事项'}} 
                       b.caret
                     ul.dropdown-menu(role='menu', class="animated animated flipInX")
-                      li
-                        a(ng-click="setApplyThing('教五会议室')") 教五会议室
-                      li
-                        a(ng-click="setApplyThing('教六会议室')") 教六会议室
-                      li
-                        a(ng-click="apply.setApplyThing('大厅使用')") 大厅使用
-                  input.form-control(type='text', name='applything',ng-model='apply.applything',data-parsley-group="step1",style='display:none;', required)
-              .col-md-2
-                .form-group
-                  input.form-control(type='text',placeholder='其他' name='applything',ng-model='apply.applything')
+                      li(ng-if='roomLists.length<1')
+                        a 暂无可申请的事项
+                      li(ng-repeat='room in roomLists' ng-click="setApplyThing(room)")
+                        a(ng-bind='::room.name')
+                  input.form-control(type='text', name='applything',ng-model='apply.applything.id',data-parsley-group="step1",style='display:none;', required)
             // END row 
           ul.pager
             li.next

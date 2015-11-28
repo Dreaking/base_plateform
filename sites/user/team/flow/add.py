@@ -11,11 +11,12 @@ import time
 @route('/team/flow/add')
 class TeamFlowAdd:
     def POST(self):
-        input = web.input(description = None, amount = None, payment_type_name = None)
-        if input.description == None or input.amount == None or input.payment_type_name == None:
+        input = web.input(description = None, amount = None, layout_two_id = None)
+        if input.description == None or input.amount == None or input.layout_two_id == None:
             return output(110)
         try:
             input.amount = float(input.amount)
+            input.layout_two_id = int(input.layout_two_id)
         except:
             return output(111)
 
@@ -27,12 +28,16 @@ class TeamFlowAdd:
         team_id = session['team_id']
 
         db = getDb()
+        results = db.select('layout_two', vars = {'id':input.layout_two_id},
+                            where = "id=$id and (type='all' or type='flow')", what = "parent_id")
+        if len(results) == 0:
+            return output(475)
         operator_name = db.select('userinfo', vars = {'id':session['user_id']},
                                   where = "user_id=$id", what = 'name')[0].name
         try:
             db.insert('flow', operator_name = operator_name, description = input.description,
                       amount = input.amount, team_id = session['team_id'],
-                      payment_type_name = input.payment_type_name,
+                      layout_two_id = input.layout_two_id,
                       add_time = int(time.mktime(time.localtime())))
         except:
             return output(700)

@@ -44,6 +44,7 @@ h3 招聘管理
           td.text-center
             label
               button.btn.btn-sm.btn-danger(title="删除" ng-click='pag.delectPost(post.recruit_id)') 删除
+p(ng-if='pag.posts.length<1').text-center.text-mute 暂无发布任何招聘
       //- template
       script(type="text/ng-template", id="confirm")
         .ngdialog-message.clearfix

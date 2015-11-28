@@ -27,13 +27,11 @@
             <div class="form-group clearfix">
                <div style="padding:0;padding-right:10px;" class="col-md-6">
                   <select ng-model="todo.firstType" ng-change="todo.getSecondList()" class="form-control">
-                     <option ng-repeat="item in todo.typeItems" ng-value="item.item">{{item.item}}</option>
+                     <option ng-repeat="(item,value) in todo.typeItems" value="{{item}}" ng-bind="item"></option>
                   </select>
                </div>
                <div style="padding:0;padding-right:10px;" class="col-md-6">
-                  <select ng-model="todo.secondType" class="form-control">
-                     <option ng-repeat="item in todo.secondTypeItems" ng-value="item.item">{{item.item}}</option>
-                  </select>
+                  <select ng-model="todo.secondType" ng-options="g.layout_two_id as g.name for g in todo.secondTypeItems" class="form-control"></select>
                </div>
             </div>
             <div class="form-group">
@@ -55,11 +53,24 @@
                <div class="timeline-panel">
                   <div ng-class="timelineAlt ? 'right' : 'left'" class="popover">
                      <span ng-click="todo.removeTodo(item.flow_id)" style="padding-right: 8px;" class="md-lg close">×</span>
-                     <h4 class="popover-title">{{::item.amount}}</h4>
+                     <h4 ng-click="todo.todoSelected=item.$$hashKey" class="popover-title text-warning">收支金额(元):
+                        <span ng-bind="::item.amount"></span>
+                     </h4>
                      <div class="arrow"></div>
-                     <div class="popover-content">
-                        <abbr title="{{::item.payment_type_name}}">{{::item.payment_type_name}}</abbr>
-                        <p style="padding-top:5px;">{{::item.description}}</p>
+                     <div ng-show="todo.todoSelected==item.$$hashKey" class="popover-content ng-fadeIn">
+                        <abbr title="{{::item.payment_type_name}}"></abbr>
+                        <p style="padding-top:5px;" class="text-muted">操作人 --
+                           <span ng-bind="::item.operator_name"></span>
+                        </p>
+                        <p style="padding-top:5px;" class="text-muted">一级类型 --
+                           <span ng-bind="::item.layout_one_name"></span>
+                        </p>
+                        <p style="padding-top:5px;" class="text-muted">二级类型 --
+                           <span ng-bind="::item.layout_two_name"></span>
+                        </p>
+                        <p style="padding-top:5px;" class="text-muted">描述 --
+                           <span ng-bind="::item.description"></span>
+                        </p>
                      </div>
                   </div>
                </div>

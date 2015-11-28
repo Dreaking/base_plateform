@@ -4,6 +4,7 @@
 <div ng-controller="TeamCheckController as table" class="container-fluid">
    <!-- Editable row-->
    <h4 class="page-header">申请列表</h4>
+   <iframe ng-src="{{table.exportUrl}}" style="display:none;"></iframe>
    <table class="table table-bordered table-hover bg-white">
       <tr style="font-weight: bold">
          <td>团队名</td>
@@ -41,7 +42,7 @@
    </table>
    <p ng-show="!table.teams||table.teams.length&lt;1" class="text-center">暂无任何数据</p>
    <script type="text/ng-template" id="ApplyDetail">
-      <div><h3 class="mt0 text-center">申请材料</h3><div ng-show="!!!detail" class="panel-body loader-demo"><div class="sk-spinner sk-spinner-double-bounce"><div class="sk-double-bounce1"></div><div class="sk-double-bounce2"></div></div></div><p ng-show="theme" ng-bind-html="detail"></p></div>
+      <div><h3 class="mt0 text-center">申请材料</h3><div ng-show="!!!detail" class="panel-body loader-demo"><div class="sk-spinner sk-spinner-double-bounce"><div class="sk-double-bounce1"></div><div class="sk-double-bounce2"></div></div></div><div class="table-responsive"><table class="table table-bordered"><tbody><tr><td>团队名</td><td ng-bind="::detail.team_name"> </td></tr><tr><td>项目经营范围</td><td ng-bind="::detail.operate_range"> </td></tr><tr><td>项目负责人</td><td ng-bind="::detail.manager_name"> </td></tr><tr><td>指导老师</td><td ng-bind="::detail.guide_teacher"> </td></tr><tr><td>负责人院系、班级</td><td ng-bind="::detail.class_name"> </td></tr><tr><td>团队介绍</td><td ng-bind-html="::detail.team_desc"></td></tr><tr><td>项目介绍</td><td ng-bind-html="::detail.project_desc"></td></tr><tr><td>申请理由</td><td ng-bind-html="::detail.apply_reason"></td></tr></tbody></table></div></div>
    </script>
    <script type="text/ng-template" id="passconfirm">
       <div class="ngdialog-message clearfix"><h3 class="text-center">确定通过该团队申请?</h3><button type="button" ng-click="confirm()" class="btn btn-primary mr pull-right">确定</button><button type="button" ng-click="closeThisDialog()" class="btn btn-default pull-left">取消</button></div>

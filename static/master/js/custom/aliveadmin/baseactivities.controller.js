@@ -22,9 +22,9 @@
         return input;
       }
     }
-    BaseActivityController.$inject = ['schoolResourceApi', 'adminResourceApi','ngDialog', 'APP_PARMAS']
+    BaseActivityController.$inject = ['$timeout','$sce','schoolResourceApi', 'adminResourceApi','ngDialog', 'APP_PARMAS']
 
-    function BaseActivityController(schoolResourceApi, adminResourceApi,ngDialog, APP_PARMAS) {
+    function BaseActivityController($timeout,$sce,schoolResourceApi, adminResourceApi,ngDialog, APP_PARMAS) {
       var vm = this;
       vm.editorConfig = {
         initialFrameHeight: 300
@@ -47,7 +47,7 @@
         schoolResourceApi.DownloadActivityExcel({
           activity_id: id
         }, function(data) {
-          window.open(data.file_url);
+          $timeout(function(){vm.exportUrl=$sce.trustAsResourceUrl(data.data.file_url);},0,true)
         })
       }
       vm.submitted = false;

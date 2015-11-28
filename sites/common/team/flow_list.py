@@ -68,7 +68,19 @@ class TeamFlowList:
         for i in results:
             flow_list.append({'flow_id':i.flow_id, 'description':i.description, 'amount':i.amount,
                                 'operator_name':i.operator_name, 'add_time':i.add_time,
-                              'payment_type_name':i.payment_type_name})
+                              'layout_two_id':i.layout_two_id})
+        for i in flow_list:
+            layout_two = db.select('layout_two', vars = {'id':i['layout_two_id']}, where = 'id=$id',
+                                   what = 'parent_id,name')[0]
+            i['layout_one_id'] = layout_two.parent_id
+            i['layout_two_name'] = layout_two.name
+            layout_one = db.select('layout_one', vars = {'id':layout_two.parent_id},
+                                             where = "id=$id", what = 'name, type')[0]
+            i['layout_one_name'] = layout_one.name
+            if layout_one.type == 'increment':
+                i['layout_one_type'] = 0
+            else:
+                i['layout_one_type'] = 1
         return output(200, {'flow_count': count, 'page_num': input.page_num, 'page_size': input.page_size,
                             'flow_list': flow_list})
 

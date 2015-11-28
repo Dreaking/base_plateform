@@ -15,11 +15,6 @@
           span.icon-lock.form-control-feedback.text-muted
           span.text-danger(ng-show="login.loginForm.account_password.$dirty && login.loginForm.account_password.$error.required") 请输入密码
         .clearfix
-          .checkbox.c-checkbox.pull-left.mt0
-            label
-              input(type='checkbox', value='', name="account_remember", ng-model="login.account.remember")
-              span.fa.fa-check
-              |  自动登录
           .pull-right
             a.text-muted(ui-sref="page.recover") 忘记密码?
         

@@ -5,7 +5,7 @@
       .module('app.controllers')
       .controller('RecruitCmpostController', RecruitCmpostController)
     RecruitCmpostController.$inject = ['$scope', '$timeout', '$state', 'teamResourceApi', 'ngDialog']
-
+ 
     function RecruitCmpostController($scope, $timeout, $state, teamResourceApi, ngDialog) {
       var vm = this;
       $scope.authMsg = '';
@@ -25,6 +25,9 @@
               dialog.close();
             }, 2000);
       };
+      vm.editorConfig={
+        initialFrameHeight:450
+      }
       vm.newRecruit = function() {
         vm.submitted = true;
         if(vm.post.content==''){

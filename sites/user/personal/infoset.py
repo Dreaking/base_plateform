@@ -7,15 +7,45 @@ from database import *
 from output import *
 from route import route
 import re
+
+def judgeBirthday(birthday):
+    pattern = r'^[0-9]{4}-[0-9]{2}-[0-9]{2}$'
+    if not re.compile(pattern).match(birthday):
+        return False
+    date = re.split('-', birthday)
+    try:
+        year = int(date[0])
+        month = int(date[1])
+        day = int(date[2])
+        month_days = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+        if month not in range(1, 13):
+            return False
+        if month == 2:
+            if year % 400 == 0 or (year % 100 != 0 and year % 4 == 0):
+                if day > 29:
+                    return False
+            else:
+                if day > 28:
+                    return False
+        if day > month_days[month - 1]:
+            return False
+        return True
+    except:
+        return False
+
 @route('/user/info/set')
 class UserInfoSet:
     def POST(self):
         return UserInfoSet.UserInfo_Set()
     @staticmethod
     def UserInfo_Set():
-        input =web.input(name=None,nickname=None,school_id=None,major_id=None,
-                         sid=None,qq=None,is_male=None,email=None,birthday=None)
-        if input.name==None or input.nickname==None or input.school_id==None or input.major_id==None or input.is_male==None:
+        input =web.input(id_type = None, id_number = None, name = None, education_degree = None,
+                         citizenship = None, nationality = None, characters = None, address = None,
+                         address_detail = None, phone = None, grade = None, political_face = None,
+                         school_id = None, major_id = None, sid = None, is_male = None,
+                         email = None, birthday = None, nickname = None)
+        if(input.name == None or input.nickname == None or input.school_id == None or
+                   input.major_id == None or input.is_male == None):
             return output(110)
         try:
             input.school_id=int(input.school_id)
@@ -23,6 +53,8 @@ class UserInfoSet:
             input.is_male  =int(input.is_male)
             if input.is_male not in (0,1):
                 return output(112)
+            if input.grade != None:
+                input.grade = int(input.grade)
         except:
             return output(111)
 
@@ -32,41 +64,45 @@ class UserInfoSet:
         if session['user_type'] == 0:
             return output(410)
 
+        args = {'name':input.name, 'school_id':input.school_id, 'major_id':input.major_id,
+                'nickname':input.nickname}
         if input.sid!=None:
             if not re.compile(r'^[0-9_]+$').match(input.sid):
                 return output(112)
-        if input.qq!=None:
-            if not re.compile(r'^[1-9][0-9]+$').match(input.qq) or len(input.qq)>11:
+            args['sid'] = input.sid
+
+        if input.birthday != None:
+            if not judgeBirthday(input.birthday):
                 return output(112)
-        if input.birthday!=None:
-            if not re.compile(r'^[0-9]{4}-(0[1-9])|(1[0-2])-((0[1-9])|([1-2][0-9])|(3[0-1]))$').match(input.birthday):
-                return output(112)
-            date =re.split('-',input.birthday)
-            try:
-                year =int(date[0])
-                month=int(date[1])
-                day =int(date[2])
-                if day ==0:
-                    return output(112)
-            except:
-                return output(111)
-            if month in (1,3,5,7,8,10,12):
-                if day>31:
-                    return output(112)
-            if month in(4,6,9,11):
-                if day>30:
-                    return output(112)
-            if month==2:
-                if year%400==0 or (year%4==0 and year%100!=0):
-                    if day>29:
-                        return output(112)
-                else:
-                    if day>28:
-                        return output(112)
+            args['birthday'] = input.birthday
+        if input.id_type != None:
+            args['id_type'] = input.id_type
+        if input.id_number != None:
+            args['id_number'] = input.id_number
+        if input.education_degree != None:
+            args['education_degree'] = input.education_degree
+        if input.citizenship != None:
+            args['citizenship'] = input.citizenship
+        if input.nationality != None:
+            args['nationality'] = input.nationality
+        if input.characters != None:
+            args['characters'] = input.characters
+        if input.address != None:
+            args['address'] = input.address
+        if input.address_detail != None:
+            args['address_detail'] = input.address_detail
+        if input.email != None:
+            args['email'] = input.email
+        if input.phone != None:
+            args['phone'] = input.phone
+        if input.political_face != None:
+            args['political_face'] = input.political_face
+        if input.grade != None:
+            args['grade'] = input.grade
         if input.is_male==1:
-            sex = "male"
+            args['gender'] = 'male'
         else:
-            sex = "female"
+            args['gender'] = 'female'
         db=getDb()
         user_id=session['user_id']
 
@@ -78,18 +114,16 @@ class UserInfoSet:
             return output(462)
 
         try:
-            if len(db.select('userinfo', vars ={"user_id":user_id},
-                             where = "user_id=$user_id", what = "user_id")) == 0:
-                db.insert("userinfo", user_id = user_id, name=input.name,nickname =input.nickname,
-                          school_id=input.school_id, major_id =input.major_id,gender=sex,
-                          birthday=input.birthday,qq=input.qq, sid =input.sid,email=input.email,
-                          phone = session['login_name'])
+            vars = {"user_id":user_id}
+            where = "user_id=$user_id"
+            if len(db.select('userinfo', vars =vars,
+                             where = where, what = "user_id")) == 0:
+                args['user_id'] = user_id
+                db.insert("userinfo", **args)
             else:
-                db.update("userinfo",vars ={"user_id":user_id},
-                        where = "user_id=$user_id",
-                        name=input.name,nickname =input.nickname,school_id=input.school_id,
-                        major_id =input.major_id,gender=sex,birthday=input.birthday,qq=input.qq,
-                        sid =input.sid,email=input.email, phone = session['login_name'])
+                args['vars'] = vars
+                args['where'] = where
+                db.update("userinfo",**args)
         except:
             return output(700)
         return output(200)

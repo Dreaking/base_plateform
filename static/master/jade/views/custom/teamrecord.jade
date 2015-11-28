@@ -2,17 +2,16 @@ h3 团队流水
   small Edit in User
 
 .container-fluid
+  iframe(ng-src='{{table.exportUrl}}' style='display:none;')
   form.form-inline(role='form' ng-submit="table.exportExcel()")
         .row.panel-heading.form-horizontal
           .form-group.pull-right.list-inline.panel-heading
-            label.col-sm-4.control-label 团队
-            .col-sm-8
               select.form-control(name='account' ng-change='table.changeList()' ng-options='team.team_id as team.team_name for team in table.teams' ng-model='selectTeam')
-          .form-group.pull-right.list-inline.panel-heading
+          .pull-right.list-inline.panel-heading
             button.btn.btn-default(type='submit') 导出Excel
           .form-group.pull-right.list-inline.panel-heading
             .input-group
-              input.form-control(type='text',ng-change='table.checkChange()' datepicker-popup='{{table.format}}', ng-model='table.endtime', is-open='table.endopened', max-date="'2017-06-22'", datepicker-options='dateOptions', date-disabled='disabled(date, mode)', ng-required='true', close-text='Close')
+              input.form-control(type='text',ng-change='table.checkChange()' datepicker-popup='{{table.format}}', ng-model='table.endtime', is-open='table.endopened', max-date="'2017-06-22'",  datepicker-options='dateOptions',datepicker-mode='enddatemode.mode', date-disabled='disabled(date, mode)', ng-required='true')
               span.input-group-btn
                 button.btn.btn-default(type='button', ng-click='table.endopen($event)')
                   em.icon-calendar
@@ -20,7 +19,7 @@ h3 团队流水
              label.col-sm-4.control-label 至
           .form-group.pull-right.list-inline.panel-heading
             .input-group
-              input.form-control(type='text',ng-change='table.checkChange()' datepicker-popup='{{table.format}}', ng-model='table.starttime', is-open='table.startopened', max-date="'2017-06-22'", datepicker-options='dateOptions', date-disabled='disabled(date, mode)', ng-required='true', close-text='Close')
+              input.form-control(type='text',ng-change='table.checkChange()' datepicker-popup='{{table.format}}', ng-model='table.starttime', is-open='table.startopened', max-date="'2017-06-22'",  datepicker-options='dateOptions',datepicker-mode='enddatemode.mode', date-disabled='disabled(date, mode)', ng-required='true')
               span.input-group-btn
                 button.btn.btn-default(type='button', ng-click='table.startopen($event)')
                   em.icon-calendar
@@ -34,15 +33,21 @@ h3 团队流水
         th
           strong 时间
         th
-          strong 支出类型
+          strong 操作人
+        th
+          strong 一级类型
+        th
+          strong 二级类型
         th
           strong 支出描述
         th
           strong 总支出(元)
     tbody
       tr(ng-repeat='record in table.records')
-        td {{::record.payment_id}}
+        td {{::record.flow_id}}
         td {{::record.add_time|NowTime}}
-        td {{::record | TypeFilter}}
-        td {{::record.reason}}
+        td {{::record.operator_name}}
+        td {{::record.layout_one_name}}
+        td {{::record.layout_two_name}}
+        td {{::record.description}}
         td {{::record.amount| MoneyFilter}}

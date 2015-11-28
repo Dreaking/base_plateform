@@ -7,6 +7,6 @@ create table payment(
   amount double not null,
   team_id int not null,
   add_time bigint not null,
-  type enum('admin-de', 'admin-in', 'shopping') not null,
+  layout_two_id int not null,
   num int not null
 )engine=InnoDB default charset=utf8;

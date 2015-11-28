@@ -27,10 +27,20 @@ class UserInfoGet:
 
         if len(results) == 0:
             return output(423)
-
         userinfo = results[0]
+        school_id = userinfo.school_id
+        major_id = userinfo.major_id
+        userinfo = {'name':userinfo.name, 'id_type':userinfo.id_type, 'id_number':userinfo.id_number,
+                    'education_degree':userinfo.education_degree, 'citizenship':userinfo.citizenship,
+                    'nationality':userinfo.nationality, 'characters':userinfo.characters,
+                    'address':userinfo.address, 'address_detail':userinfo.address_detail,
+                    'phone':userinfo.phone, 'grade':userinfo.grade, 'political_face':userinfo.political_face,
+                    'school_id':userinfo.school_id, 'major_id':userinfo.major_id, 'sid':userinfo.sid,
+                    'email':userinfo.email, 'birthday':userinfo.birthday, 'nickname':userinfo.nickname,
+                    'is_male': True if userinfo.gender == 'male' else False}
+        userinfo['school_name'] = db.select('school', vars = {'id':school_id}, where = "school_id=$id",
+                            what = 'school_name')[0].school_name
+        userinfo['major_name'] = db.select('major', vars = {'id':major_id}, where = "major_id=$id",
+                            what = 'major_name')[0].major_name
 
-        return output(200,{'name':userinfo.name, 'school_id':userinfo.school_id, 'major_id':userinfo.major_id,
-                           'nickname':userinfo.nickname, 'sid':userinfo.sid, 'email':userinfo.email,
-                           'qq':userinfo.qq, 'phone':userinfo.phone,
-                           'is_male':True if userinfo.gender == 'male' else False, 'birthday':userinfo.birthday})
+        return output(200, userinfo)

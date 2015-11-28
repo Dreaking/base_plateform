@@ -1,6 +1,7 @@
 <h3>团队补贴
    <small>Team Expense Calendar</small>
 </h3>
+<iframe ng-src="{{table.exportUrl}}" style="display:none;"></iframe>
 <div class="container-fluid">
    <form role="form" ng-submit="table.exportExcel()" class="form-inline">
       <div class="row panel-heading form-horizontal">
@@ -9,8 +10,8 @@
          </div>
          <div class="form-group pull-right list-inline panel-heading">
             <div class="input-group">
-               <input type="text" ng-change="table.checkChange()" datepicker-popup="{{table.format}}" ng-model="table.endtime" is-open="table.endopened" max-date="'2017-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true"
-               close-text="Close" class="form-control" />
+               <input type="text" ng-change="table.checkChange()" datepicker-popup="{{table.format}}" ng-model="table.endtime" is-open="table.endopened" datepicker-options="dateOptions" datepicker-mode="enddatemode.mode" ng-required="true" class="form-control"
+               />
                <span class="input-group-btn">
                   <button type="button" ng-click="table.endopen($event)" class="btn btn-default">
                      <em class="icon-calendar"></em>
@@ -23,8 +24,8 @@
          </div>
          <div class="form-group pull-right list-inline panel-heading">
             <div class="input-group">
-               <input type="text" ng-change="table.checkChange()" datepicker-popup="{{table.format}}" ng-model="table.starttime" is-open="table.startopened" max-date="'2017-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true"
-               close-text="Close" class="form-control" />
+               <input type="text" ng-change="table.checkChange()" datepicker-popup="{{table.format}}" ng-model="table.starttime" is-open="table.startopened" datepicker-options="dateOptions" datepicker-mode="startdatemode.mode" ng-required="true" class="form-control"
+               />
                <span class="input-group-btn">
                   <button type="button" ng-click="table.startopen($event)" class="btn btn-default">
                      <em class="icon-calendar table-responsive b0"></em>
@@ -45,7 +46,10 @@
             <strong>时间</strong>
          </th>
          <th>
-            <strong>支出类型</strong>
+            <strong>一级类型</strong>
+         </th>
+         <th>
+            <strong>二级类型</strong>
          </th>
          <th>
             <strong>数量</strong>
@@ -62,10 +66,11 @@
       <tr ng-repeat="record in table.records">
          <td>{{::record.payment_id}}</td>
          <td>{{::record.add_time|NowTime}}</td>
-         <td>{{::record.type | TypeFilter}}</td>
+         <td>{{::record.layout_one_name}}</td>
+         <td>{{::record.layout_two_name}}</td>
          <td>{{::record.count}}</td>
          <td>{{::record.reason}}</td>
-         <td>{{::record.amount| MoneyFilter}}</td>
+         <td>{{::record.amount}}</td>
       </tr>
    </tbody>
 </table>

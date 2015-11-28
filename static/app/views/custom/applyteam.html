@@ -1,26 +1,311 @@
 <h3>申请新团队
    <small>Apply For New Team</small>
 </h3>
-<div ng-controller="ApplyTeamController as apply" class="container-fluid">
-   <div style="border-width:0px;" class="row content-wrapper">
-      <div class="col-lg-1-1">
-         <div class="panel panel-default">
-            <div class="panel-body">
-               <form name="apply.formValidate" ng-submit="apply.replyTeam()" novalidate="" class="form-validate form-horizontal">
-                  <input type="text" name="title" required="" ng-maxlength="10" ng-model="apply.title" placeholder="团队名" class="mb-lg form-control input-lg" />
-                  <label for="fileupload" class="btn btn-default mb-lg">上传EXCEL</label>
-                  <input id="fileupload" style="display:none;" type="file" ngf-select="apply.uploadFiles($file)" />
-                  <span ng-show="apply.validateInput('title', 'required')" class="mb-lg text-danger">请填写内容</span>
-                  <span ng-show="form.validateInput('length', 'maxlength')" class="text-danger">字数不能超过10</span>
-                  <!-- Wysiswyg editor-->
-                  <ueditor config="apply.editorConfig" ng-model="apply.content" required=""></ueditor>
-                  <br/>
-                  <div class="center-block">
-                     <button type="submit" ng-class="{'disabled':!apply.content||!apply.title}" class="btn btn-primary m-r-10 m-t-10 center-block">
-                        <em></em>申请新团队</button>
+<div style="border-width:0px;" class="row content-wrapper">
+   <div class="col-lg-1-1">
+      <div class="panel panel-default">
+         <div class="panel-body">
+            <form form-wizard="" name="apply.UserList" validate-steps="true" validate-form="UserList" steps="4" novalidate="novalidate">
+               <div class="form-wizard wizard-horizontal">
+                  <!-- START wizard steps indicator-->
+                  <ol class="row">
+                     <li ng-class="{'active':wizard.active(1)}" class="col-md-3">
+                        <h4>基本信息填写</h4>
+                        <small class="text-muted">填写基本的项目信息</small>
+                     </li>
+                     <li ng-class="{'active':wizard.active(2)}" class="col-md-3">
+                        <h4>成员信息填写</h4>
+                        <small class="text-muted">须分配好核心成员以及主要负责人</small>
+                     </li>
+                     <li ng-class="{'active':wizard.active(3)}" class="col-md-3">
+                        <h4>入驻材料填写</h4>
+                        <small class="text-muted">填写项目简介、团队简介在内的信息</small>
+                     </li>
+                     <li ng-class="{'active':wizard.active(4)}" class="col-md-3">
+                        <h4>提交入驻申请</h4>
+                        <small class="text-muted">完成入驻信息填写</small>
+                     </li>
+                  </ol>
+                  <div id="step1" ng-show="wizard.active(1)">
+                     <fieldset>
+                        <legend></legend>
+                        <div class="row small-margin-top">
+                           <div class="col-md-5 col-md-offset-1">
+                              <div class="form-group">
+                                 <label class="large-padding-left">团队名称</label>
+                                 <div class="controls">
+                                    <input type="text" ng-model="apply.pj.team_name" data-parsley-group="step1" placeholder="项目简介" required="required" class="form-control one-border-input form-control" />
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="col-md-5">
+                              <div class="form-group">
+                                 <label class="large-padding-left">项目经营范围</label>
+                                 <div class="controls">
+                                    <input type="text" ng-model="apply.pj.operate_range" data-parsley-group="step1" placeholder="项目经营范围" required="required" class="form-control one-border-input form-control" />
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="row small-margin-top">
+                           <div class="col-md-5 col-md-offset-1">
+                              <div class="form-group">
+                                 <label class="large-padding-left">项目负责人</label>
+                                 <div class="controls">
+                                    <input type="text" ng-model="apply.pj.manager_name" data-parsley-group="step1" placeholder="项目负责人" required="required" class="form-control one-border-input form-control" />
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="col-md-5">
+                              <div class="form-group">
+                                 <label class="large-padding-left">指导老师</label>
+                                 <div class="controls">
+                                    <input type="text" ng-model="apply.pj.guide_teacher" data-parsley-group="step1" placeholder="指导老师" required="required" class="form-control one-border-input form-control" />
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="row small-margin-top">
+                           <div class="col-md-5 col-md-offset-1">
+                              <div class="form-group">
+                                 <label class="large-padding-left">负责人院系、班级</label>
+                                 <div class="controls">
+                                    <input type="text" ng-model="apply.pj.class_name" data-parsley-group="step1" placeholder="负责人院系、班级" required="required" class="form-control one-border-input form-control" />
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="col-md-5">
+                              <div class="form-group">
+                                 <label class="large-padding-left">负责人联系电话</label>
+                                 <div class="controls">
+                                    <input type="text" ng-model="apply.pj.phone" data-parsley-group="step1" placeholder="负责人联系电话" required="required" class="form-control one-border-input form-control" />
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </fieldset>
+                     <ul class="pager">
+                        <li class="next"><a ng-click="wizard.go(2)">下一步</a>
+                        </li>
+                     </ul>
                   </div>
-               </form>
-            </div>
+                  <div id="step2" ng-show="wizard.active(2)">
+                     <fieldset>
+                        <div class="container-fluid">
+                           <legend></legend>
+                           <div style="margin-bottom:15px;" class="row row-table">
+                              <div ng-repeat="menber in apply.pj.user_lists" ng-click="apply.editMenber(menber)" ng-class="{'br':apply.pj.user_lists.length&gt;1&amp;&amp;!$last}" class="col-md-2 col-sm-3 col-xs-6 text-center pv">
+                                 <div class="h3">{{menber.name?menber.name:'新成员'}}</div>
+                                 <div>核心成员</div>
+                              </div>
+                           </div>
+                           <table class="table table-bordered bg-white">
+                              <tr style="font-weight: bold">
+                                 <td style="width:20%">姓名</td>
+                                 <td style="width:20%">性别</td>
+                                 <td style="width:20%">学院</td>
+                                 <td style="width:20%">专业</td>
+                                 <td style="width:20%">年级</td>
+                              </tr>
+                              <tr>
+                                 <td>
+                                    <input type="text" ng-class="{'submited':apply.submited}" ng-model="apply.defaultTeamMenber.name" data-parsley-group="step2" placeholder="姓名" required="required" class="form-control" />
+                                 </td>
+                                 <td>
+                                    <select ng-model="apply.defaultTeamMenber.is_male" data-parsley-group="step2" required="required" class="form-control">
+                                       <option value="{{::key}}" ng-repeat="(key,value) in apply.SEX">{{::value}}</option>
+                                    </select>
+                                 </td>
+                                 <td>
+                                    <select name="college" required="" ng-options="g.school_id as g.school_name for g in apply.colleges" ng-change="apply.loadMajors(apply.school_id)" ng-model="apply.defaultTeamMenber.school_id" data-parsley-group="step2"
+                                    placeholder="学院" class="form-control"></select>
+                                 </td>
+                                 <td>
+                                    <select name="major" required="" ng-options="g.major_id as g.major_name for g in apply.majors" ng-model="apply.defaultTeamMenber.major_id" data-parsley-group="step2" placeholder="专业" class="form-control"></select>
+                                 </td>
+                                 <td>
+                                    <input type="text" ng-class="{'submited':apply.submited}" ng-model="apply.defaultTeamMenber.grade" data-parsley-group="step2" ng-pattern="/^[2][0-9]{3}$/" placeholder="年级/例:2013" required="required" class="form-control"
+                                    />
+                                 </td>
+                              </tr>
+                           </table>
+                           <table class="table table-bordered bg-white">
+                              <tr style="font-weight: bold">
+                                 <td style="border-top: 0;width:20%">出生日期</td>
+                                 <td style="border-top: 0;width:20%">身份证件类型</td>
+                                 <td style="border-top: 0;width:20%">身份证件号码</td>
+                                 <td style="border-top: 0;width:20%">学号</td>
+                                 <td style="border-top: 0;width:20%">邮箱</td>
+                              </tr>
+                              <tr>
+                                 <td>
+                                    <div class="input-group">
+                                       <input type="text" ng-class="{'submited':apply.submited}" disabled="disabled" datepicker-popup="{{apply.format}}" ng-model="apply.defaultTeamMenber.datetime" is-open="apply.dateopened" max-date="'2017-06-22'" datepicker-options="dateOptions"
+                                       date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" class="form-control" />
+                                       <span class="input-group-btn">
+                                          <button type="button" ng-click="apply.dateopen($event)" class="btn btn-default">
+                                             <em class="icon-calendar table-responsive b0"></em>
+                                          </button>
+                                       </span>
+                                    </div>
+                                 </td>
+                                 <td>
+                                    <select ng-model="apply.defaultTeamMenber.id_type" data-parsley-group="step2" required="required" class="form-control">
+                                       <option value="{{::idcardtype}}" ng-repeat="idcardtype in apply.IDCARDTYPE">{{::idcardtype}}</option>
+                                    </select>
+                                 </td>
+                                 <td>
+                                    <input type="text" ng-class="{'submited':apply.submited}" ng-model="apply.defaultTeamMenber.id_number" data-parsley-group="step2" ng-pattern="/(^[0-9]{15}$)|(^[0-9]{17}([0-9]|X)$)/" placeholder="身份证件号码" required="required"
+                                    class="form-control" />
+                                 </td>
+                                 <td>
+                                    <input type="text" ng-class="{'submited':apply.submited}" ng-model="apply.defaultTeamMenber.sid" data-parsley-group="step2" ng-pattern="/^[0-9]{10}$/" placeholder="学号" required="required" class="form-control" />
+                                 </td>
+                                 <td>
+                                    <input type="text" ng-class="{'submited':apply.submited}" ng-model="apply.defaultTeamMenber.email" data-parsley-group="step2" ng-pattern="/^([a-zA-Z0-9_.-])+@(([a-zA-Z0-9-])+.)+([a-zA-Z0-9]{2,4})+$/" placeholder="邮箱" required="required"
+                                    class="form-control" />
+                                 </td>
+                              </tr>
+                           </table>
+                           <table class="table table-bordered bg-white">
+                              <tr>
+                                 <td style="border-top: 0;width:20%">手机号码</td>
+                                 <td style="border-top: 0;width:20%">政治面貌</td>
+                                 <td style="border-top: 0;width:20%">民族</td>
+                                 <td style="border-top: 0;width:20%">文化程度</td>
+                                 <td style="border-top: 0;width:20%">国籍</td>
+                              </tr>
+                              <tr>
+                                 <td>
+                                    <input type="text" ng-class="{'submited':apply.submited}" ng-model="apply.defaultTeamMenber.mobile" data-parsley-group="step2" ng-pattern="/^[1][0-9]{10}$/" placeholder="手机号码" required="required" class="form-control" />
+                                 </td>
+                                 <td>
+                                    <select ng-model="apply.defaultTeamMenber.political_face" data-parsley-group="step2" required="required" class="form-control">
+                                       <option value="{{::role}}" ng-repeat="role in apply.ROLE">{{::role}}</option>
+                                    </select>
+                                 </td>
+                                 <td>
+                                    <select ng-model="apply.defaultTeamMenber.nationality" data-parsley-group="step2" required="required" class="form-control">
+                                       <option value="{{::nation}}" ng-repeat="nation in apply.NATIONS">{{::nation}}</option>
+                                    </select>
+                                 </td>
+                                 <td>
+                                    <select ng-model="apply.defaultTeamMenber.education_degree" data-parsley-group="step2" required="required" class="form-control">
+                                       <option value="{{::iq}}" ng-repeat="iq in apply.IQ">{{::iq}}</option>
+                                    </select>
+                                 </td>
+                                 <td>
+                                    <ui-select ng-model="apply.defaultTeamMenber.citizenship" theme="bootstrap" data-parsley-group="step2" required="required">
+                                       <ui-select-match placeholder="选择国籍或输入关键词搜索">{{$select.selected}}</ui-select-match>
+                                       <ui-select-choices repeat="county in apply.COUNTYS | singleFilter: $select.search">
+                                          <div ng-bind="::county | highlight: $select.search"></div>
+                                       </ui-select-choices>
+                                    </ui-select>
+                                 </td>
+                              </tr>
+                           </table>
+                           <table class="table table-bordered bg-white">
+                              <tr style="font-weight: bold">
+                                 <td style="border-top: 0;width:20%">户口性质</td>
+                                 <td style="border-top: 0;width:40%">户籍地址（所属行政区划）</td>
+                                 <td style="border-top: 0;width:40%">户籍地址（详细地址）</td>
+                              </tr>
+                              <tr>
+                                 <td>
+                                    <ui-select ng-model="apply.defaultTeamMenber.characters" theme="bootstrap" data-parsley-group="step2" required="required">
+                                       <ui-select-match placeholder="户口性质或输入关键词">{{$select.selected}}</ui-select-match>
+                                       <ui-select-choices repeat="home in apply.HOMETYPE | singleFilter: $select.search">
+                                          <div ng-bind="::home | highlight: $select.search"></div>
+                                       </ui-select-choices>
+                                    </ui-select>
+                                 </td>
+                                 <td>
+                                    <ui-select ng-model="apply.defaultTeamMenber.address" theme="bootstrap" reset-search-input="false" required="required">
+                                       <ui-select-match placeholder="请输入区号搜索">{{$select.selected}}</ui-select-match>
+                                       <ui-select-choices repeat="address in apply.addresses track by $index" refresh="apply.refreshAddresses($select.search)" refresh-delay="1000">
+                                          <div ng-bind-html="address | highlight: $select.search"></div>
+                                       </ui-select-choices>
+                                    </ui-select>
+                                 </td>
+                                 <td>
+                                    <input type="text" ng-class="{'submited':apply.submited}" ng-model="apply.defaultTeamMenber.address_detail" data-parsley-group="step2" placeholder="详细地址" required="required" class="form-control" />
+                                 </td>
+                              </tr>
+                           </table>
+                        </div>
+                     </fieldset>
+                     <div class="btn-form">
+                        <button type="button" ng-disabled="tableform.$waiting" ng-click="apply.addMenber()" class="btn btn-default pull-right">添加新成员</button>
+                        <button type="button" ng-disabled="tableform.$waiting" ng-click="apply.SaveUserList()" class="btn btn-info">保存</button>
+                        <button type="button" ng-disabled="apply.pj.user_lists.length&lt;2" ng-click="apply.delectMenber()" class="btn btn-danger">删除</button>
+                     </div>
+                     <ul class="pager">
+                        <li class="previous"><a ng-click="wizard.go(1)">上一步</a>
+                        </li>
+                        <li class="next"><a ng-click="wizard.go(3)">下一步</a>
+                        </li>
+                     </ul>
+                  </div>
+                  <div id="step3" ng-show="wizard.active(3)">
+                     <fieldset>
+                        <hr/>
+                        <div class="row">
+                           <div class="col-md-2 text-center">
+                              <label>创业项目简介</label>
+                           </div>
+                           <div class="col-md-10">
+                              <div class="container-fluid">
+                                 <ueditor config="apply.editorConfig" ng-model="apply.pj.project_desc"></ueditor>
+                              </div>
+                           </div>
+                        </div>
+                        <hr/>
+                        <div class="row">
+                           <div class="col-md-2 text-center">
+                              <label>创业团队简介</label>
+                           </div>
+                           <div class="col-md-10">
+                              <div class="container-fluid">
+                                 <ueditor config="apply.editorConfig" ng-model="apply.pj.team_desc"></ueditor>
+                              </div>
+                           </div>
+                        </div>
+                        <hr/>
+                        <div class="row">
+                           <div class="col-md-2 text-center">
+                              <label>申请理由(包括经费使用计划及效绩目标)</label>
+                           </div>
+                           <div class="col-md-10">
+                              <div class="container-fluid">
+                                 <ueditor config="apply.editorConfig" ng-model="apply.pj.apply_reason"></ueditor>
+                              </div>
+                           </div>
+                        </div>
+                     </fieldset>
+                     <ul class="pager">
+                        <li class="previous"><a ng-click="wizard.go(2)">上一步</a>
+                        </li>
+                        <li class="next"><a ng-if="!(apply.pj.project_desc&amp;&amp;apply.pj.team_desc&amp;&amp;apply.pj.apply_reason)" class="disabled">下一步</a><a ng-click="wizard.go(4)" ng-if="apply.pj.project_desc&amp;&amp;apply.pj.team_desc&amp;&amp;apply.pj.apply_reason">下一步</a>
+                        </li>
+                     </ul>
+                  </div>
+                  <div id="step4" ng-show="wizard.active(4)">
+                     <fieldset>
+                        <div class="jumbotron">
+                           <h2>确认是否填写完成？</h2>
+                           <p>提交后请耐心等待管理员审核，审核结果将会通过短信通知</p>
+                           <p ng-if="apply.UserList.$valid&amp;&amp;!apply.applysubmited"><a ng-click="apply.submitApply()" class="btn btn-info btn-lg">提交申请</a>
+                           </p>
+                           <p ng-if="apply.UserList.$invalid&amp;&amp;apply.applysubmited" class="text-success">提交完成</p>
+                        </div>
+                        <ul class="pager">
+                           <li ng-if="!apply.applysubmited" class="previous"><a ng-click="wizard.go(3)">上一步</a>
+                           </li>
+                        </ul>
+                     </fieldset>
+                  </div>
+               </div>
+            </form>
          </div>
       </div>
    </div>
@@ -28,4 +313,7 @@
 <script type="text/ng-template" id="alert">
    <div class="ngdialog-message clearfix"><h3 ng-bind-html="header" class="text-center"></h3><p class="text-center"> 
    {{authMsg}}</p></div>
+</script>
+<script type="text/ng-template" id="countySelector">
+   <div class="ngdialog-message clearfix"><h3 class="text-center">选择国籍</h3><small class="text-center">从下拉框选择或者输入关键词搜索</small><ui-select ng-model="selected" theme="bootstrap"><ui-select-match placeholder="选择国籍或输入关键词">{{$select.selected}}</ui-select-match><ui-select-choices repeat="county in COUNTYS | propsFilter:  $select.search"><div ng-bind-html="county | highlight: $select.search"> </div></ui-select-choices></ui-select></div><button type="button" ng-click="confirm('Save')" class="btn btn-primary center-block">保存                                            </button>
 </script>

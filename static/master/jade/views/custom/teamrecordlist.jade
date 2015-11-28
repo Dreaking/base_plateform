@@ -25,10 +25,9 @@ h3 记账本
         .form-group.clearfix
           .col-md-6(style='padding:0;padding-right:10px;')
             select.form-control(ng-model='todo.firstType' ng-change='todo.getSecondList()')
-              option(ng-repeat='item in todo.typeItems' ng-value='item.item') {{item.item}}
+              option( ng-repeat='(item,value) in todo.typeItems' value='{{item}}' ng-bind='item')
           .col-md-6(style='padding:0;padding-right:10px;')
-            select.form-control(ng-model='todo.secondType')
-              option(ng-repeat='item in todo.secondTypeItems' ng-value='item.item') {{item.item}}
+            select.form-control(ng-model='todo.secondType' ng-options='g.layout_two_id as g.name for g in todo.secondTypeItems')
         .form-group
           textarea.form-control(ng-trim="true", ng-model='todo.todo.description', placeholder='账单描述', rows="8")
         
@@ -45,11 +44,19 @@ h3 记账本
           .timeline-panel
             .popover(ng-class="timelineAlt ? 'right' : 'left'")
                 span.md-lg.close(ng-click='todo.removeTodo(item.flow_id)' style='padding-right: 8px;') ×
-                h4.popover-title {{::item.amount}}
+                h4.popover-title.text-warning(ng-click='todo.todoSelected=item.$$hashKey') 收支金额(元):
+                  span(ng-bind='::item.amount')
                 .arrow
-                .popover-content
-                  abbr(title='{{::item.payment_type_name}}') {{::item.payment_type_name}}
-                  p(style='padding-top:5px;') {{::item.description}}
+                .popover-content.ng-fadeIn(ng-show='todo.todoSelected==item.$$hashKey')
+                  abbr(title='{{::item.payment_type_name}}')
+                  p.text-muted(style='padding-top:5px;') 操作人 -- 
+                    span(ng-bind='::item.operator_name')
+                  p.text-muted(style='padding-top:5px;') 一级类型 -- 
+                    span(ng-bind='::item.layout_one_name')
+                  p.text-muted(style='padding-top:5px;') 二级类型 -- 
+                    span(ng-bind='::item.layout_two_name')
+                  p.text-muted(style='padding-top:5px;') 描述 -- 
+                    span(ng-bind='::item.description')
         li.timeline-end(ng-if="$last")
           a(ng-click='todo.gotoEdit()').timeline-badge
             em.fa.fa-plus

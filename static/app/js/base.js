@@ -20369,11 +20369,11 @@ function $LocaleProvider() {
 
       DATETIME_FORMATS: {
         MONTH:
-            'January,February,March,April,May,June,July,August,September,October,November,December'
-            .split(','),
-        SHORTMONTH:  'Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec'.split(','),
-        DAY: 'Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday'.split(','),
-        SHORTDAY: 'Sun,Mon,Tue,Wed,Thu,Fri,Sat'.split(','),
+            ["一月","二月","三月","四月","五月","六月",
+			"七月","八月","九月","十月","十一月","十二月"],
+        SHORTMONTH:  ["一", "二", "三", "四", "五", "六", "七", "八", "九", "十", "十一", "十二"],
+        DAY: ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"], 
+        SHORTDAY: ["日","一","二","三","四","五","六"],
         AMPMS: ['AM','PM'],
         medium: 'MMM d, y h:mm:ss a',
         'short': 'M/d/yy h:mm a',
@@ -56445,9 +56445,9 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
 
 .constant('datepickerPopupConfig', {
   datepickerPopup: 'yyyy-MM-dd',
-  currentText: 'Today',
-  clearText: 'Clear',
-  closeText: 'Done',
+  currentText: '今天',
+  clearText: '清除',
+  closeText: '关闭',
   closeOnDateSelection: true,
   appendToBody: false,
   showButtonBar: true
@@ -58958,7 +58958,7 @@ angular.module("template/alert/alert.html", []).run(["$templateCache", function(
     "<div class=\"alert\" ng-class=\"['alert-' + (type || 'warning'), closeable ? 'alert-dismissable' : null]\" role=\"alert\">\n" +
     "    <button ng-show=\"closeable\" type=\"button\" class=\"close\" ng-click=\"close()\">\n" +
     "        <span aria-hidden=\"true\">&times;</span>\n" +
-    "        <span class=\"sr-only\">Close</span>\n" +
+    "        <span class=\"sr-only\">{{getText('close')}}</span>\n" +
     "    </button>\n" +
     "    <div ng-transclude></div>\n" +
     "</div>\n" +
@@ -59055,7 +59055,7 @@ angular.module("template/datepicker/popup.html", []).run(["$templateCache", func
     "			<button type=\"button\" class=\"btn btn-sm btn-info\" ng-click=\"select('today')\">{{ getText('current') }}</button>\n" +
     "			<button type=\"button\" class=\"btn btn-sm btn-danger\" ng-click=\"select(null)\">{{ getText('clear') }}</button>\n" +
     "		</span>\n" +
-    "		<button type=\"button\" class=\"btn btn-sm btn-success pull-right\" ng-click=\"close()\">{{ getText('close') }}</button>\n" +
+    "		<button type=\"button\" class=\"btn btn-sm btn-success pull-right\" ng-click=\"close()\">{{getText('close')}}</button>\n" +
     "	</li>\n" +
     "</ul>\n" +
     "");

@@ -26,6 +26,24 @@
 		//--基地管理员权限
 		function adminResourceApiFn($resource){
 			return $resource('/admin/:user/:param/:operate/:others', {}, {
+				//--一级级联添加--
+				LayoutOneAdd:{method:'POST',params:{param:'layout',operate:'one',others:'add'}},
+				//--一级级联编辑--
+				LayoutOneEdit:{method:'POST',params:{param:'layout',operate:'one',others:'edit'}},
+				//--一级级联删除--
+				LayoutOneDelect:{method:'POST',params:{param:'layout',operate:'one',others:'delete'}},
+				//--二级级联添加--
+				LayoutTwoAdd:{method:'POST',params:{param:'layout',operate:'two',others:'add'}},
+				//--二级级联编辑--
+				LayoutTwoEdit:{method:'POST',params:{param:'layout',operate:'two',others:'edit'}},
+				//--二级级联删除--
+				LayoutTwoDelect:{method:'POST',params:{param:'layout',operate:'two',others:'delete'}},
+				//--申请地点添加--
+				PlaceAdd:{method:'POST',params:{param:'place',others:'add'}},
+				//--申请地点编辑--
+				PlaceEdit:{method:'POST',params:{param:'place',others:'edit'}},
+				//--申请地点删除--
+				PlaceDelete:{method:'POST',params:{param:'place',others:'delete'}},
 				//--团队补贴Excel导出--
 				TeamRecordExport:{method:'POST',params:{user:'account',param:'record',operate:'excel',others:'export'}},
 				//--帖子列表--
@@ -96,7 +114,7 @@
 		      	//--批量扣钱--
 		      	DecreaseAllMoney: {method:'POST', params:{user:'account',param:'batch',operate:'decrease'}},
 		      	//--团队申请中心--
-		      	ApplyForThing: {method:'POST', params:{user:'room',param:'apply',operate:'add'}},
+		      	ApplyForThing: {method:'POST', params:{user:'place',param:'apply',operate:'add'}},
 		      	//--添加招聘--
 		      	AddRecruit: {method:'POST', params:{param:'recruit',operate:'add'}},
 		      	//--修改招聘--
@@ -119,8 +137,16 @@
 		//--公共权限--
 		function schoolResourceApiFn($resource){
 			return $resource('/:user/:param/:operate/:others', {}, {
+				//--地点列表--
+				PlaceQuery:{method:'POST',params:{user:'place',param:'name',operate:'list'}},
+				//--全部类型级联--
+				LayoutAllQuery:{method:'POST',params:{user:'layout',param:'all',operate:'list'}},
+				//--补贴类型级联--
+				LayoutPaymentQuery:{method:'POST',params:{user:'layout',param:'payment',operate:'list'}},
+				//--流水类型级联--
+				LayoutFlowAllQuery:{method:'POST',params:{user:'layout',param:'flow',operate:'list'}},
 				//--申请物资列表--
-				ApplyThingList:{method:'POST',params:{user:'room',param:'apply',operate:'list'}},
+				ApplyThingList:{method:'POST',params:{user:'place',param:'apply',operate:'list'}},
 				//--获取记账本收支类型列表--
 				PaymentList:{method:'POST',params:{user:'payment',param:'type',operate:'list'}},
 				//--获取回复列表--
@@ -148,9 +174,9 @@
 				//--获取招聘详情--
 				GetRecruitDetail:{method:'POST',params:{user:'base',param:'recruit',operate:'detail',others:'get'}},				
 				//--通过物资申请--
-				PassThingApply:{method:'POST',params:{user:'room',param:'apply',operate:'approve'}},				
+				PassThingApply:{method:'POST',params:{user:'place',param:'apply',operate:'approve'}},
 				//--否决物资申请--
-				RejectThingApply:{method:'POST',params:{user:'room',param:'apply',operate:'decline'}},				
+				RejectThingApply:{method:'POST',params:{user:'place',param:'apply',operate:'decline'}},
 				//--获取活动报名EXCEL--
 				DownloadActivityExcel:{method:'POST',params:{user:'activity',param:'apply',operate:'excel',others:'get'}},
 				//--修改密码--

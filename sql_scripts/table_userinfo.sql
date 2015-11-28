@@ -4,15 +4,24 @@ drop table if exists userinfo;
 create table userinfo(
   user_id int primary key not null,
   name varchar(20) not null,
+  nickname varchar(20) not null,
   school_id int not null,
   major_id int not null,
-  nickname varchar(20) not null,
+  id_type varchar(20),
+  id_number varchar(30),
+  education_degree varchar(20),
+  citizenship varchar(25),
+  nationality varchar(25),
+  characters varchar(20),
+  address varchar(20),
+  address_detail varchar(50),
   sid varchar(20),
   email varchar(30),
-  qq varchar(11),
   phone varchar(13),
   gender enum('male', 'female') not null,
-  birthday bigint
+  birthday char(10),
+  political_face varchar(10),
+  grade int
 )engine=InnoDB default charset=utf8;
 
 insert into userinfo(user_id, name, school_id,

@@ -31,18 +31,19 @@
     }
   }
 
-  TeamOrderController.$inject = ['$scope', '$timeout', 'DTOptionsBuilder', 'DTColumnDefBuilder', 'schoolResourceApi', 'teamResourceApi', 'adminResourceApi'];
+  TeamOrderController.$inject = ['$scope','$sce', '$timeout', 'DTOptionsBuilder', 'DTColumnDefBuilder', 'schoolResourceApi', 'teamResourceApi', 'adminResourceApi'];
 
-  function TeamOrderController($scope, $timeout, DTOptionsBuilder, DTColumnDefBuilder, schoolResourceApi, teamResourceApi, adminResourceApi) {
+  function TeamOrderController($scope,$sce, $timeout, DTOptionsBuilder, DTColumnDefBuilder, schoolResourceApi, teamResourceApi, adminResourceApi) {
     var vm = this;
-    vm.dtOptions = DTOptionsBuilder.newOptions().withPaginationType('full_numbers').withDisplayLength(2);
+    vm.dtOptions = DTOptionsBuilder.newOptions().withPaginationType('full_numbers');
     vm.dtColumnDefs = [
       DTColumnDefBuilder.newColumnDef(0),
       DTColumnDefBuilder.newColumnDef(1),
       DTColumnDefBuilder.newColumnDef(2).notSortable(),
-      DTColumnDefBuilder.newColumnDef(3),
-      DTColumnDefBuilder.newColumnDef(4).notSortable(),
-      DTColumnDefBuilder.newColumnDef(5)
+      DTColumnDefBuilder.newColumnDef(3).notSortable(),
+      DTColumnDefBuilder.newColumnDef(4),
+      DTColumnDefBuilder.newColumnDef(5).notSortable(),
+      DTColumnDefBuilder.newColumnDef(6)
     ];
     vm.exportExcel = function() {
       adminResourceApi.TeamRecordExport({
@@ -50,7 +51,7 @@
         start_date: vm.starttimeunix,
         end_date: vm.endtimeunix
       }, function(data) {
-        window.open(data.data.file_url);
+         $timeout(function(){vm.exportUrl=$sce.trustAsResourceUrl(data.data.file_url);},0,true)
       })
     }
     vm.checkChange = function() {
@@ -123,15 +124,17 @@
         dialog.close();
       }, 2000);
     };
-    vm.dateOptions = {
+    $scope.dateOptions = {
       formatYear: '@',
       startingDay: 1,
-      navigationAsDateFormat: true
+      minMode:'month'
     };
-    vm.initDate = new Date('2019-10-20');
+    $scope.enddatemode={
+      mode:'month'
+    }
+    $scope.startdatemode=angular.copy($scope.enddatemode)
     vm.format = 'yyyy年-MM月';
     $scope.$on('$stateChangeSuccess', function(event, toState, toParams) {
-      console.log(toParams)
       $scope.selectTeam = toParams.id;
       getRecordListWithOutTime(toParams.id)
     });

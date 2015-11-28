@@ -1,0 +1,312 @@
+h3 级联列表管理
+  small Cascade List Management
+
+.panel.panel-default
+    .panel-heading
+        | 收入类型级联
+    .table-responsive(style='overflow-x: visible;')
+        table.table.table-striped.table-bordered.table-hover
+          thead
+            tr
+              th 名称
+              th.text-center 一级级联
+              th.text-center 二级级联
+          tbody
+           tr
+              td 通用类型
+              td.form-inline.editable-wrap.text-center
+                .btn-group(dropdown='dropdown')
+                    button.btn.btn-default.btn-sm(type='button', ng-disabled='disabled', dropdown-toggle="")
+                      em.fa.fa-angle-down.fa-fw
+                      | {{cascade.incomeCommonOneSelected?cascade.incomeCommonOneSelected.name:'请选择要操作的级联'}}
+                    ul.dropdown-menu(role='menu')
+                      li(ng-if='cascade.incomeCommonBrige.length<1')
+                        a 暂无级联选项
+                      li(ng-repeat='(key,value) in cascade.incomeCommonBrige track by $index')
+                        a(ng-bind='key' ng-click='cascade.changeOneSelected(cascade.incomeCommon,cascade.incomeCommonOneSelected,cascade.incomeCommonTwoSelected,key,value)')
+                .editable-controls.form-group
+                  input.editable-has-buttons.editable-input.form-control.input-sm(type='text' ng-model='cascade.incomeCommonOneSelected.name')
+                  span.editable-buttons
+                    button.btn.btn-success.btn-sm(type='button' ng-click='cascade.layoutOneEdit(cascade.incomeCommonOneSelected,cascade.incomeCommonBrige)')
+                      span.fa.fa-check
+                    button.btn.btn-danger.btn-sm(type='button' ng-click='cascade.layoutOneDelect(cascade.incomeCommonOneSelected,cascade.incomeCommonBrige)')
+                      span.fa.fa-minus
+                  span.editable-buttons
+                    button.btn.btn-default.btn-sm(type='button' ng-click='cascade.layoutOneAdd(cascade.incomeCommonOneSelected,cascade.incomeCommonBrige,0)')
+                      span.fa.fa-plus
+              td.form-inline.editable-wrap.text-center
+                .btn-group(dropdown='dropdown')
+                  button.btn.btn-default.btn-sm(type='button', ng-disabled='disabled', dropdown-toggle="")
+                    em.fa.fa-angle-down.fa-fw
+                    | {{cascade.incomeCommonTwoSelected.name?cascade.incomeCommonTwoSelected.name:'请选择要操作的级联'}}
+                  ul.dropdown-menu(role='menu')
+                    li(ng-if='!cascade.incomeCommon[cascade.incomeCommonOneSelected.name]||cascade.incomeCommon[cascade.incomeCommonOneSelected.name].length<1')
+                      a 暂无级联选项
+                    li(ng-repeat='item in cascade.incomeCommon[cascade.incomeCommonOneSelected.name] track by $index' ng-if='cascade.incomeCommonOneSelected')
+                      a(value='item.layout_two_id' ng-bind='item.name' ng-click='cascade.changeSelected(cascade.incomeCommonTwoSelected,item.name)')
+                .editable-controls.form-group
+                    input.editable-has-buttons.editable-input.form-control.input-sm(type='text' ng-model='cascade.incomeCommonTwoSelected.name')
+                    span.editable-buttons
+                      button.btn.btn-success.btn-sm(type='button' ng-click='cascade.layoutTwoEdit(cascade.incomeCommonTwoSelected,cascade.incomeCommon[cascade.incomeCommonOneSelected.name])')
+                        span.fa.fa-check
+                      button.btn.btn-danger.btn-sm(type='button' ng-click='cascade.layoutTwoDelect(cascade.incomeCommonTwoSelected,cascade.incomeCommon[cascade.incomeCommonOneSelected.name])')
+                        span.fa.fa-minus
+                  span.editable-buttons
+                    button.btn.btn-default.btn-sm(type='button' ng-click='cascade.layoutTwoAdd(cascade.incomeCommonOneSelected,cascade.incomeCommonTwoSelected,cascade.incomeCommon[cascade.incomeCommonOneSelected.name],0)')
+                      span.fa.fa-plus
+            tr
+              td 补贴类型
+              td.form-inline.editable-wrap.text-center
+                .btn-group(dropdown='dropdown')
+                    button.btn.btn-default.btn-sm(type='button', ng-disabled='disabled', dropdown-toggle="")
+                      em.fa.fa-angle-down.fa-fw
+                      | {{cascade.incomePaymentOneSelected?cascade.incomePaymentOneSelected.name:'请选择要操作的级联'}}
+                    ul.dropdown-menu(role='menu')
+                      li(ng-if='cascade.incomePaymentBrige.length<1')
+                        a 暂无级联选项
+                      li(ng-repeat='(key,value) in cascade.incomePaymentBrige track by $index')
+                        a(ng-bind='key' ng-click='cascade.changeOneSelected(cascade.incomePayment,cascade.incomePaymentOneSelected,cascade.incomePaymentTwoSelected,key,value)')
+                .editable-controls.form-group
+                  input.editable-has-buttons.editable-input.form-control.input-sm(type='text' ng-model='cascade.incomePaymentOneSelected.name')
+                  span.editable-buttons
+                    button.btn.btn-success.btn-sm(type='button' ng-click='cascade.layoutOneEdit(cascade.incomePaymentOneSelected,cascade.incomePaymentBrige)')
+                      span.fa.fa-check
+                    button.btn.btn-danger.btn-sm(type='button' ng-click='cascade.layoutOneDelect(cascade.incomePaymentOneSelected,cascade.incomePaymentBrige)')
+                      span.fa.fa-minus
+                  span.editable-buttons
+                    button.btn.btn-default.btn-sm(type='button' ng-click='cascade.layoutOneAdd(cascade.incomePaymentOneSelected,cascade.incomePaymentBrige,0)')
+                      span.fa.fa-plus
+              td.form-inline.editable-wrap.text-center
+                .btn-group(dropdown='dropdown')
+                  button.btn.btn-default.btn-sm(type='button', ng-disabled='disabled', dropdown-toggle="")
+                    em.fa.fa-angle-down.fa-fw
+                    | {{cascade.incomePaymentTwoSelected.name?cascade.incomePaymentTwoSelected.name:'请选择要操作的级联'}}
+                  ul.dropdown-menu(role='menu')
+                    li(ng-if='!cascade.incomePayment[cascade.incomePaymentOneSelected.name]||cascade.incomePayment[cascade.incomePaymentOneSelected.name].length<1')
+                      a 暂无级联选项
+                    li(ng-repeat='item in cascade.incomePayment[cascade.incomePaymentOneSelected.name] track by $index' ng-if='cascade.incomePaymentOneSelected')
+                      a(value='item.layout_two_id' ng-bind='item.name' ng-click='cascade.changeSelected(cascade.incomePaymentTwoSelected,item.name)')
+                .editable-controls.form-group
+                    input.editable-has-buttons.editable-input.form-control.input-sm(type='text' ng-model='cascade.incomePaymentTwoSelected.name')
+                    span.editable-buttons
+                      button.btn.btn-success.btn-sm(type='button' ng-click='cascade.layoutTwoEdit(cascade.incomePaymentTwoSelected,cascade.incomePayment[cascade.incomePaymentOneSelected.name])')
+                        span.fa.fa-check
+                      button.btn.btn-danger.btn-sm(type='button' ng-click='cascade.layoutTwoDelect(cascade.incomePaymentTwoSelected,cascade.incomePayment[cascade.incomePaymentOneSelected.name])')
+                        span.fa.fa-minus
+                  span.editable-buttons
+                    button.btn.btn-default.btn-sm(type='button' ng-click='cascade.layoutTwoAdd(cascade.incomePaymentOneSelected,cascade.incomePaymentTwoSelected,cascade.incomePayment[cascade.incomePaymentOneSelected.name],1)')
+                      span.fa.fa-plus
+            tr
+              td 流水类型
+              td.form-inline.editable-wrap.text-center
+                .btn-group(dropdown='dropdown')
+                    button.btn.btn-default.btn-sm(type='button', ng-disabled='disabled', dropdown-toggle="")
+                      em.fa.fa-angle-down.fa-fw
+                      | {{cascade.incomeFlowOneSelected?cascade.incomeFlowOneSelected.name:'请选择要操作的级联'}}
+                    ul.dropdown-menu(role='menu')
+                      li(ng-if='cascade.incomeFlowBrige.length<1')
+                        a 暂无级联选项
+                      li(ng-repeat='(key,value) in cascade.incomeFlowBrige track by $index')
+                        a(ng-bind='key' ng-click='cascade.changeOneSelected(cascade.incomeFlow,cascade.incomeFlowOneSelected,cascade.incomeFlowTwoSelected,key,value)')
+                .editable-controls.form-group
+                  input.editable-has-buttons.editable-input.form-control.input-sm(type='text' ng-model='cascade.incomeFlowOneSelected.name')
+                  span.editable-buttons
+                    button.btn.btn-success.btn-sm(type='button' ng-click='cascade.layoutOneEdit(cascade.incomeFlowOneSelected,cascade.incomeFlowBrige)')
+                      span.fa.fa-check
+                    button.btn.btn-danger.btn-sm(type='button' ng-click='cascade.layoutOneDelect(cascade.incomeFlowOneSelected,cascade.incomeFlowBrige)')
+                      span.fa.fa-minus
+                  span.editable-buttons
+                    button.btn.btn-default.btn-sm(type='button' ng-click='cascade.layoutOneAdd(cascade.incomeFlowOneSelected,cascade.incomeFlowBrige,0)')
+                      span.fa.fa-plus
+              td.form-inline.editable-wrap.text-center
+                .btn-group(dropdown='dropdown')
+                  button.btn.btn-default.btn-sm(type='button', ng-disabled='disabled', dropdown-toggle="")
+                    em.fa.fa-angle-down.fa-fw
+                    | {{cascade.incomeFlowTwoSelected.name?cascade.incomeFlowTwoSelected.name:'请选择要操作的级联'}}
+                  ul.dropdown-menu(role='menu')
+                    li(ng-if='!cascade.incomeFlow[cascade.incomeFlowOneSelected.name]||cascade.incomeFlow[cascade.incomeFlowOneSelected.name].length<1')
+                      a 暂无级联选项
+                    li(ng-repeat='item in cascade.incomeFlow[cascade.incomeFlowOneSelected.name] track by $index' ng-if='cascade.incomeFlowOneSelected')
+                      a(value='item.layout_two_id' ng-bind='item.name' ng-click='cascade.changeSelected(cascade.incomeFlowTwoSelected,item.name)')
+                .editable-controls.form-group
+                    input.editable-has-buttons.editable-input.form-control.input-sm(type='text' ng-model='cascade.incomeFlowTwoSelected.name')
+                    span.editable-buttons
+                      button.btn.btn-success.btn-sm(type='button' ng-click='cascade.layoutTwoEdit(cascade.incomeFlowTwoSelected,cascade.incomeFlow[cascade.incomeFlowOneSelected.name])')
+                        span.fa.fa-check
+                      button.btn.btn-danger.btn-sm(type='button' ng-click='cascade.layoutTwoDelect(cascade.incomeFlowTwoSelected,cascade.incomeFlow[cascade.incomeFlowOneSelected.name])')
+                        span.fa.fa-minus
+                  span.editable-buttons
+                    button.btn.btn-default.btn-sm(type='button' ng-click='cascade.layoutTwoAdd(cascade.incomeFlowOneSelected,cascade.incomeFlowTwoSelected,cascade.incomeFlow[cascade.incomeFlowOneSelected.name],2)')
+                      span.fa.fa-plus
+.panel.panel-default
+    .panel-heading
+        | 支出类型级联
+    .table-responsive(style='overflow-x: visible;')
+        table.table.table-striped.table-bordered.table-hover
+          thead
+            tr
+              th 名称
+              th.text-center 一级级联
+              th.text-center 二级级联
+          tbody
+           tr
+              td 通用类型
+              td.form-inline.editable-wrap.text-center
+                .btn-group(dropdown='dropdown')
+                    button.btn.btn-default.btn-sm(type='button', ng-disabled='disabled', dropdown-toggle="")
+                      em.fa.fa-angle-down.fa-fw
+                      | {{cascade.payoutCommonOneSelected?cascade.payoutCommonOneSelected.name:'请选择要操作的级联'}}
+                    ul.dropdown-menu(role='menu')
+                      li(ng-if='cascade.payoutCommonBrige.length<1')
+                        a 暂无级联选项
+                      li(ng-repeat='(key,value) in cascade.payoutCommonBrige track by $index')
+                        a(ng-bind='key' ng-click='cascade.changeOneSelected(cascade.payoutCommon,cascade.payoutCommonOneSelected,cascade.payoutCommonTwoSelected,key,value)')
+                .editable-controls.form-group
+                  input.editable-has-buttons.editable-input.form-control.input-sm(type='text' ng-model='cascade.payoutCommonOneSelected.name')
+                  span.editable-buttons
+                    button.btn.btn-success.btn-sm(type='button' ng-click='cascade.layoutOneEdit(cascade.payoutCommonOneSelected,cascade.payoutCommonBrige)')
+                      span.fa.fa-check
+                    button.btn.btn-danger.btn-sm(type='button' ng-click='cascade.layoutOneDelect(cascade.payoutCommonOneSelected,cascade.payoutCommonBrige)')
+                      span.fa.fa-minus
+                  span.editable-buttons
+                    button.btn.btn-default.btn-sm(type='button' ng-click='cascade.layoutOneAdd(cascade.payoutCommonOneSelected,cascade.payoutCommonBrige,1)')
+                      span.fa.fa-plus
+              td.form-inline.editable-wrap.text-center
+                .btn-group(dropdown='dropdown')
+                  button.btn.btn-default.btn-sm(type='button', ng-disabled='disabled', dropdown-toggle="")
+                    em.fa.fa-angle-down.fa-fw
+                    | {{cascade.payoutCommonTwoSelected.name?cascade.payoutCommonTwoSelected.name:'请选择要操作的级联'}}
+                  ul.dropdown-menu(role='menu')
+                    li(ng-if='!cascade.payoutCommon[cascade.payoutCommonOneSelected.name]||cascade.payoutCommon[cascade.payoutCommonOneSelected.name].length<1')
+                      a 暂无级联选项
+                    li(ng-repeat='item in cascade.payoutCommon[cascade.payoutCommonOneSelected.name] track by $index' ng-if='cascade.payoutCommonOneSelected')
+                      a(value='item.layout_two_id' ng-bind='item.name' ng-click='cascade.changeSelected(cascade.payoutCommonTwoSelected,item.name)')
+                .editable-controls.form-group
+                    input.editable-has-buttons.editable-input.form-control.input-sm(type='text' ng-model='cascade.payoutCommonTwoSelected.name')
+                    span.editable-buttons
+                      button.btn.btn-success.btn-sm(type='button' ng-click='cascade.layoutTwoEdit(cascade.payoutCommonTwoSelected,cascade.payoutCommon[cascade.payoutCommonOneSelected.name])')
+                        span.fa.fa-check
+                      button.btn.btn-danger.btn-sm(type='button' ng-click='cascade.layoutTwoDelect(cascade.payoutCommonTwoSelected,cascade.payoutCommon[cascade.payoutCommonOneSelected.name])')
+                        span.fa.fa-minus
+                  span.editable-buttons
+                    button.btn.btn-default.btn-sm(type='button' ng-click='cascade.layoutTwoAdd(cascade.payoutCommonOneSelected,cascade.payoutCommonTwoSelected,cascade.payoutCommon[cascade.payoutFlowOneSelected.name],0)')
+                      span.fa.fa-plus
+            tr
+              td 补贴类型
+              td.form-inline.editable-wrap.text-center
+                .btn-group(dropdown='dropdown')
+                    button.btn.btn-default.btn-sm(type='button', ng-disabled='disabled', dropdown-toggle="")
+                      em.fa.fa-angle-down.fa-fw
+                      | {{cascade.payoutPaymentOneSelected?cascade.payoutPaymentOneSelected.name:'请选择要操作的级联'}}
+                    ul.dropdown-menu(role='menu')
+                      li(ng-if='cascade.payoutPaymentBrige.length<1')
+                        a 暂无级联选项
+                      li(ng-repeat='(key,value) in cascade.payoutPaymentBrige track by $index')
+                        a(ng-bind='key' ng-click='cascade.changeOneSelected(cascade.payoutPayment,cascade.payoutPaymentOneSelected,cascade.payoutPaymentTwoSelected,key,value)')
+                .editable-controls.form-group
+                  input.editable-has-buttons.editable-input.form-control.input-sm(type='text' ng-model='cascade.payoutPaymentOneSelected.name')
+                  span.editable-buttons
+                    button.btn.btn-success.btn-sm(type='button' ng-click='cascade.layoutOneEdit(cascade.payoutPaymentOneSelected,cascade.payoutPaymentBrige)')
+                      span.fa.fa-check
+                    button.btn.btn-danger.btn-sm(type='button' ng-click='cascade.layoutOneDelect(cascade.payoutPaymentOneSelected,cascade.payoutPaymentBrige)')
+                      span.fa.fa-minus
+                  span.editable-buttons
+                    button.btn.btn-default.btn-sm(type='button' ng-click='cascade.layoutOneAdd(cascade.payoutPaymentOneSelected,cascade.payoutPaymentBrige,1)')
+                      span.fa.fa-plus
+              td.form-inline.editable-wrap.text-center
+                .btn-group(dropdown='dropdown')
+                  button.btn.btn-default.btn-sm(type='button', ng-disabled='disabled', dropdown-toggle="")
+                    em.fa.fa-angle-down.fa-fw
+                    | {{cascade.payoutPaymentTwoSelected.name?cascade.payoutPaymentTwoSelected.name:'请选择要操作的级联'}}
+                  ul.dropdown-menu(role='menu')
+                    li(ng-if='!cascade.payoutPayment[cascade.payoutPaymentOneSelected.name]||cascade.payoutPayment[cascade.payoutPaymentOneSelected.name].length<1')
+                      a 暂无级联选项
+                    li(ng-repeat='item in cascade.payoutPayment[cascade.payoutPaymentOneSelected.name] track by $index' ng-if='cascade.payoutPaymentOneSelected')
+                      a(value='item.layout_two_id' ng-bind='item.name' ng-click='cascade.changeSelected(cascade.payoutPaymentTwoSelected,item.name)')
+                .editable-controls.form-group
+                    input.editable-has-buttons.editable-input.form-control.input-sm(type='text' ng-model='cascade.payoutPaymentTwoSelected.name')
+                    span.editable-buttons
+                      button.btn.btn-success.btn-sm(type='button' ng-click='cascade.layoutTwoEdit(cascade.payoutPaymentTwoSelected,cascade.payoutPayment[cascade.payoutPaymentOneSelected.name])')
+                        span.fa.fa-check
+                      button.btn.btn-danger.btn-sm(type='button' ng-click='cascade.layoutTwoDelect(cascade.payoutPaymentTwoSelected,cascade.payoutPayment[cascade.payoutPaymentOneSelected.name])')
+                        span.fa.fa-minus
+                  span.editable-buttons
+                    button.btn.btn-default.btn-sm(type='button' ng-click='cascade.layoutTwoAdd(cascade.payoutPaymentOneSelected,cascade.payoutPaymentTwoSelected,cascade.payoutPayment[cascade.payoutPaymentOneSelected.name],1)')
+                      span.fa.fa-plus
+            tr
+              td 流水类型
+              td.form-inline.editable-wrap.text-center
+                .btn-group(dropdown='dropdown')
+                    button.btn.btn-default.btn-sm(type='button', ng-disabled='disabled', dropdown-toggle="")
+                      em.fa.fa-angle-down.fa-fw
+                      | {{cascade.payoutCommonOneSelected?cascade.payoutCommonOneSelected.name:'请选择要操作的级联'}}
+                    ul.dropdown-menu(role='menu')
+                      li(ng-if='cascade.payoutCommonBrige.length<1')
+                        a 暂无级联选项
+                      li(ng-repeat='(key,value) in cascade.payoutCommonBrige track by $index')
+                        a(ng-bind='key' ng-click='cascade.changeOneSelected(cascade.payoutCommon,cascade.payoutCommonOneSelected,cascade.payoutCommonTwoSelected,key,value)')
+                .editable-controls.form-group
+                  input.editable-has-buttons.editable-input.form-control.input-sm(type='text' ng-model='cascade.payoutCommonOneSelected.name')
+                  span.editable-buttons
+                    button.btn.btn-success.btn-sm(type='button' ng-click='cascade.layoutOneEdit(cascade.payoutCommonOneSelected,cascade.payoutCommonBrige)')
+                      span.fa.fa-check
+                    button.btn.btn-danger.btn-sm(type='button' ng-click='cascade.layoutOneDelect(cascade.payoutCommonOneSelected,cascade.payoutCommonBrige)')
+                      span.fa.fa-minus
+                  span.editable-buttons
+                    button.btn.btn-default.btn-sm(type='button' ng-click='cascade.layoutOneAdd(cascade.payoutCommonOneSelected,cascade.payoutCommonBrige,1)')
+                      span.fa.fa-plus
+              td.form-inline.editable-wrap.text-center
+                .btn-group(dropdown='dropdown')
+                  button.btn.btn-default.btn-sm(type='button', ng-disabled='disabled', dropdown-toggle="")
+                    em.fa.fa-angle-down.fa-fw
+                    | {{cascade.payoutFlowTwoSelected.name?cascade.payoutFlowTwoSelected.name:'请选择要操作的级联'}}
+                  ul.dropdown-menu(role='menu')
+                    li(ng-if='!cascade.payoutFlow[cascade.payoutFlowOneSelected.name]||cascade.payoutFlow[cascade.payoutFlowOneSelected.name].length<1')
+                      a 暂无级联选项
+                    li(ng-repeat='item in cascade.payoutFlow[cascade.payoutFlowOneSelected.name] track by $index' ng-if='cascade.payoutFlowOneSelected')
+                      a(value='item.layout_two_id' ng-bind='item.name' ng-click='cascade.changeSelected(cascade.payoutFlowTwoSelected,item.name)')
+                .editable-controls.form-group
+                    input.editable-has-buttons.editable-input.form-control.input-sm(type='text' ng-model='cascade.payoutFlowTwoSelected.name')
+                    span.editable-buttons
+                      button.btn.btn-success.btn-sm(type='button' ng-click='cascade.layoutTwoEdit(cascade.payoutFlowTwoSelected,cascade.payoutFlow[cascade.payoutFlowOneSelected.name])')
+                        span.fa.fa-check
+                      button.btn.btn-danger.btn-sm(type='button' ng-click='cascade.layoutTwoDelect(cascade.payoutFlowTwoSelected,cascade.payoutFlow[cascade.payoutFlowOneSelected.name])')
+                        span.fa.fa-minus
+                  span.editable-buttons
+                    button.btn.btn-default.btn-sm(type='button' ng-click='cascade.layoutTwoAdd(cascade.payoutFlowOneSelected,cascade.payoutFlowTwoSelected,cascade.payoutFlow[cascade.payoutFlowOneSelected.name],2)')
+                      span.fa.fa-plus
+.panel.panel-default
+    .panel-heading
+        | 申请物资列表管理
+    .table-responsive(style='overflow-x: visible;')
+        table.table.table-striped.table-bordered.table-hover
+          thead
+            tr
+              th 名称
+              th.text-center 一级级联
+          tbody
+           tr
+              td 物资列表
+              td.form-inline.editable-wrap.text-center
+                .btn-group(dropdown='dropdown')
+                    button.btn.btn-default.btn-sm(type='button', ng-disabled='disabled', dropdown-toggle="")
+                     em.fa.fa-angle-down.fa-fw
+                     |  {{cascade.placeSelected.name?cascade.placeSelected.name:'暂无级联列表'}}
+                    ul.dropdown-menu(role='menu')
+                      li(ng-if='cascade.placeList.length<1')
+                        a 暂无级联列表
+                      li(ng-repeat='place in cascade.placeList')
+                        a(ng-bind='place.name' ng-click='cascade.changePlaceSelected(place)')
+                .editable-controls.form-group
+                  input.editable-has-buttons.editable-input.form-control.input-sm(type='text' ng-model='cascade.placeSelected.name')
+                  span.editable-buttons
+                    button.btn.btn-success.btn-sm(type='button' ng-click='cascade.editPlace(cascade.placeSelected)')
+                      span.fa.fa-check
+                    button.btn.btn-danger.btn-sm(type='button' ng-click='cascade.deletePlace(cascade.placeSelected)')
+                      span.fa.fa-minus
+                  span.editable-buttons
+                    button.btn.btn-default.btn-sm(type='button' ng-click='cascade.addPlace(cascade.placeSelected)')
+                      span.fa.fa-plus
+
+
+

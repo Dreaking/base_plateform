@@ -1,0 +1,40 @@
+// START action buttons
+.clearfix.mb.form-horizontal
+  .btn-group.pull-left
+    
+  .btn-group.pull-right
+    .pull-right
+            label.col-sm-4.control-label 职位
+            .col-sm-8
+              select.form-control(name='account')
+                option(ng-value='1') 板块1
+                option(ng-value='2') 板块2
+                option(ng-value='3') 板块3
+// END action buttons
+
+.panel.panel-default(ng-controller="MailFolderController as mailfolder")
+  .panel-body
+    p.lead.text-center(ng-if="!(mailfolder.mails | filter:mailfolder.folder).length") No mails here
+    table.table.table-hover.mb-mails(ng-if="(mailfolder.mails | filter:mailfolder.folder).length")
+      //- thead
+      //-   tr
+      //-     th(check-all)
+      //-       .checkbox.c-checkbox(data-toggle="tooltip",data-title="Check All")
+      //-         label
+      //-           input(type='checkbox')
+      //-           span.fa.fa-check
+      //-     th 
+      //-     th 
+      tbody
+        tr(ng-repeat="mail in mailfolder.mails | filter:mailfolder.folder", ng-class="{'mb-mail-active': mail.unread}")
+          td
+            .checkbox.c-checkbox
+              label
+                input(type='checkbox')
+          td(ui-sref="admin.posts.view({mid: mail.id})")
+            img.mb-mail-avatar.pull-left(ng-src="{{mail.from.avatar}}", alt="Mail Avatar")
+            .mb-mail-date.pull-right {{mail.date}}
+            .mb-mail-meta
+              .pull-left
+                .mb-mail-subject {{mail.subject}}
+              .mb-mail-preview(ng-bind-html="mail.content | limitTo:100")

@@ -58,20 +58,22 @@ class AdminAccountRecordExcelExport:
         results = db.select('payment', vars = vars, where = where,
                             order = "add_time desc, payment_id desc")
         for i in results:
-            if i.type == 'admin-de':
-                type = u'管理员扣钱'
-            elif i.type == 'admin-in':
-                type = u'管理员加钱'
-            else:
-                type = u'收费项目付款'
             add_time = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(i.add_time))
             record_list.append({'payment_id':i.payment_id, 'reason':i.reason, 'amount':i.amount,
-                                'count':i.num, 'add_time':add_time, 'type':type})
+                                'count':i.num, 'add_time':add_time, 'layout_two_id':i.layout_two_id})
+        for i in record_list:
+            layout_two = db.select('layout_two', vars = {'id':i['layout_two_id']}, where = 'id=$id',
+                                   what = 'parent_id,name')[0]
+            i['layout_one_id'] = layout_two.parent_id
+            i['layout_two_name'] = layout_two.name
+            i['layout_one_name'] = db.select('layout_one', vars = {'id':layout_two.parent_id},
+                                             where = "id=$id", what = 'name')[0].name
 
         excel_file = xlwt.Workbook()
         sheet = excel_file.add_sheet('record_list')
-        li = [u'id', u'描述', u'类型', u'金额', u'数量', u'增加时间']
-        col_name = ['payment_id', 'reason', 'type', 'amount', 'count', 'add_time']
+        li = [u'id', u'描述', u'一级类型名', u'二级类型名', u'金额', u'数量', u'添加时间']
+        col_name = ['payment_id', 'reason', 'layout_one_name', 'layout_two_name',
+                    'amount', 'count', 'add_time']
         for col, data in enumerate(li):
             sheet.write(0, col, data)
 
@@ -93,4 +95,4 @@ class AdminAccountRecordExcelExport:
         except:
             return output(700)
 
-        return output(200, {'file_url':'http://120.24.209.197/excel/file/' + filename})
+        return output(200, {'file_url':'/excel/file/' + filename})

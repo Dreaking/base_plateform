@@ -1,8 +1,9 @@
 <h3>活动管理
    <small>Edit in Activity</small>
 </h3>
-<div ng-controller="BaseActivityController as art" class="container-fluid">
+<div ng-controller="BaseActivityController as active" class="container-fluid">
    <div style="border-width:0px;" class="row content-wrapper">
+      <iframe ng-src="{{active.exportUrl}}" style="display:none;"></iframe>
       <p class="lead">历史活动列表</p>
       <div class="panel">
          <div class="table-responsive">
@@ -27,35 +28,35 @@
                   </tr>
                </thead>
                <tbody>
-                  <tr ng-repeat="activity in art.activities">
+                  <tr ng-repeat="activity in active.activities">
                      <td>{{activity.notice_id}}</td>
                      <td>{{activity.add_time| NowTime }}</td>
                      <td>{{activity.title | limitTo:10}}</td>
                      <td>{{activity.content | removeTag |limitTo:50}}</td>
                      <td>
-                        <button type="button" ng-click="art.downloadExcel(activity.notice_id)" class="btn btn-sm btn-default">
+                        <button type="button" ng-click="active.downloadExcel(activity.notice_id)" class="btn btn-sm btn-default">
                            <span>报名导出</span>
                         </button>
-                        <button type="button" title="删除" ng-click="art.delecteActivity($index,activity)" class="btn btn-sm btn-danger">
+                        <button type="button" title="删除" ng-click="active.delecteActivity($index,activity)" class="btn btn-sm btn-danger">
                            <em class="icon-trash"></em>
                         </button>
                      </td>
                   </tr>
                </tbody>
             </table>
-            <p ng-show="!art.activities||art.activities.length&lt;1" class="text-center">暂无任何数据</p>
          </div>
+         <p ng-show="!active.activities||active.activities.length&lt;1" class="text-center small-margin-top">暂无任何数据</p>
       </div>
-      <!-- Article Content-->
+      <!-- activeicle Content-->
       <div class="col-lg-1-1">
          <div class="panel panel-default">
             <div class="panel-body">
-               <form name="art.formValidate" ng-submit="art.addActivity(art.activity)" novalidate="" class="form-validate form-horizontal">
-                  <input type="text" name="title" required="" ng-maxlength="20" ng-model="art.activity.title" placeholder="标题" class="mb-lg form-control input-lg" />
-                  <span ng-show="art.validateInput('title', 'required')" class="mb-lg text-danger">请填写内容</span>
+               <form name="active.formValidate" ng-submit="active.addActivity(active.activity)" novalidate="" class="form-validate form-horizontal">
+                  <input type="text" name="title" required="" ng-maxlength="20" ng-model="active.activity.title" placeholder="标题" class="mb-lg form-control input-lg" />
+                  <span ng-show="active.validateInput('title', 'required')" class="text-danger">请填写内容</span>
                   <span ng-show="form.validateInput('length', 'maxlength')" class="text-danger">字数不能超过20</span>
                   <!-- Wysiswyg editor-->
-                  <ueditor config="art.editorConfig" ng-model="art.activity.content" required=""></ueditor>
+                  <ueditor config="active.editorConfig" ng-model="active.activity.content" required=""></ueditor>
                   <br/>
                   <div class="pull-right">
                      <button type="submit" class="btn btn-primary m-r-10 m-t-10">

@@ -15,9 +15,9 @@
         return moment.unix(input).format('ll');
       }
     }
-  TeamCheckController.$inject = ['$scope', '$filter', 'ngDialog', 'editableOptions', 'editableThemes', '$q', 'schoolResourceApi', 'adminResourceApi', 'APP_PARMAS'];
+  TeamCheckController.$inject = ['$scope','$sce', '$filter', 'ngDialog', 'editableOptions', 'editableThemes', '$q', 'schoolResourceApi', 'adminResourceApi', 'APP_PARMAS'];
 
-  function TeamCheckController($scope, $filter, ngDialog, editableOptions, editableThemes, $q, schoolResourceApi, adminResourceApi, APP_PARMAS) {
+  function TeamCheckController($scope,$sce, $filter, ngDialog, editableOptions, editableThemes, $q, schoolResourceApi, adminResourceApi, APP_PARMAS) {
     var vm = this;
     $scope.passApply=function(id){
       ngDialog.openConfirm({
@@ -32,7 +32,7 @@
     }
     $scope.getExcel=function(id){
       adminResourceApi.GetTeamcheckExcel({application_id:id},function(data){
-        window.open('data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,'+data.data.content);
+         $timeout(function(){vm.exportUrl=$sce.trustAsResourceUrl(data.data.file_url);},0,true)
       })
     }
     $scope.rejectApply=function(id){
@@ -62,7 +62,7 @@
     DetailCtrl.$inject=['$scope'];  
     function DetailCtrl($scope){
       adminResourceApi.TeamApplyDetailQuery({application_id:$scope.ngDialogData.id}).$promise.then(function(data){
-       $scope.detail=data.data.content;
+       $scope.detail=data.data;
       })
      }
   }
